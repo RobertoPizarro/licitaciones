@@ -1,0 +1,52 @@
+.licitacion-summary-card {
+    border-top: 4px solid #F59E0B;
+}
+
+.process-type {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    background-color: #EFF6FF; 
+    border: 1px solid #DBEAFE; 
+}
+
+.process-type .icon {
+    color: #3B82F6;
+    margin-right: 0.75rem;
+    flex-shrink: 0; 
+}
+
+.process-type p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.process-type p:first-child strong {
+    font-weight: 600;
+    color: #1E40AF;
+}
+
+.process-type p:last-child {
+    font-size: 0.875rem;
+    color: #3B82F6;
+}
+
+
+.licitacion-process-type {
+    background-color: #FFFBEB; 
+    border-color: #FEF3C7; 
+}
+
+.licitacion-process-type .icon {
+    color: #F59E0B;
+}
+
+.licitacion-process-type p:first-child strong {
+    color: #92400E;
+}
+
+.licitacion-process-type p:last-child {
+    color: #B45309; 
+}

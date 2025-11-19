@@ -1,0 +1,34 @@
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.status-pill svg {
+    stroke-width: 2px;
+}
+
+.status-blue {
+    background-color: #DBEAFE;
+    color: #3B82F6;
+}
+
+.status-gray {
+    background-color: #F3F4F6;
+    color: #6B7280;
+}
+
+.status-green {
+    background-color: #D1FAE5;
+    color: #10B981;
+}
+
+.status-red {
+    background-color: #FEE2E2; 
+    color: #EF4444;
+}
