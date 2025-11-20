@@ -3,7 +3,7 @@
 import React from 'react';
 import './Pagination.css';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { PaginationProps } from '@/app/lib/types';
+import { PaginationProps } from '../../lib/types';
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalItems, itemsPerPage, onPageChange }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -16,62 +16,62 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalItems, itemsP
 
   const getPageNumbers = () => {
     const pageNumbers: (number | string)[] = [];
-    const pageNeighbours = 1; 
+    const pageNeighbours = 1;
 
-    const totalBlocks = pageNeighbours * 2 + 5; 
+    const totalBlocks = pageNeighbours * 2 + 5;
 
     if (totalPages <= totalBlocks) {
-        for (let i = 1; i <= totalPages; i++) {
-            pageNumbers.push(i);
-        }
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
     } else {
-        const leftSiblingIndex = Math.max(currentPage - pageNeighbours, 1);
-        const rightSiblingIndex = Math.min(currentPage + pageNeighbours, totalPages);
+      const leftSiblingIndex = Math.max(currentPage - pageNeighbours, 1);
+      const rightSiblingIndex = Math.min(currentPage + pageNeighbours, totalPages);
 
-        const shouldShowLeftDots = leftSiblingIndex > 2;
-        const shouldShowRightDots = rightSiblingIndex < totalPages - 2;
+      const shouldShowLeftDots = leftSiblingIndex > 2;
+      const shouldShowRightDots = rightSiblingIndex < totalPages - 2;
 
-        const firstPageIndex = 1;
-        const lastPageIndex = totalPages;
+      const firstPageIndex = 1;
+      const lastPageIndex = totalPages;
 
-        if (!shouldShowLeftDots && shouldShowRightDots) {
-            let leftItemCount = 3 + 2 * pageNeighbours;
-            let leftRange = [];
-            for (let i = 1; i <= leftItemCount; i++) {
-                leftRange.push(i);
-            }
-            pageNumbers.push(...leftRange, '...', totalPages);
-
-        } else if (shouldShowLeftDots && !shouldShowRightDots) {
-            let rightItemCount = 3 + 2 * pageNeighbours;
-            let rightRange = [];
-            for (let i = totalPages - rightItemCount + 1; i <= totalPages; i++) {
-                rightRange.push(i);
-            }
-            pageNumbers.push(firstPageIndex, '...', ...rightRange);
-
-        } else {
-            let middleRange = [];
-            for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) {
-                middleRange.push(i);
-            }
-            pageNumbers.push(firstPageIndex, '...', ...middleRange, '...', lastPageIndex);
+      if (!shouldShowLeftDots && shouldShowRightDots) {
+        let leftItemCount = 3 + 2 * pageNeighbours;
+        let leftRange = [];
+        for (let i = 1; i <= leftItemCount; i++) {
+          leftRange.push(i);
         }
+        pageNumbers.push(...leftRange, '...', totalPages);
+
+      } else if (shouldShowLeftDots && !shouldShowRightDots) {
+        let rightItemCount = 3 + 2 * pageNeighbours;
+        let rightRange = [];
+        for (let i = totalPages - rightItemCount + 1; i <= totalPages; i++) {
+          rightRange.push(i);
+        }
+        pageNumbers.push(firstPageIndex, '...', ...rightRange);
+
+      } else {
+        let middleRange = [];
+        for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) {
+          middleRange.push(i);
+        }
+        pageNumbers.push(firstPageIndex, '...', ...middleRange, '...', lastPageIndex);
+      }
     }
 
     return pageNumbers.map((page, index) => {
-        if (typeof page === 'string') {
-            return <span key={`ellipsis-${index}`} className="pagination-ellipsis">...</span>;
-        }
+      if (typeof page === 'string') {
+        return <span key={`ellipsis-${index}`} className="pagination-ellipsis">...</span>;
+      }
 
-        return (
-            <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`pagination-number ${currentPage === page ? 'active' : ''}`}>
-                {page}
-            </button>
-        );
+      return (
+        <button
+          key={page}
+          onClick={() => handlePageChange(page)}
+          className={`pagination-number ${currentPage === page ? 'active' : ''}`}>
+          {page}
+        </button>
+      );
     });
   };
 

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DetallesLicitacion from '../organisms/DetallesLicitacion'; 
+import DetallesLicitacion from '../organisms/DetallesLicitacion';
 import DocumentacionRequerida from '../organisms/DocumentacionRequerida';
 import Resumen from '../molecules/Resumen';
 import { Item } from '../../lib/types';
@@ -20,22 +20,22 @@ const ReadOnlyItem = ({ item }: { item: Item }) => {
 
   return (
     <div className="readonly-item-card">
-        <div className="licitacion-item-grid"> 
-            <div><label>Tipo</label><p>{item.type}</p></div>
-            <div><label>Descripción</label><p>{item.description}</p></div>
-            {item.type === 'Producto' ? (
-            <>
-                <div><label>Cantidad</label><p>{item.quantity}</p></div>
-                <div><label>Precio Uni.</label><p>S/ {item.price?.toFixed(2)}</p></div>
-            </>
-            ) : (
-            <>
-                <div><label>Horas Estimadas</label><p>{item.estimatedHours}</p></div>
-                <div><label>Tarifa / Hora</label><p>S/ {item.hourlyRate?.toFixed(2)}</p></div>
-            </>
-            )}
-            <div className="total-column"><label>Total Item</label><p>S/ {total.toFixed(2)}</p></div>
-        </div>
+      <div className="licitacion-item-grid">
+        <div><label>Tipo</label><p>{item.type}</p></div>
+        <div><label>Descripción</label><p>{item.description}</p></div>
+        {item.type === 'Producto' ? (
+          <>
+            <div><label>Cantidad</label><p>{item.quantity}</p></div>
+            <div><label>Precio Uni.</label><p>S/ {item.price?.toFixed(2)}</p></div>
+          </>
+        ) : (
+          <>
+            <div><label>Horas Estimadas</label><p>{item.estimatedHours}</p></div>
+            <div><label>Tarifa / Hora</label><p>S/ {item.hourlyRate?.toFixed(2)}</p></div>
+          </>
+        )}
+        <div className="total-column"><label>Total Item</label><p>S/ {total.toFixed(2)}</p></div>
+      </div>
     </div>
   );
 };
@@ -69,22 +69,21 @@ const RequestLicitacionTemplate: React.FC = () => {
     setDeadlineError('');
 
     if (!budget) {
-        setBudgetError('Por favor, ingrese un presupuesto.');
-        isValid = false;
+      setBudgetError('Por favor, ingrese un presupuesto.');
+      isValid = false;
     } else if (parseFloat(String(budget)) < totalAmount) {
-        setBudgetError(`El presupuesto no puede ser menor al monto total estimado (S/ ${totalAmount.toFixed(2)}).`);
-        isValid = false;
+      setBudgetError(`El presupuesto no puede ser menor al monto total estimado (S/ ${totalAmount.toFixed(2)}).`);
+      isValid = false;
     }
 
     if (!deadline) {
-        setDeadlineError('Por favor, seleccione una fecha límite.');
-        isValid = false;
+      setDeadlineError('Por favor, seleccione una fecha límite.');
+      isValid = false;
     }
 
     if (isValid) {
-        console.log('Licitación creada con éxito:', { title, notes, items, budget, deadline, selectedDocs });
-        alert('¡Licitación creada con éxito!');
-        navigate('/licitacioneslist');
+      alert('¡Licitación creada con éxito!');
+      navigate('/licitacioneslist');
     }
   };
 
@@ -94,9 +93,9 @@ const RequestLicitacionTemplate: React.FC = () => {
         <h1>Crear Licitación</h1>
         <p>Complete el formulario especializado para iniciar el proceso de licitación formal.</p>
       </header>
-      
+
       <div className="main-page-content">
-        
+
         <div className="card">
           <div className="card-header"><h2>Información General</h2><p>Datos precargados para esta licitación de ejemplo.</p></div>
           <div className="card-body">
@@ -104,7 +103,7 @@ const RequestLicitacionTemplate: React.FC = () => {
             <div className="readonly-info"><label>Notas</label><p>{notes}</p></div>
           </div>
         </div>
-        
+
         <div className="card">
           <div className="card-header"><h2>Ítems Solicitados</h2><p>Datos precargados para esta licitación de ejemplo.</p></div>
           <div className="card-body">
@@ -112,24 +111,24 @@ const RequestLicitacionTemplate: React.FC = () => {
           </div>
         </div>
 
-        <DetallesLicitacion 
-            budget={budget} 
-            onBudgetChange={setBudget} 
-            deadline={deadline} 
-            onDeadlineChange={setDeadline} 
-            totalAmount={totalAmount} 
-            budgetError={budgetError} 
-            deadlineError={deadlineError} 
+        <DetallesLicitacion
+          budget={budget}
+          onBudgetChange={setBudget}
+          deadline={deadline}
+          onDeadlineChange={setDeadline}
+          totalAmount={totalAmount}
+          budgetError={budgetError}
+          deadlineError={deadlineError}
         />
         <DocumentacionRequerida selectedDocs={selectedDocs} onSelectedDocsChange={setSelectedDocs} />
-        
-        <Resumen 
-            totalAmount={totalAmount} 
-            onSubmit={handleSubmit}
-            title={title}
-            items={items}
-            subtitle="Revisar el monto máximo, la fecha límite y los documentos requetidos"
-            buttonText="Crear licitación"
+
+        <Resumen
+          totalAmount={totalAmount}
+          onSubmit={handleSubmit}
+          title={title}
+          items={items}
+          subtitle="Revisar el monto máximo, la fecha límite y los documentos requetidos"
+          buttonText="Crear licitación"
         />
       </div>
     </>

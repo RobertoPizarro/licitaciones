@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import LicitacionesTable from '../organisms/LicitacionesTable';
 import FilterBar from '../molecules/FilterBar';
 import Pagination from '../molecules/Pagination';
@@ -12,12 +12,12 @@ const LicitacionesListTemplate = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const ITEMS_PER_PAGE = 10; 
+    const ITEMS_PER_PAGE = 10;
 
     const filteredLicitaciones = useMemo(() => {
         let licitaciones: Licitacion[] = [...allLicitaciones];
         if (searchQuery) {
-            licitaciones = licitaciones.filter(lic => 
+            licitaciones = licitaciones.filter(lic =>
                 lic.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 lic.id.toLowerCase().includes(searchQuery.toLowerCase())
             );
@@ -60,7 +60,7 @@ const LicitacionesListTemplate = () => {
                 </div>
             </header>
             <div className="main-page-content">
-                <FilterBar 
+                <FilterBar
                     searchQuery={searchQuery} onSearchQueryChange={setSearchQuery}
                     status={status} onStatusChange={setStatus}
                     startDate={startDate} onStartDateChange={setStartDate}
@@ -69,7 +69,7 @@ const LicitacionesListTemplate = () => {
                     onClearFilters={handleClearFilters}
                 />
                 <LicitacionesTable licitaciones={paginatedLicitaciones} />
-                <Pagination 
+                <Pagination
                     currentPage={currentPage}
                     totalItems={filteredLicitaciones.length}
                     itemsPerPage={ITEMS_PER_PAGE}
