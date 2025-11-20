@@ -6,7 +6,7 @@ import CardHeader from '../atoms/CardHeader';
 import CardBody from '../atoms/CardBody';
 import Button from '../atoms/Button';
 import { ResumenProps } from '../../lib/types';
-import { LICITACION_THRESHOLD } from '../../lib/constants';
+import { limite_money } from '../../lib/constants';
 
 const ResumenCard: React.FC<ResumenProps> = ({
     totalAmount,
@@ -14,7 +14,7 @@ const ResumenCard: React.FC<ResumenProps> = ({
     subtitle = 'Revisa el monto total y el tipo de proceso antes de continuar.',
     buttonText
 }) => {
-    const isLicitacion = totalAmount > LICITACION_THRESHOLD;
+    const isLicitacion = totalAmount > limite_money;
 
     const renderButton = () => {
         if (buttonText) {

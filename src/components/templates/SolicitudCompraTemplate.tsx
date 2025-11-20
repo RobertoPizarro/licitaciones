@@ -5,7 +5,7 @@ import DetallesSolicitudForm from '../organisms/DetallesSolicitudForm';
 import ProductosYServicios from '../organisms/ProductosYServicios';
 import ResumenCard from '../organisms/ResumenCard';
 import PageHeader from '../molecules/PageHeader';
-import { LICITACION_THRESHOLD } from '../../lib/constants';
+import { limite_money } from '../../lib/constants';
 
 const SolicitudCompraTemplate: React.FC = () => {
   const navigate = useNavigate();
@@ -24,13 +24,14 @@ const SolicitudCompraTemplate: React.FC = () => {
   const handleSubmit = () => {
     // Validación del título
     if (!title.trim()) {
+      alert('Por favor, ingrese un título para la solicitud.');
       setTitleError('Por favor, ingrese un título para la solicitud.');
       return;
     }
 
     setTitleError('');
 
-    const isLicitacion = totalAmount > LICITACION_THRESHOLD;
+    const isLicitacion = totalAmount > limite_money;
 
     if (isLicitacion) {
       navigate(`/licitacion`);

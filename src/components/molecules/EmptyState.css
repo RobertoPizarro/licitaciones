@@ -8,13 +8,13 @@
 }
 
 .empty-state-icon {
-  color: #9ca3af;
+  color: #dc2626;
   margin-bottom: 0.75rem;
 }
 
 .empty-state-message {
   font-size: 0.875rem;
-  color: #9ca3af;
+  color: #dc2626;
   margin: 0;
 }
 
@@ -26,12 +26,4 @@
   background-color: #fef2f2;
   border: 1px dashed #fca5a5;
   border-radius: 8px;
-}
-
-.empty-state-error .empty-state-message {
-  color: #dc2626;
-}
-
-.empty-state-error .empty-state-icon {
-  color: #dc2626;
 }

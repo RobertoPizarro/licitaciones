@@ -8,7 +8,7 @@ import Label from '../atoms/Label';
 import Button from '../atoms/Button';
 import SearchInput from '../molecules/SearchInput';
 import { FilterBarProps } from '../../lib/types';
-import { STATUS_OPTIONS } from '../../lib/constants';
+import { estados_li } from '../../lib/constants';
 
 
 const FilterPanel: React.FC<FilterBarProps> = ({
@@ -45,7 +45,7 @@ const FilterPanel: React.FC<FilterBarProps> = ({
                     <Label htmlFor="status">Estado</Label>
                     <Select id="status" value={status} onChange={(e) => onStatusChange(e.target.value)}>
                         <option value="">Todos</option>
-                        {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s.charAt(0) + s.slice(1).toLowerCase()}</option>)}
+                        {estados_li.map(s => <option key={s} value={s}>{s.charAt(0) + s.slice(1).toLowerCase()}</option>)}
                     </Select>
                 </div>
 

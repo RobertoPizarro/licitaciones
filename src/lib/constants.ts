@@ -1,7 +1,7 @@
 import { Documento } from "./types";
 
 // Status options para filtros de licitaciones
-export const STATUS_OPTIONS = [
+export const estados_li = [
   "BORRADOR",
   "NUEVA",
   "EN INVITACION",
@@ -14,7 +14,7 @@ export const STATUS_OPTIONS = [
 ] as const;
 
 // Documentos Legales
-export const DOCUMENTOS_LEGALES: Documento[] = [
+export const doc_legales: Documento[] = [
   { id: "acta-constitucion", name: "Acta de Constitución" },
   { id: "vigencia-poder", name: "Certificado de Vigencia de Poder" },
   { id: "ruc", name: "RUC y Ficha RUC" },
@@ -27,7 +27,7 @@ export const DOCUMENTOS_LEGALES: Documento[] = [
 ];
 
 // Documentos Técnicos
-export const DOCUMENTOS_TECNICOS: Documento[] = [
+export const doc_tec: Documento[] = [
   { id: "cert-calidad-iso", name: "Certificaciones de Calidad (ISO)" },
   { id: "ficha-tecnica", name: "Ficha Técnica del Producto/Servicio" },
   { id: "cert-homologacion", name: "Certificados de Homologación" },
@@ -42,7 +42,7 @@ export const DOCUMENTOS_TECNICOS: Documento[] = [
 ];
 
 // Documentos Financieros
-export const DOCUMENTOS_FINANCIEROS: Documento[] = [
+export const doc_finan: Documento[] = [
   { id: "propuesta-economica", name: "Propuesta Económica" },
   {
     id: "estados-financieros-auditados",
@@ -67,7 +67,7 @@ export const DOCUMENTOS_FINANCIEROS: Documento[] = [
 ];
 
 // IDs de documentos requeridos obligatorios
-export const DOCUMENTOS_FINANCIEROS_REQUIRED = ["propuesta-economica"];
+export const doc_finan_req = ["propuesta-economica"];
 
 // Límite de monto para proceso de licitación (S/)
-export const LICITACION_THRESHOLD = 10000;
+export const limite_money = 10000;

@@ -6,10 +6,10 @@ import CardHeader from '../atoms/CardHeader';
 import CardBody from '../atoms/CardBody';
 import './DocumentacionRequerida.css';
 import {
-    DOCUMENTOS_LEGALES,
-    DOCUMENTOS_TECNICOS,
-    DOCUMENTOS_FINANCIEROS,
-    DOCUMENTOS_FINANCIEROS_REQUIRED
+    doc_legales,
+    doc_tec,
+    doc_finan,
+    doc_finan_req
 } from '../../lib/constants';
 
 interface DocumentacionRequeridaProps {
@@ -37,7 +37,7 @@ const DocumentacionRequerida: React.FC<DocumentacionRequeridaProps> = ({ selecte
                     icon={<Scale size={24} />}
                     title="Documentos Legales"
                     description="Documentación jurídica y constitutiva de la empresa"
-                    options={DOCUMENTOS_LEGALES}
+                    options={doc_legales}
                     selected={selectedDocs.legal || []}
                     onChange={(selected) => handleSelectionChange('legal', selected)}
                     emptyStateVariant="error"
@@ -46,7 +46,7 @@ const DocumentacionRequerida: React.FC<DocumentacionRequeridaProps> = ({ selecte
                     icon={<Wrench size={24} />}
                     title="Documentos Técnicos"
                     description="Especificaciones técnicas y certificaciones"
-                    options={DOCUMENTOS_TECNICOS}
+                    options={doc_tec}
                     selected={selectedDocs.technical || []}
                     onChange={(selected) => handleSelectionChange('technical', selected)}
                     emptyStateVariant="error"
@@ -55,10 +55,10 @@ const DocumentacionRequerida: React.FC<DocumentacionRequeridaProps> = ({ selecte
                     icon={<PiggyBank size={24} />}
                     title="Documentos Financieros"
                     description="Información económica y propuesta comercial"
-                    options={DOCUMENTOS_FINANCIEROS}
+                    options={doc_finan}
                     selected={selectedDocs.financial || []}
                     onChange={(selected) => handleSelectionChange('financial', selected)}
-                    requiredIds={DOCUMENTOS_FINANCIEROS_REQUIRED}
+                    requiredIds={doc_finan_req}
                     emptyStateVariant="error"
                 />
             </CardBody>
