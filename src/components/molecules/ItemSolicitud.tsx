@@ -5,6 +5,7 @@ import Select from '../atoms/Select';
 import Input from '../atoms/Input';
 import Label from '../atoms/Label';
 import IconButton from '../atoms/IconButton';
+import './ItemSolicitud.css';
 
 interface ItemSolicitudProps {
   item: Item;
