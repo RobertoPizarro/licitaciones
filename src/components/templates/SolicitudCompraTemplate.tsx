@@ -4,6 +4,7 @@ import { Item } from '../../lib/types';
 import DetallesSolicitudForm from '../organisms/DetallesSolicitudForm';
 import ProductosYServicios from '../organisms/ProductosYServicios';
 import ResumenCard from '../organisms/ResumenCard';
+import PageHeader from '../molecules/PageHeader';
 import { LICITACION_THRESHOLD } from '../../lib/constants';
 
 const SolicitudCompraTemplate: React.FC = () => {
@@ -33,17 +34,15 @@ const SolicitudCompraTemplate: React.FC = () => {
 
     if (isLicitacion) {
       navigate(`/licitacion`);
-    } else {
-      alert('Creando solicitud de compra simple...');
     }
   };
 
   return (
     <>
-      <header className="page-header">
-        <h1>Solicitud de Compra o Servicio</h1>
-        <p>Complete los detalles de su solicitud. Puede agregar múltiples productos o servicios.</p>
-      </header>
+      <PageHeader
+        title="Solicitud de Compra o Servicio"
+        description="Complete los detalles de su solicitud. Puede agregar múltiples productos o servicios."
+      />
 
       <div className="main-page-content">
         <DetallesSolicitudForm

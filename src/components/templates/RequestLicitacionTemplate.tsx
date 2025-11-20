@@ -9,6 +9,7 @@ import CardHeader from '../atoms/CardHeader';
 import CardBody from '../atoms/CardBody';
 import ReadOnlyField from '../molecules/ReadOnlyField';
 import ReadOnlyItem from '../molecules/ReadOnlyItem';
+import PageHeader from '../molecules/PageHeader';
 import { Item } from '../../lib/types';
 
 const hardcodedTitle = "Licitación de Suministros y Servicios TI";
@@ -44,42 +45,44 @@ const RequestLicitacionTemplate: React.FC = () => {
   const handleSubmit = () => {
     let isValid = true;
 
-    // Reset errors
     setBudgetError('');
     setDeadlineError('');
 
     if (!budget) {
+      alert('Por favor, ingrese un presupuesto.');
       setBudgetError('Por favor, ingrese un presupuesto.');
       isValid = false;
     } else if (parseFloat(String(budget)) < totalAmount) {
+      alert(`El presupuesto no puede ser menor al monto total estimado (S/ ${totalAmount.toFixed(2)}).`);
       setBudgetError(`El presupuesto no puede ser menor al monto total estimado (S/ ${totalAmount.toFixed(2)}).`);
       isValid = false;
     }
 
     if (!deadline) {
+      alert('Por favor, seleccione una fecha límite.');
       setDeadlineError('Por favor, seleccione una fecha límite.');
       isValid = false;
     }
 
     if (isValid) {
-      alert('¡Licitación creada con éxito!');
+      alert('¡Solicitud de licitación creada con éxito!');
       navigate('/licitacioneslist');
     }
   };
 
   return (
     <>
-      <header className="page-header">
-        <h1>Crear Licitación</h1>
-        <p>Complete el formulario especializado para iniciar el proceso de licitación formal.</p>
-      </header>
+      <PageHeader
+        title="Crear Solicitud de Licitación"
+        description="Complete el formulario especializado para iniciar el proceso de licitación formal."
+      />
 
       <div className="main-page-content">
 
         <Card>
           <CardHeader>
             <h2>Información General</h2>
-            <p>Datos precargados para esta licitación de ejemplo.</p>
+            <p>Datos heredados de la solicitud de compra.</p>
           </CardHeader>
           <CardBody>
             <ReadOnlyField label="Título" value={title} />
@@ -90,7 +93,7 @@ const RequestLicitacionTemplate: React.FC = () => {
         <Card>
           <CardHeader>
             <h2>Ítems Solicitados</h2>
-            <p>Datos precargados para esta licitación de ejemplo.</p>
+            <p>Datos heredados de la solicitud de compra.</p>
           </CardHeader>
           <CardBody>
             {items.map((item) => <ReadOnlyItem key={item.id} item={item} />)}

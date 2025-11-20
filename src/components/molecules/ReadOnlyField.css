@@ -1,12 +1,12 @@
-.readonly-field {
+.readonly-info {
   margin-bottom: 1rem;
 }
 
-.readonly-field:last-child {
+.readonly-info:last-child {
   margin-bottom: 0;
 }
 
-.readonly-field label {
+.readonly-info label {
   display: block;
   margin-bottom: 0.25rem;
   font-size: 0.875rem;
@@ -14,7 +14,7 @@
   color: #4b5563;
 }
 
-.readonly-field p {
+.readonly-info p {
   background-color: #f9fafb;
   padding: 0.75rem 1rem;
   border-radius: 8px;

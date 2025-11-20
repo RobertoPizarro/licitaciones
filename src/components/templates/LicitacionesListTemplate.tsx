@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react';
 import LicitacionesTable from '../organisms/LicitacionesTable';
 import FilterPanel from '../organisms/FilterPanel';
 import Pagination from '../molecules/Pagination';
+import PageHeader from '../molecules/PageHeader';
 import { allLicitaciones } from '../../lib/mock-data';
 import { Licitacion } from '../../lib/types';
 
@@ -53,12 +54,10 @@ const LicitacionesListTemplate = () => {
 
     return (
         <>
-            <header className="page-header">
-                <div className="header-content">
-                    <h1>Gestión de Licitaciones</h1>
-                    <p>Consulte el estado y avance de todos los procesos de licitación.</p>
-                </div>
-            </header>
+            <PageHeader
+                title="Gestión de Licitaciones"
+                description="Consulte el estado y avance de todos los procesos de licitación."
+            />
             <div className="main-page-content">
                 <FilterPanel
                     searchQuery={searchQuery} onSearchQueryChange={setSearchQuery}
