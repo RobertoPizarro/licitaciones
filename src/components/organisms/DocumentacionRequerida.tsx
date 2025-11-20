@@ -40,6 +40,7 @@ const DocumentacionRequerida: React.FC<DocumentacionRequeridaProps> = ({ selecte
                     options={DOCUMENTOS_LEGALES}
                     selected={selectedDocs.legal || []}
                     onChange={(selected) => handleSelectionChange('legal', selected)}
+                    emptyStateVariant="error"
                 />
                 <DocumentSelector
                     icon={<Wrench size={24} />}
@@ -48,6 +49,7 @@ const DocumentacionRequerida: React.FC<DocumentacionRequeridaProps> = ({ selecte
                     options={DOCUMENTOS_TECNICOS}
                     selected={selectedDocs.technical || []}
                     onChange={(selected) => handleSelectionChange('technical', selected)}
+                    emptyStateVariant="error"
                 />
                 <DocumentSelector
                     icon={<PiggyBank size={24} />}
@@ -57,6 +59,7 @@ const DocumentacionRequerida: React.FC<DocumentacionRequeridaProps> = ({ selecte
                     selected={selectedDocs.financial || []}
                     onChange={(selected) => handleSelectionChange('financial', selected)}
                     requiredIds={DOCUMENTOS_FINANCIEROS_REQUIRED}
+                    emptyStateVariant="error"
                 />
             </CardBody>
         </Card>

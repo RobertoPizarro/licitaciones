@@ -5,10 +5,11 @@ interface EmptyStateProps {
     message: string;
     icon?: React.ReactNode;
     className?: string;
+    variant?: 'default' | 'error';
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ message, icon, className }) => {
-    const emptyClassName = `empty-state ${className || ''}`.trim();
+const EmptyState: React.FC<EmptyStateProps> = ({ message, icon, className, variant = 'default' }) => {
+    const emptyClassName = `empty-state ${variant === 'error' ? 'empty-state-error' : ''} ${className || ''}`.trim();
 
     return (
         <div className={emptyClassName}>

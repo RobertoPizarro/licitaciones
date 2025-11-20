@@ -9,6 +9,7 @@ interface PillListProps {
     onRemove: (id: string) => void;
     requiredIds?: string[];
     emptyMessage?: string;
+    emptyStateVariant?: 'default' | 'error';
 }
 
 const PillList: React.FC<PillListProps> = ({
@@ -16,12 +17,13 @@ const PillList: React.FC<PillListProps> = ({
     options,
     onRemove,
     requiredIds = [],
-    emptyMessage = 'No se han seleccionado documentos'
+    emptyMessage = 'No se han seleccionado documentos',
+    emptyStateVariant = 'default'
 }) => {
     const getOptionName = (id: string) => options.find(opt => opt.id === id)?.name || id;
 
     if (selectedIds.length === 0) {
-        return <EmptyState message={emptyMessage} />;
+        return <EmptyState message={emptyMessage} variant={emptyStateVariant} />;
     }
 
     return (

@@ -52,7 +52,7 @@ const ProductosYServicios: React.FC<ProductosYServiciosProps> = ({ items, onItem
           error ? (
             <ErrorMessage>{error}</ErrorMessage>
           ) : (
-            <EmptyState message="Aún no ha agregado ningún item." />
+            <EmptyState message="Aún no ha agregado ningún item." variant="error" />
           )
         ) : (
           <div className="items-list-container">

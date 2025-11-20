@@ -13,6 +13,7 @@ interface DocumentSelectorProps {
     selected: string[];
     onChange: (selected: string[]) => void;
     requiredIds?: string[];
+    emptyStateVariant?: 'default' | 'error';
 }
 
 const DocumentSelector: React.FC<DocumentSelectorProps> = ({
@@ -22,7 +23,8 @@ const DocumentSelector: React.FC<DocumentSelectorProps> = ({
     options,
     selected,
     onChange,
-    requiredIds = []
+    requiredIds = [],
+    emptyStateVariant
 }) => {
     const handleRemove = (id: string) => {
         if (requiredIds.includes(id)) return;
@@ -50,6 +52,7 @@ const DocumentSelector: React.FC<DocumentSelectorProps> = ({
                 options={options}
                 onRemove={handleRemove}
                 requiredIds={requiredIds}
+                emptyStateVariant={emptyStateVariant}
             />
         </div>
     );

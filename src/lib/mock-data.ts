@@ -2,7 +2,7 @@ import type { Licitacion } from "./types";
 import { STATUS_OPTIONS } from "./constants";
 
 export const allLicitaciones: Licitacion[] = Array.from(
-  { length: 403 },
+  { length: 400 },
   (_, i) => ({
     id: `2025${String(i + 1).padStart(3, "0")}`,
     titulo: `Equipo de Cómputo #${i + 1}`,
