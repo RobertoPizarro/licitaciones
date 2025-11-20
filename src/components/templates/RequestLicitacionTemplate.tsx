@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DetallesLicitacion from '../organisms/DetallesLicitacion';
 import DocumentacionRequerida from '../organisms/DocumentacionRequerida';
-import Resumen from '../molecules/Resumen';
+import ResumenCard from '../organisms/ResumenCard';
+import Card from '../atoms/Card';
+import CardHeader from '../atoms/CardHeader';
+import CardBody from '../atoms/CardBody';
+import ReadOnlyField from '../molecules/ReadOnlyField';
+import ReadOnlyItem from '../molecules/ReadOnlyItem';
 import { Item } from '../../lib/types';
 
 const hardcodedTitle = "Licitación de Suministros y Servicios TI";
@@ -13,32 +18,7 @@ const hardcodedItems: Item[] = [
   { id: 'serv-1', type: 'Servicio', description: 'Consultoría y desarrollo de software a medida', estimatedHours: 120, hourlyRate: 200 }
 ];
 
-const ReadOnlyItem = ({ item }: { item: Item }) => {
-  const total = item.type === 'Producto'
-    ? (item.quantity || 0) * (item.price || 0)
-    : (item.estimatedHours || 0) * (item.hourlyRate || 0);
 
-  return (
-    <div className="readonly-item-card">
-      <div className="licitacion-item-grid">
-        <div><label>Tipo</label><p>{item.type}</p></div>
-        <div><label>Descripción</label><p>{item.description}</p></div>
-        {item.type === 'Producto' ? (
-          <>
-            <div><label>Cantidad</label><p>{item.quantity}</p></div>
-            <div><label>Precio Uni.</label><p>S/ {item.price?.toFixed(2)}</p></div>
-          </>
-        ) : (
-          <>
-            <div><label>Horas Estimadas</label><p>{item.estimatedHours}</p></div>
-            <div><label>Tarifa / Hora</label><p>S/ {item.hourlyRate?.toFixed(2)}</p></div>
-          </>
-        )}
-        <div className="total-column"><label>Total Item</label><p>S/ {total.toFixed(2)}</p></div>
-      </div>
-    </div>
-  );
-};
 
 const RequestLicitacionTemplate: React.FC = () => {
   const navigate = useNavigate();
@@ -96,20 +76,26 @@ const RequestLicitacionTemplate: React.FC = () => {
 
       <div className="main-page-content">
 
-        <div className="card">
-          <div className="card-header"><h2>Información General</h2><p>Datos precargados para esta licitación de ejemplo.</p></div>
-          <div className="card-body">
-            <div className="readonly-info"><label>Título</label><p>{title}</p></div>
-            <div className="readonly-info"><label>Notas</label><p>{notes}</p></div>
-          </div>
-        </div>
+        <Card>
+          <CardHeader>
+            <h2>Información General</h2>
+            <p>Datos precargados para esta licitación de ejemplo.</p>
+          </CardHeader>
+          <CardBody>
+            <ReadOnlyField label="Título" value={title} />
+            <ReadOnlyField label="Notas" value={notes} />
+          </CardBody>
+        </Card>
 
-        <div className="card">
-          <div className="card-header"><h2>Ítems Solicitados</h2><p>Datos precargados para esta licitación de ejemplo.</p></div>
-          <div className="card-body">
+        <Card>
+          <CardHeader>
+            <h2>Ítems Solicitados</h2>
+            <p>Datos precargados para esta licitación de ejemplo.</p>
+          </CardHeader>
+          <CardBody>
             {items.map((item) => <ReadOnlyItem key={item.id} item={item} />)}
-          </div>
-        </div>
+          </CardBody>
+        </Card>
 
         <DetallesLicitacion
           budget={budget}
@@ -122,7 +108,7 @@ const RequestLicitacionTemplate: React.FC = () => {
         />
         <DocumentacionRequerida selectedDocs={selectedDocs} onSelectedDocsChange={setSelectedDocs} />
 
-        <Resumen
+        <ResumenCard
           totalAmount={totalAmount}
           onSubmit={handleSubmit}
           title={title}

@@ -1,0 +1,13 @@
+.selected-pills-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Required pill styling override */
+.pill-required {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+  cursor: not-allowed;
+}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Item } from '../../lib/types';
-import DetallesSolicitud from '../molecules/DetallesSolicitud';
+import DetallesSolicitudForm from '../organisms/DetallesSolicitudForm';
 import ProductosYServicios from '../organisms/ProductosYServicios';
-import Resumen from '../molecules/Resumen';
+import ResumenCard from '../organisms/ResumenCard';
+import { LICITACION_THRESHOLD } from '../../lib/constants';
 
 const SolicitudCompraTemplate: React.FC = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const SolicitudCompraTemplate: React.FC = () => {
 
     setTitleError('');
 
-    const isLicitacion = totalAmount > 10000;
+    const isLicitacion = totalAmount > LICITACION_THRESHOLD;
 
     if (isLicitacion) {
       navigate(`/licitacion`);
@@ -45,24 +46,24 @@ const SolicitudCompraTemplate: React.FC = () => {
       </header>
 
       <div className="main-page-content">
-        <DetallesSolicitud 
-            title={title} 
-            onTitleChange={setTitle} 
-            notes={notes} 
-            onNotesChange={setNotes}
-            titleError={titleError}
+        <DetallesSolicitudForm
+          title={title}
+          onTitleChange={setTitle}
+          notes={notes}
+          onNotesChange={setNotes}
+          titleError={titleError}
         />
-        
-        <ProductosYServicios 
-            items={items} 
-            onItemsChange={setItems}
+
+        <ProductosYServicios
+          items={items}
+          onItemsChange={setItems}
         />
-        
-        <Resumen 
-            totalAmount={totalAmount} 
-            onSubmit={handleSubmit}
-            title={title}
-            items={items}
+
+        <ResumenCard
+          totalAmount={totalAmount}
+          onSubmit={handleSubmit}
+          title={title}
+          items={items}
         />
       </div>
     </>

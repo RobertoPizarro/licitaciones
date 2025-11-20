@@ -11,7 +11,10 @@ import {
   CheckCircle2,     // FINALIZADA
   XCircle,          // CANCELADA
 } from 'lucide-react';
-import { StatusPillProps } from '../../lib/types';
+
+interface StatusPillProps {
+  status: string;
+}
 
 const ICONS: { [key: string]: React.ReactElement } = {
   BORRADOR: <FilePenLine size={14} />,
@@ -33,7 +36,7 @@ const STATUS_STYLES: { [key: string]: { text: string; className: string } } = {
   'EN EVALUACION': { text: 'En evaluación', className: 'status-blue' },
   ADJUDICADO: { text: 'Adjudicado', className: 'status-blue' },
   'CON CONTRATO': { text: 'Con contrato', className: 'status-blue' },
-  FINALIZADA: { text: 'Finalizada', className: 'status-green' }, 
+  FINALIZADA: { text: 'Finalizada', className: 'status-green' },
   CANCELADA: { text: 'Cancelada', className: 'status-red' },
 };
 

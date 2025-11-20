@@ -1,18 +1,13 @@
 import React from 'react';
 import { Eye } from 'lucide-react';
-import StatusPill from '../atoms/StatusPill';
+import StatusPill from '../molecules/StatusPill';
+import Button from '../atoms/Button';
+import Card from '../atoms/Card';
 import './LicitacionesTable.css';
 import { LicitacionesTableProps } from '../../lib/types';
 
-const ViewDetailsButton = () => (
-    <button className="view-details-btn">
-        <Eye size={16} />
-        <span>Ver detalles</span>
-    </button>
-);
-
 const LicitacionesTable: React.FC<LicitacionesTableProps> = ({ licitaciones }) => (
-    <div className="card licitaciones-table-card">
+    <Card className="licitaciones-table-card">
         <div className="table-responsive">
             <table className="licitaciones-table">
                 <thead>
@@ -31,12 +26,17 @@ const LicitacionesTable: React.FC<LicitacionesTableProps> = ({ licitaciones }) =
                             <tr key={lic.id}>
                                 <td className="font-medium">{lic.id}</td>
                                 <td>{lic.titulo}</td>
-                                <td>{new Date(lic.fechaCreacion + 'T00:00:00').toLocaleDateString('es-PE', {timeZone: 'UTC'})}</td>
+                                <td>{new Date(lic.fechaCreacion + 'T00:00:00').toLocaleDateString('es-PE', { timeZone: 'UTC' })}</td>
                                 <td suppressHydrationWarning>
                                     S/ {lic.presupuesto.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                 </td>
                                 <td><StatusPill status={lic.estado} /></td>
-                                <td><ViewDetailsButton /></td>
+                                <td>
+                                    <Button variant="secondary" size="sm">
+                                        <Eye size={16} />
+                                        <span>Ver detalles</span>
+                                    </Button>
+                                </td>
                             </tr>
                         ))
                     ) : (
@@ -49,8 +49,7 @@ const LicitacionesTable: React.FC<LicitacionesTableProps> = ({ licitaciones }) =
                 </tbody>
             </table>
         </div>
-    </div>
+    </Card>
 );
 
 export default LicitacionesTable;
-

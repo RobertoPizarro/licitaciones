@@ -1,8 +1,17 @@
 import React from 'react';
 import { Trash2 } from 'lucide-react';
 import { Item } from '../../lib/types';
-import Button from '../atoms/Button';
-import { ItemSolicitudProps } from '../../lib/types';
+import Select from '../atoms/Select';
+import Input from '../atoms/Input';
+import Label from '../atoms/Label';
+import IconButton from '../atoms/IconButton';
+
+interface ItemSolicitudProps {
+  item: Item;
+  onItemChange: (updatedItem: Item) => void;
+  onRemove: () => void;
+}
+
 
 const ItemSolicitud: React.FC<ItemSolicitudProps> = ({ item, onItemChange, onRemove }) => {
 
@@ -11,7 +20,7 @@ const ItemSolicitud: React.FC<ItemSolicitudProps> = ({ item, onItemChange, onRem
     let processedValue = value;
 
     if (numericFields.includes(field)) {
-        processedValue = parseFloat(value) || 0;
+      processedValue = parseFloat(value) || 0;
     }
 
     const updatedItem = { ...item, [field]: processedValue };
@@ -29,24 +38,24 @@ const ItemSolicitud: React.FC<ItemSolicitudProps> = ({ item, onItemChange, onRem
     onItemChange(updatedItem);
   };
 
-  const total = item.type === 'Producto' 
-    ? (item.quantity || 0) * (item.price || 0) 
+  const total = item.type === 'Producto'
+    ? (item.quantity || 0) * (item.price || 0)
     : (item.estimatedHours || 0) * (item.hourlyRate || 0);
 
   return (
     <div className="solicitud-item-card">
       <div className="solicitud-item-grid">
         <div className="solicitud-col-span-2">
-          <label>Tipo</label>
-          <select value={item.type} onChange={(e) => handleFieldChange('type', e.target.value as Item['type'])}>
+          <Label>Tipo</Label>
+          <Select value={item.type} onChange={(e) => handleFieldChange('type', e.target.value as Item['type'])}>
             <option value="Producto">Producto</option>
             <option value="Servicio">Servicio</option>
-          </select>
+          </Select>
         </div>
         <div className="solicitud-col-span-4">
-          <label>Descripción</label>
-          <input 
-            type="text" 
+          <Label>Descripción</Label>
+          <Input
+            type="text"
             placeholder="Ej. Laptop, servicio de mantenimiento"
             value={item.description}
             onChange={(e) => handleFieldChange('description', e.target.value)}
@@ -56,8 +65,8 @@ const ItemSolicitud: React.FC<ItemSolicitudProps> = ({ item, onItemChange, onRem
         {item.type === 'Producto' ? (
           <>
             <div className="solicitud-col-span-2">
-              <label>Cantidad</label>
-              <input 
+              <Label>Cantidad</Label>
+              <Input
                 type="text"
                 inputMode="decimal"
                 value={item.quantity}
@@ -65,8 +74,8 @@ const ItemSolicitud: React.FC<ItemSolicitudProps> = ({ item, onItemChange, onRem
               />
             </div>
             <div className="solicitud-col-span-2">
-              <label>Precio Unitario</label>
-              <input 
+              <Label>Precio Unitario</Label>
+              <Input
                 type="text"
                 inputMode="decimal"
                 value={item.price}
@@ -77,8 +86,8 @@ const ItemSolicitud: React.FC<ItemSolicitudProps> = ({ item, onItemChange, onRem
         ) : (
           <>
             <div className="solicitud-col-span-2">
-              <label>Horas Estimadas</label>
-              <input 
+              <Label>Horas Estimadas</Label>
+              <Input
                 type="text"
                 inputMode="decimal"
                 value={item.estimatedHours}
@@ -86,8 +95,8 @@ const ItemSolicitud: React.FC<ItemSolicitudProps> = ({ item, onItemChange, onRem
               />
             </div>
             <div className="solicitud-col-span-2">
-              <label>Tarifa / Hora</label>
-              <input 
+              <Label>Tarifa / Hora</Label>
+              <Input
                 type="text"
                 inputMode="decimal"
                 value={item.hourlyRate}
@@ -98,14 +107,17 @@ const ItemSolicitud: React.FC<ItemSolicitudProps> = ({ item, onItemChange, onRem
         )}
 
         <div className="solicitud-total-column">
-          <label>Total</label>
+          <Label>Total</Label>
           <span>S/ {total.toFixed(2)}</span>
         </div>
 
         <div className="solicitud-remove-column">
-          <Button variant="danger" onClick={onRemove}>
-            <Trash2 size={20} />
-          </Button>
+          <IconButton
+            variant="danger"
+            icon={<Trash2 size={20} />}
+            onClick={onRemove}
+            ariaLabel="Eliminar item"
+          />
         </div>
 
       </div>

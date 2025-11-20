@@ -1,10 +1,26 @@
-
 import React from 'react';
+import Card from '../atoms/Card';
+import CardHeader from '../atoms/CardHeader';
+import CardBody from '../atoms/CardBody';
+import FormGroup from '../atoms/FormGroup';
+import Label from '../atoms/Label';
+import Input from '../atoms/Input';
+import ErrorMessage from '../atoms/ErrorMessage';
 import './DetallesLicitacion.css';
-import { DetallesLicitacionProps } from '../../lib/types';
 
-const DetallesLicitacion: React.FC<DetallesLicitacionProps> = ({ 
-  budget, 
+interface DetallesLicitacionProps {
+  budget: number | string;
+  onBudgetChange: (value: number | string) => void;
+  deadline: string;
+  onDeadlineChange: (value: string) => void;
+  totalAmount: number;
+  budgetError?: string;
+  deadlineError?: string;
+}
+
+
+const DetallesLicitacion: React.FC<DetallesLicitacionProps> = ({
+  budget,
   onBudgetChange,
   deadline,
   onDeadlineChange,
@@ -13,46 +29,45 @@ const DetallesLicitacion: React.FC<DetallesLicitacionProps> = ({
 }) => {
 
   return (
-    <div className="card">
-      <div className="card-header">
+    <Card>
+      <CardHeader>
         <h2>Detalles de la Licitación</h2>
         <p>Complete la información específica para este proceso de licitación</p>
-      </div>
-      <div className="card-body">
+      </CardHeader>
+      <CardBody>
         <div className="licitacion-details-grid">
-          
-          <div className="form-group">
-            <label htmlFor="presupuesto">Presupuesto Máximo</label>
-            <div className="input-group">
-                <span className="input-group-text">S/</span>
-                <input 
-                    type="number"
-                    id="presupuesto"
-                    value={budget}
-                    onChange={(e) => onBudgetChange(e.target.value)}
-                    placeholder="0.00"
-                    min="0"
-                />
-            </div>
-            {budgetError && <p className="error-message">{budgetError}</p>}
-          </div>
 
-          <div className="form-group">
-            <label htmlFor="fecha-limite">Fecha Límite para Recibir Propuestas</label>
-            <input
+          <FormGroup>
+            <Label htmlFor="presupuesto">Presupuesto Máximo</Label>
+            <div className="input-group">
+              <span className="input-group-text">S/</span>
+              <Input
+                type="number"
+                id="presupuesto"
+                value={budget}
+                onChange={(e) => onBudgetChange(e.target.value)}
+                placeholder="0.00"
+                min="0"
+              />
+            </div>
+            {budgetError && <ErrorMessage>{budgetError}</ErrorMessage>}
+          </FormGroup>
+
+          <FormGroup>
+            <Label htmlFor="fecha-limite">Fecha Límite para Recibir Propuestas</Label>
+            <Input
               type="date"
               id="fecha-limite"
               value={deadline}
               onChange={(e) => onDeadlineChange(e.target.value)}
               min={new Date().toISOString().split('T')[0]}
-              className="form-input"
             />
-            {deadlineError && <p className="error-message">{deadlineError}</p>}
-          </div>
+            {deadlineError && <ErrorMessage>{deadlineError}</ErrorMessage>}
+          </FormGroup>
 
         </div>
-      </div>
-    </div>
+      </CardBody>
+    </Card>
   );
 };
 

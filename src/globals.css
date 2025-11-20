@@ -1,12 +1,11 @@
-
 html {
   height: 100%;
 }
 
 body {
-  background-color: #F9FAFB;
+  background-color: #f9fafb;
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #111827;
@@ -16,169 +15,126 @@ body {
   box-sizing: border-box;
 }
 
+/* Layout Structure */
 .main-layout {
   display: flex;
 }
+
 .main-content-area {
   flex: 1;
-  margin-left: 250px; 
+  margin-left: 250px;
   min-height: 100vh;
 }
+
 .page-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2.5rem;
 }
 
+/* Page Header */
 .page-header h1 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   letter-spacing: -0.5px;
 }
+
 .page-header p {
-  color: #6B7280;
-  margin-bottom: 2rem; 
+  color: #6b7280;
+  margin-bottom: 2rem;
   font-size: 1.125rem;
 }
 
+/* Main Content Area */
 .main-page-content {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.card {
-  background-color: white;
-  border: 1px solid #E5E7EB; 
-  border-radius: 12px; 
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  margin-bottom: 1.5rem;
-}
-.card:last-child {
-    margin-bottom: 0;
-}
-.card-header {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #E5E7EB;
-}
-.card-header h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0;
-}
-.card-header p {
-    font-size: 0.9rem;
-    color: #6B7280;
-    margin: 0.25rem 0 0;
-}
-.card-body {
-    padding: 1.5rem;
+/* Read-only field styles (used in RequestLicitacionTemplate) */
+.readonly-info {
+  margin-bottom: 1rem;
 }
 
-.form-group {
-  margin-bottom: 1.5rem;
-}
-.form-group:last-child {
+.readonly-info:last-child {
   margin-bottom: 0;
 }
-.form-group label {
+
+.readonly-info label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
+  color: #4b5563;
 }
-input, textarea, select {
-  font-family: 'Inter', sans-serif;
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #D1D5DB; 
+
+.readonly-info p {
+  background-color: #f9fafb;
+  padding: 0.75rem 1rem;
   border-radius: 8px;
   font-size: 1rem;
-  transition: all 0.2s ease;
-}
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: #3B82F6;
-  box-shadow: 0 0 0 3px #BFDBFE; 
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  white-space: pre-wrap;
+  min-height: 46px;
 }
 
-
-.readonly-info {
-    margin-bottom: 1rem;
-}
-.readonly-info:last-child {
-    margin-bottom: 0;
-}
-.readonly-info label {
-    display: block;
-    margin-bottom: 0.25rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #4B5563; 
-}
-.readonly-info p {
-    background-color: #F9FAFB;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #1F2937;
-    border: 1px solid #E5E7EB;
-    white-space: pre-wrap;
-    min-height: 46px;
-}
-
+/* Read-only item card (used in RequestLicitacionTemplate) */
 .readonly-item-card {
-    background-color: #F9FAFB;
-    border: 1px solid #E5E7EB;
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1rem;
-}
-.readonly-item-card:last-child {
-    margin-bottom: 0;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
 }
 
+.readonly-item-card:last-child {
+  margin-bottom: 0;
+}
+
+/* Licitacion item grid (used in RequestLicitacionTemplate) */
 .licitacion-item-grid {
-    display: grid;
-    grid-template-columns: 1fr 2.5fr 1fr 1fr 1fr;
-    gap: 0.5rem 1.5rem; 
-    align-items: start;
+  display: grid;
+  grid-template-columns: 1fr 2.5fr 1fr 1fr 1fr;
+  gap: 0.5rem 1.5rem;
+  align-items: start;
 }
 
 .licitacion-item-grid label {
-    font-size: 0.8rem;
-    color: #6B7280;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.25rem;
-    display: block;
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+  display: block;
 }
 
 .licitacion-item-grid p {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #1F2937;
-    margin:0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .licitacion-item-grid .total-column {
-    text-align: right;
+  text-align: right;
 }
 
-
+/* Solicitud item styles (used in ItemSolicitud molecule) */
 .solicitud-item-card {
-  background-color: #F9FAFB;
-  border: 1px solid #E5E7EB; 
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 1.5rem;
 }
 
 .items-list-container > .solicitud-item-card:not(:last-child) {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .solicitud-item-grid {
@@ -193,7 +149,7 @@ input:focus, select:focus, textarea:focus {
   margin-bottom: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151; 
+  color: #374151;
 }
 
 .solicitud-col-span-2 {
@@ -216,7 +172,7 @@ input:focus, select:focus, textarea:focus {
 .solicitud-total-column span {
   font-size: 1.1rem;
   font-weight: 500;
-  color: #1F2937;
+  color: #1f2937;
 }
 
 .solicitud-remove-column {

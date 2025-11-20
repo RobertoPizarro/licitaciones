@@ -1,108 +1,56 @@
-
-import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDown, X } from 'lucide-react';
+import React from 'react';
+import SelectorHeader from './SelectorHeader';
+import CustomDropdown from './CustomDropdown';
+import PillList from './PillList';
+import { Documento } from '../../lib/types';
 import './DocumentSelector.css';
-import { DocumentSelectorProps } from '../../lib/types';
 
-const DocumentSelector: React.FC<DocumentSelectorProps> = ({ 
-    icon, 
-    title, 
+interface DocumentSelectorProps {
+    icon: React.ReactNode;
+    title: string;
+    description: string;
+    options: Documento[];
+    selected: string[];
+    onChange: (selected: string[]) => void;
+    requiredIds?: string[];
+}
+
+const DocumentSelector: React.FC<DocumentSelectorProps> = ({
+    icon,
+    title,
     description,
     options,
     selected,
     onChange,
     requiredIds = []
 }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const handleToggle = () => setIsOpen(!isOpen);
-
-    const handleOptionClick = (optionId: string) => {
-        if (requiredIds.includes(optionId)) return; 
-
-        const newSelected = selected.includes(optionId)
-            ? selected.filter(id => id !== optionId)
-            : [...selected, optionId];
+    const handleRemove = (id: string) => {
+        if (requiredIds.includes(id)) return;
+        const newSelected = selected.filter(selectedId => selectedId !== id);
         onChange(newSelected);
     };
 
-    const handleSelectAll = () => {
-        if (selected.length === options.length) {
-            onChange(requiredIds);
-        } else {
-            onChange(options.map(opt => opt.id));
-        }
-    };
-    
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-    const getOptionName = (id: string) => options.find(opt => opt.id === id)?.name || id;
-
     return (
-        <div className="document-selector-container" ref={dropdownRef}>
-            <div className="selector-header">
-                <div className="selector-icon">{icon}</div>
-                <div>
-                    <h3>{title}</h3>
-                    <p>{description}</p>
-                </div>
-            </div>
+        <div className="document-selector-container">
+            <SelectorHeader
+                icon={icon}
+                title={title}
+                description={description}
+            />
 
-            <div className="custom-select-wrapper">
-                <div className={`custom-select ${isOpen ? 'open' : ''}`} onClick={handleToggle}>
-                    <div className="custom-select-trigger">
-                        <span>Seleccionar documento...</span>
-                        <ChevronDown size={20} className={`chevron ${isOpen ? 'open' : ''}`}/>
-                    </div>
-                </div>
-                {isOpen && (
-                    <div className="custom-options">
-                        <div className="option-item select-all-item">
-                            <input 
-                                type="checkbox" 
-                                id={`select-all-${title}`}
-                                checked={selected.length === options.length}
-                                onChange={handleSelectAll}
-                            />
-                            <label htmlFor={`select-all-${title}`}>Seleccionar Todos</label>
-                        </div>
-                        {options.map(option => (
-                            <div key={option.id} className="option-item">
-                                <input 
-                                    type="checkbox" 
-                                    id={option.id}
-                                    checked={selected.includes(option.id)}
-                                    onChange={() => handleOptionClick(option.id)}
-                                    disabled={requiredIds.includes(option.id)}
-                                />
-                                <label htmlFor={option.id}>{option.name}</label>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
+            <CustomDropdown
+                options={options}
+                selected={selected}
+                onChange={onChange}
+                requiredIds={requiredIds}
+            />
 
-            <div className="selected-pills-container">
-                {selected.length > 0 ? selected.map(id => (
-                    <div key={id} className={`pill ${requiredIds.includes(id) ? 'required' : ''}`}>
-                        <span>{getOptionName(id)}</span>
-                        {!requiredIds.includes(id) && (
-                            <X size={14} className="remove-pill" onClick={() => handleOptionClick(id)} />
-                        )}
-                    </div>
-                )) : (
-                    <p className="no-docs-message">No se han seleccionado documentos</p>
-                )}
-            </div>
+            <PillList
+                selectedIds={selected}
+                options={options}
+                onRemove={handleRemove}
+                requiredIds={requiredIds}
+            />
         </div>
     );
 };

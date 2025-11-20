@@ -1,7 +1,7 @@
 
 import { useState, useMemo } from 'react';
 import LicitacionesTable from '../organisms/LicitacionesTable';
-import FilterBar from '../molecules/FilterBar';
+import FilterPanel from '../organisms/FilterPanel';
 import Pagination from '../molecules/Pagination';
 import { allLicitaciones } from '../../lib/mock-data';
 import { Licitacion } from '../../lib/types';
@@ -60,7 +60,7 @@ const LicitacionesListTemplate = () => {
                 </div>
             </header>
             <div className="main-page-content">
-                <FilterBar
+                <FilterPanel
                     searchQuery={searchQuery} onSearchQueryChange={setSearchQuery}
                     status={status} onStatusChange={setStatus}
                     startDate={startDate} onStartDateChange={setStartDate}

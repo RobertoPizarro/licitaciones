@@ -1,22 +1,17 @@
-
 import React from 'react';
-import './FilterBar.css';
-import { Search, X } from 'lucide-react';
+import './FilterPanel.css';
+import { X } from 'lucide-react';
+import Card from '../atoms/Card';
+import Select from '../atoms/Select';
+import Input from '../atoms/Input';
+import Label from '../atoms/Label';
 import Button from '../atoms/Button';
+import SearchInput from '../molecules/SearchInput';
 import { FilterBarProps } from '../../lib/types';
-const STATUS_OPTIONS = [
-    'BORRADOR',
-    'NUEVA',
-    'EN INVITACION',
-    'CON PROPUESTAS',
-    'EN EVALUACION',
-    'ADJUDICADO',
-    'CON CONTRATO',
-    'FINALIZADA',
-    'CANCELADA',
-];
+import { STATUS_OPTIONS } from '../../lib/constants';
 
-const FilterBar: React.FC<FilterBarProps> = ({
+
+const FilterPanel: React.FC<FilterBarProps> = ({
     searchQuery, onSearchQueryChange,
     status, onStatusChange,
     startDate, onStartDateChange,
@@ -28,57 +23,50 @@ const FilterBar: React.FC<FilterBarProps> = ({
     const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onStartDateChange(e.target.value);
     };
-    
+
     const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onEndDateChange(e.target.value);
     };
 
     return (
-        <div className="card filter-bar-card">
+        <Card className="filter-panel-card">
             <div className="filter-grid">
                 <div className="filter-item search-filter">
-                    <label htmlFor="search">Buscar por Título o ID</label>
-                    <div className="input-with-icon">
-                        <Search size={18} className="input-icon" />
-                        <input
-                            type="text"
-                            id="search"
-                            placeholder="E.g., Compra de equipo..."
-                            value={searchQuery}
-                            onChange={(e) => onSearchQueryChange(e.target.value)}
-                            className="form-input"
-                        />
-                    </div>
+                    <Label htmlFor="search">Buscar por Título o ID</Label>
+                    <SearchInput
+                        id="search"
+                        placeholder="E.g., Compra de equipo..."
+                        value={searchQuery}
+                        onChange={(e) => onSearchQueryChange(e.target.value)}
+                    />
                 </div>
 
                 <div className="filter-item">
-                    <label htmlFor="status">Estado</label>
-                    <select id="status" value={status} onChange={(e) => onStatusChange(e.target.value)} className="form-input">
+                    <Label htmlFor="status">Estado</Label>
+                    <Select id="status" value={status} onChange={(e) => onStatusChange(e.target.value)}>
                         <option value="">Todos</option>
                         {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s.charAt(0) + s.slice(1).toLowerCase()}</option>)}
-                    </select>
+                    </Select>
                 </div>
 
                 <div className="filter-item">
-                    <label htmlFor="start-date">Fecha Desde</label>
-                    <input
+                    <Label htmlFor="start-date">Fecha Desde</Label>
+                    <Input
                         type="date"
                         id="start-date"
                         value={startDate}
                         onChange={handleStartDateChange}
-                        className="form-input"
                         max={endDate || undefined}
                     />
                 </div>
 
                 <div className="filter-item">
-                    <label htmlFor="end-date">Fecha Hasta</label>
-                    <input
+                    <Label htmlFor="end-date">Fecha Hasta</Label>
+                    <Input
                         type="date"
                         id="end-date"
                         value={endDate}
                         onChange={handleEndDateChange}
-                        className="form-input"
                         min={startDate || undefined}
                     />
                 </div>
@@ -92,8 +80,8 @@ const FilterBar: React.FC<FilterBarProps> = ({
                     <span>Aplicar Filtros</span>
                 </Button>
             </div>
-        </div>
+        </Card>
     );
 };
 
-export default FilterBar;
+export default FilterPanel;
