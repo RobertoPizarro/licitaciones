@@ -1,0 +1,103 @@
+.timeline-item {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-marker-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.timeline-marker {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.timeline-marker.active {
+  background-color: #3b82f6;
+  color: white;
+  box-shadow: 0 0 0 4px #dbeafe;
+}
+
+.timeline-marker.completed {
+  background-color: #10b981;
+  color: white;
+}
+
+.timeline-marker.pending {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+}
+
+.timeline-line {
+  flex-grow: 1;
+  width: 2px;
+  background-color: #e5e7eb;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.timeline-item.active .timeline-line {
+  background-color: #e5e7eb; /* Keep line gray for active step onwards unless completed */
+}
+
+.timeline-content {
+  flex: 1;
+  padding-top: 2px;
+}
+
+.timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.timeline-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.timeline-item.pending .timeline-title {
+  color: #6b7280;
+}
+
+.status-badge {
+  background-color: #2563eb;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.timeline-description {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.timeline-actions {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.75rem;
+}

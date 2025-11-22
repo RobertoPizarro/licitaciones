@@ -1,0 +1,29 @@
+.general-info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.general-info-grid .readonly-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 0.75rem;
+}
+
+.general-info-grid .readonly-field:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.general-info-grid .readonly-field label {
+  margin-bottom: 0;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.general-info-grid .readonly-field p {
+  font-weight: 500;
+  color: #111827;
+}

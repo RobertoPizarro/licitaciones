@@ -4,16 +4,16 @@ import './Button.css';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'licitacion' | 'danger';
+  variant?: 'primary' | 'secondary' | 'licitacion' | 'danger' | 'danger-outline';
   size?: 'sm' | 'md';
 }
 
-const Button: React.FC<ButtonProps> = ({ 
+const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   size = 'md',
-  className, 
-  ...props 
+  className,
+  ...props
 }) => {
   const buttonClassName = `btn btn-${variant} btn-${size} ${className || ''}`.trim();
 
