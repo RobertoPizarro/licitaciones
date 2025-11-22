@@ -1,6 +1,6 @@
 .sidebar {
   width: 250px;
-  background-color: #3B82F6;
+  background-color: #3b82f6;
   color: white;
   display: flex;
   flex-direction: column;
@@ -8,6 +8,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1000;
 }
 
 .sidebar-header {
@@ -36,8 +37,9 @@
   transition: background-color 0.3s;
 }
 
-.sidebar-nav li.active a, .sidebar-nav li a:hover {
-  background-color: #2563EB;
+.sidebar-nav li.active a,
+.sidebar-nav li a:hover {
+  background-color: #2563eb;
 }
 
 .sidebar-footer {

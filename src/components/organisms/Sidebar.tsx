@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.css';
-import { FileText, Users, Megaphone, FileCheck, DollarSign } from 'lucide-react';
+import { FileText, Users, Megaphone, FileCheck, DollarSign, ChartColumn, Package } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
@@ -32,15 +32,18 @@ const Sidebar: React.FC = () => {
           <li className={getLinkClass('/')}>
             <Link to="/"><FileText size={20} /> Solicitudes</Link>
           </li>
-          
+
           <li><a href="#"><Users size={20} /> Proveedores</a></li>
-          
+
+          <li><a href="#"><Package size={20} /> Compras</a></li>
+
           <li className={getLinkClass('/licitacioneslist')}>
             <Link to="/licitacioneslist"><Megaphone size={20} /> Licitaciones</Link>
           </li>
-          
+
           <li><a href="#"><FileCheck size={20} /> Órdenes</a></li>
           <li><a href="#"><DollarSign size={20} /> Facturación</a></li>
+          <li><a href="#"><ChartColumn size={20} /> Análisis de Proveedores</a></li>
         </ul>
       </nav>
       <div className="sidebar-footer">
