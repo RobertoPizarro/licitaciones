@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Copy, Download } from 'lucide-react';
+import { Mail, Download } from 'lucide-react';
 import Modal from '../atoms/Modal';
 import Button from '../atoms/Button';
 import Badge from '../atoms/Badge';
@@ -98,9 +98,6 @@ Por favor, envíe su propuesta completa antes de la fecha límite indicada.
 Atentamente,
 Juan Pérez - Módulo de Compras`;
 
-    const handleCopy = (text: string) => {
-        navigator.clipboard.writeText(text);
-    };
 
     const handleOpenGmail = () => {
         const emails = getSelectedEmails();
@@ -170,62 +167,32 @@ Juan Pérez - Módulo de Compras`;
                             <div className="email-section">
                                 <div className="form-field">
                                     <label>Correos Electrónicos</label>
-                                    <div className="field-with-copy">
-                                        <input
-                                            type="text"
-                                            value={getSelectedEmails()}
-                                            readOnly
-                                            className="readonly-input"
-                                        />
-                                        <button
-                                            className="copy-button"
-                                            onClick={() => handleCopy(getSelectedEmails())}
-                                            title="Copiar"
-                                        >
-                                            <Copy size={16} />
-                                            Copiar
-                                        </button>
-                                    </div>
+                                    <input
+                                        type="text"
+                                        value={getSelectedEmails()}
+                                        readOnly
+                                        className="readonly-input"
+                                    />
                                 </div>
 
                                 <div className="form-field">
                                     <label>Asunto</label>
-                                    <div className="field-with-copy">
-                                        <input
-                                            type="text"
-                                            value={emailSubject}
-                                            readOnly
-                                            className="readonly-input"
-                                        />
-                                        <button
-                                            className="copy-button"
-                                            onClick={() => handleCopy(emailSubject)}
-                                            title="Copiar"
-                                        >
-                                            <Copy size={16} />
-                                            Copiar
-                                        </button>
-                                    </div>
+                                    <input
+                                        type="text"
+                                        value={emailSubject}
+                                        readOnly
+                                        className="readonly-input"
+                                    />
                                 </div>
 
                                 <div className="form-field">
                                     <label>Descripción del correo</label>
-                                    <div className="field-with-copy">
-                                        <textarea
-                                            value={emailBody}
-                                            readOnly
-                                            className="readonly-textarea"
-                                            rows={10}
-                                        />
-                                        <button
-                                            className="copy-button"
-                                            onClick={() => handleCopy(emailBody)}
-                                            title="Copiar"
-                                        >
-                                            <Copy size={16} />
-                                            Copiar
-                                        </button>
-                                    </div>
+                                    <textarea
+                                        value={emailBody}
+                                        readOnly
+                                        className="readonly-textarea"
+                                        rows={10}
+                                    />
                                 </div>
 
                                 <div className="documents-section">
