@@ -25,12 +25,16 @@ interface LicitacionDetailTemplateProps {
     proveedoresCount?: number;
     propuestasRegistradas?: number;
     propuestasAprobadasTecnicamente?: number;
+    propuestasAprobadasEconomicamente?: number;
     onApprove: () => void;
     onReject: () => void;
     onFinalizarInvitacion?: () => void;
     onFinalizarRegistro?: () => void;
     onEnviarEvaluacion?: () => void;
     onIniciarEvaluacionTecnica?: () => void;
+    onIniciarEvaluacionEconomica?: () => void;
+    onGenerarContrato?: () => void;
+    onEnviarOrdenCompra?: () => void;
 }
 
 const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
@@ -46,12 +50,16 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     proveedoresCount,
     propuestasRegistradas,
     propuestasAprobadasTecnicamente,
+    propuestasAprobadasEconomicamente,
     onApprove,
     onReject,
     onFinalizarInvitacion,
     onFinalizarRegistro,
     onEnviarEvaluacion,
-    onIniciarEvaluacionTecnica
+    onIniciarEvaluacionTecnica,
+    onIniciarEvaluacionEconomica,
+    onGenerarContrato,
+    onEnviarOrdenCompra
 }) => {
     // Modal states
     const [showApprovalModal, setShowApprovalModal] = useState(false);
@@ -121,11 +129,15 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         proveedoresCount={proveedoresCount}
                         propuestasRegistradas={propuestasRegistradas}
                         propuestasAprobadasTecnicamente={propuestasAprobadasTecnicamente}
+                        propuestasAprobadasEconomicamente={propuestasAprobadasEconomicamente}
                         onRegistrarPropuesta={handleRegistrarPropuesta}
                         onFinalizarInvitacion={onFinalizarInvitacion}
                         onFinalizarRegistro={onFinalizarRegistro}
                         onEnviarEvaluacion={onEnviarEvaluacion}
                         onIniciarEvaluacionTecnica={onIniciarEvaluacionTecnica}
+                        onIniciarEvaluacionEconomica={onIniciarEvaluacionEconomica}
+                        onGenerarContrato={onGenerarContrato}
+                        onEnviarOrdenCompra={onEnviarOrdenCompra}
                     />
                 </div>
                 <div className="licitacion-detail-right-col">

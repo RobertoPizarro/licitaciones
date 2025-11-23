@@ -1,7 +1,7 @@
 import React from 'react';
 import TimelineItem from '../molecules/TimelineItem';
 import Button from '../atoms/Button';
-import { CheckCircle, XCircle, Send, Flag, PencilLine, ArrowRight, Settings } from 'lucide-react';
+import { CheckCircle, XCircle, Send, Flag, PencilLine, ArrowRight, Settings, FileText } from 'lucide-react';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionTimeline.css';
 
@@ -16,11 +16,15 @@ interface LicitacionTimelineProps {
     proveedoresCount?: number;
     propuestasRegistradas?: number;
     propuestasAprobadasTecnicamente?: number;
+    propuestasAprobadasEconomicamente?: number;
     onRegistrarPropuesta?: () => void;
     onFinalizarInvitacion?: () => void;
     onFinalizarRegistro?: () => void;
     onEnviarEvaluacion?: () => void;
     onIniciarEvaluacionTecnica?: () => void;
+    onIniciarEvaluacionEconomica?: () => void;
+    onGenerarContrato?: () => void;
+    onEnviarOrdenCompra?: () => void;
 }
 
 // Mapeo del orden de los estados
@@ -47,11 +51,15 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
     proveedoresCount = 8,
     propuestasRegistradas = 3,
     propuestasAprobadasTecnicamente = 2,
+    propuestasAprobadasEconomicamente = 1,
     onRegistrarPropuesta,
     onFinalizarInvitacion,
     onFinalizarRegistro,
     onEnviarEvaluacion,
-    onIniciarEvaluacionTecnica
+    onIniciarEvaluacionTecnica,
+    onIniciarEvaluacionEconomica,
+    onGenerarContrato,
+    onEnviarOrdenCompra
 }) => {
     // Determinar el índice del estado actual
     const currentIndex = statusOrder.indexOf(currentStatus);
@@ -218,13 +226,17 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
             <TimelineItem
                 stepNumber={6}
                 title="En evaluación - Comité de Economía"
-                description="Analizando los criterios económicos y financieros"
+                description={
+                    currentStatus === 'ADJUDICADO' || getStepStatus('EVALUACION_ECONOMIA') === 'completed'
+                        ? `${propuestasAprobadasEconomicamente} de ${propuestasAprobadasTecnicamente} propuestas aprobadas económicamente`
+                        : "Analizando los criterios económicos y financieros"
+                }
                 status={getStepStatus('EVALUACION_ECONOMIA')}
                 timestamp={timestamps['EVALUACION_ECONOMIA']}
                 statusText={getStatusText('EVALUACION_ECONOMIA')}
             >
                 {currentStatus === 'EVALUACION_ECONOMIA' && (
-                    <Button variant="primary" size="sm" onClick={() => alert('Iniciar evaluación económica - Por implementar')}>
+                    <Button variant="primary" size="sm" onClick={onIniciarEvaluacionEconomica}>
                         <Settings size={16} />
                         Iniciar evaluación
                     </Button>
@@ -234,25 +246,47 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
             <TimelineItem
                 stepNumber={7}
                 title="Adjudicado"
-                description="Proveedor ganador seleccionado"
+                description={
+                    currentStatus === 'CON_CONTRATO' || getStepStatus('ADJUDICADO') === 'completed'
+                        ? "Contrato de adjudicación generado"
+                        : "A la espera del contrato de adjudicación"
+                }
                 status={getStepStatus('ADJUDICADO')}
                 timestamp={timestamps['ADJUDICADO']}
                 statusText={getStatusText('ADJUDICADO')}
-            />
+            >
+                {currentStatus === 'ADJUDICADO' && (
+                    <Button variant="primary" size="sm" onClick={onGenerarContrato}>
+                        <FileText size={16} />
+                        Generar contrato
+                    </Button>
+                )}
+            </TimelineItem>
 
             <TimelineItem
                 stepNumber={8}
                 title="Con contrato"
-                description="Contrato de adjudicación generado"
+                description={
+                    currentStatus === 'FINALIZADA' || getStepStatus('CON_CONTRATO') === 'completed'
+                        ? "Licitación enviada a orden de compra"
+                        : "Pendiente de envío a orden de compra"
+                }
                 status={getStepStatus('CON_CONTRATO')}
                 timestamp={timestamps['CON_CONTRATO']}
                 statusText={getStatusText('CON_CONTRATO')}
-            />
+            >
+                {currentStatus === 'CON_CONTRATO' && (
+                    <Button variant="primary" size="sm" onClick={onEnviarOrdenCompra}>
+                        <Send size={16} />
+                        Enviar a Orden de Compra
+                    </Button>
+                )}
+            </TimelineItem>
 
             <TimelineItem
                 stepNumber={9}
                 title="Finalizada"
-                description="Licitación finalizada"
+                description="Proceso de Licitación finalizado"
                 status={getStepStatus('FINALIZADA')}
                 timestamp={timestamps['FINALIZADA']}
                 statusText={getStatusText('FINALIZADA')}

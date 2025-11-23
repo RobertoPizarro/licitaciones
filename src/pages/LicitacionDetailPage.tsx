@@ -19,7 +19,8 @@ const LicitacionDetailPage: React.FC = () => {
         maxBudget: 45000,
         proveedoresCount: 8,
         propuestasRegistradas: 3,
-        propuestasAprobadasTecnicamente: 2
+        propuestasAprobadasTecnicamente: 2,
+        propuestasAprobadasEconomicamente: 1
     };
 
     // Función helper para generar timestamp actual
@@ -91,6 +92,33 @@ const LicitacionDetailPage: React.FC = () => {
         setCurrentStatus('EVALUACION_ECONOMIA');
     };
 
+    const handleIniciarEvaluacionEconomica = () => {
+        // Guardar timestamp de EVALUACION_ECONOMIA y cambiar a ADJUDICADO
+        setTimestamps(prev => ({
+            ...prev,
+            ['EVALUACION_ECONOMIA']: getCurrentTimestamp()
+        }));
+        setCurrentStatus('ADJUDICADO');
+    };
+
+    const handleGenerarContrato = () => {
+        // Guardar timestamp de ADJUDICADO y cambiar a CON_CONTRATO
+        setTimestamps(prev => ({
+            ...prev,
+            ['ADJUDICADO']: getCurrentTimestamp()
+        }));
+        setCurrentStatus('CON_CONTRATO');
+    };
+
+    const handleEnviarOrdenCompra = () => {
+        // Guardar timestamp de CON_CONTRATO y cambiar a FINALIZADA
+        setTimestamps(prev => ({
+            ...prev,
+            ['CON_CONTRATO']: getCurrentTimestamp()
+        }));
+        setCurrentStatus('FINALIZADA');
+    };
+
 
     return (
         <LicitacionDetailTemplate
@@ -106,12 +134,16 @@ const LicitacionDetailPage: React.FC = () => {
             proveedoresCount={licitacionData.proveedoresCount}
             propuestasRegistradas={licitacionData.propuestasRegistradas}
             propuestasAprobadasTecnicamente={licitacionData.propuestasAprobadasTecnicamente}
+            propuestasAprobadasEconomicamente={licitacionData.propuestasAprobadasEconomicamente}
             onApprove={handleApprove}
             onReject={handleReject}
             onFinalizarInvitacion={handleFinalizarInvitacion}
             onFinalizarRegistro={handleFinalizarRegistro}
             onEnviarEvaluacion={handleEnviarEvaluacion}
             onIniciarEvaluacionTecnica={handleIniciarEvaluacionTecnica}
+            onIniciarEvaluacionEconomica={handleIniciarEvaluacionEconomica}
+            onGenerarContrato={handleGenerarContrato}
+            onEnviarOrdenCompra={handleEnviarOrdenCompra}
         />
     );
 };
