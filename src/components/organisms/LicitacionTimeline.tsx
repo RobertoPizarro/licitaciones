@@ -74,6 +74,9 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
 
     // Función helper para obtener el texto de estado
     const getStatusText = (stepStatus: LicitacionStatus): string | undefined => {
+        // FINALIZADA nunca muestra statusText, solo timestamp
+        if (stepStatus === 'FINALIZADA') return undefined;
+
         const status = getStepStatus(stepStatus);
         if (status === 'active') return '---';
         if (status === 'pending') return 'Pendiente';
@@ -290,6 +293,7 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 status={getStepStatus('FINALIZADA')}
                 timestamp={timestamps['FINALIZADA']}
                 statusText={getStatusText('FINALIZADA')}
+                isFinalState={true}
             />
         </div>
     );

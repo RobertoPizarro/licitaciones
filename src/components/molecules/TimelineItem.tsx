@@ -11,6 +11,7 @@ interface TimelineItemProps {
     statusText?: string; // Texto de estado ("---" o "Pendiente")
     children?: React.ReactNode;
     isRejected?: boolean; // Para mostrar icono de X
+    isFinalState?: boolean; // Para mostrar check en lugar de reloj cuando está activo
 }
 
 const TimelineItem: React.FC<TimelineItemProps> = ({
@@ -21,7 +22,8 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
     timestamp,
     statusText,
     children,
-    isRejected = false
+    isRejected = false,
+    isFinalState = false
 }) => {
     // Determinar qué mostrar en el marker
     const renderMarkerContent = () => {
@@ -29,6 +31,10 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
             return <X size={16} />;
         }
         if (status === 'completed') {
+            return <Check size={16} />;
+        }
+        // Si es el estado final y está activo, mostrar check en lugar de reloj
+        if (status === 'active' && isFinalState) {
             return <Check size={16} />;
         }
         if (status === 'active') {

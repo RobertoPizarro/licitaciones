@@ -111,10 +111,12 @@ const LicitacionDetailPage: React.FC = () => {
     };
 
     const handleEnviarOrdenCompra = () => {
-        // Guardar timestamp de CON_CONTRATO y cambiar a FINALIZADA
+        // Guardar el mismo timestamp para CON_CONTRATO y FINALIZADA ya que finalizan al mismo tiempo
+        const timestamp = getCurrentTimestamp();
         setTimestamps(prev => ({
             ...prev,
-            ['CON_CONTRATO']: getCurrentTimestamp()
+            ['CON_CONTRATO']: timestamp,
+            ['FINALIZADA']: timestamp
         }));
         setCurrentStatus('FINALIZADA');
     };
