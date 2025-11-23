@@ -2,11 +2,12 @@
   display: flex;
   gap: 1rem;
   position: relative;
-  padding-bottom: 2rem;
+  min-height: 60px; /* Altura mínima consistente para todos los items */
+  margin-bottom: 1.5rem; /* Espaciado uniforme entre items */
 }
 
 .timeline-item:last-child {
-  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .timeline-marker-container {
@@ -15,18 +16,20 @@
   align-items: center;
   width: 24px;
   flex-shrink: 0;
+  position: relative;
 }
 
 .timeline-marker {
-  width: 24px;
-  height: 24px;
+  width: 32px; /* Aumentado ligeramente para mejor presencia visual */
+  height: 32px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  z-index: 1;
+  z-index: 2;
+  flex-shrink: 0;
 }
 
 .timeline-marker.active {
@@ -46,15 +49,22 @@
 }
 
 .timeline-line {
-  flex-grow: 1;
+  position: absolute;
+  top: 32px; /* Comienza justo después del marker */
+  left: 50%;
+  transform: translateX(-50%);
   width: 2px;
+  height: calc(100% + 1.5rem); /* Se extiende hasta el siguiente item */
   background-color: #e5e7eb;
-  margin-top: 4px;
-  margin-bottom: 4px;
+  z-index: 1;
 }
 
-.timeline-item.active .timeline-line {
-  background-color: #e5e7eb; /* Keep line gray for active step onwards unless completed */
+.timeline-item:last-child .timeline-line {
+  display: none; /* No mostrar línea en el último item */
+}
+
+.timeline-item.completed .timeline-line {
+  background-color: #10b981; /* Línea verde para items completados */
 }
 
 .timeline-content {

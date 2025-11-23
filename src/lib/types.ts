@@ -20,6 +20,20 @@ export interface Licitacion {
 }
 
 /**
+ * Estados posibles de una licitación en el flujo del proceso
+ */
+export type LicitacionStatus =
+  | "BORRADOR"
+  | "NUEVA"
+  | "EN_INVITACION"
+  | "CON_PROPUESTAS"
+  | "EVALUACION_TECNICA"
+  | "EVALUACION_ECONOMIA"
+  | "ADJUDICADO"
+  | "CON_CONTRATO"
+  | "FINALIZADA";
+
+/**
  * Representa un documento requerido en una licitación
  */
 export interface Documento {

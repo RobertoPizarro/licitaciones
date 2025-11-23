@@ -16,7 +16,6 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
     title,
     description,
     status,
-    isLast = false,
     children
 }) => {
     return (
@@ -25,7 +24,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
                 <div className={`timeline-marker ${status}`}>
                     {status === 'completed' ? <Check size={14} /> : stepNumber}
                 </div>
-                {!isLast && <div className="timeline-line" />}
+                <div className="timeline-line" />
             </div>
             <div className="timeline-content">
                 <div className="timeline-header">

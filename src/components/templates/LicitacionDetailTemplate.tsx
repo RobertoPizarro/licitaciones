@@ -7,6 +7,7 @@ import LicitacionGeneralInfo from '../organisms/LicitacionGeneralInfo';
 import LicitacionItemsTable from '../organisms/LicitacionItemsTable';
 import LicitacionProposals from '../organisms/LicitacionProposals';
 import LicitacionRequiredDocs from '../organisms/LicitacionRequiredDocs';
+import { LicitacionStatus } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
 
 interface LicitacionDetailTemplateProps {
@@ -15,6 +16,9 @@ interface LicitacionDetailTemplateProps {
     createdDate: string;
     buyer: string;
     supervisor: string;
+    currentStatus: LicitacionStatus;
+    onApprove: () => void;
+    onReject: () => void;
 }
 
 const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
@@ -22,7 +26,10 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     title,
     createdDate,
     buyer,
-    supervisor
+    supervisor,
+    currentStatus,
+    onApprove,
+    onReject
 }) => {
     return (
         <>
@@ -46,7 +53,11 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
 
             <div className="licitacion-detail-layout">
                 <div className="licitacion-detail-left-col">
-                    <LicitacionTimeline />
+                    <LicitacionTimeline
+                        currentStatus={currentStatus}
+                        onApprove={onApprove}
+                        onReject={onReject}
+                    />
                 </div>
                 <div className="licitacion-detail-right-col">
                     <LicitacionGeneralInfo />
