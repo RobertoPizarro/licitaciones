@@ -44,7 +44,6 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     const [isApproved, setIsApproved] = useState(false);
     const [isRejected, setIsRejected] = useState(false);
     const [supervisorName, setSupervisorName] = useState(supervisor);
-    const [rejectionReason, setRejectionReason] = useState('');
 
     // Hardcoded data for modal (in real app, this would come from props)
     const estimatedAmount = 39000;
@@ -67,7 +66,6 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
 
     const handleRejectionConfirm = (reason: string) => {
         setIsRejected(true);
-        setRejectionReason(reason);
         setShowRejectionModal(false);
         onReject();
     };
@@ -82,7 +80,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                             <span><strong>ID:</strong> {id}</span>
                             <span><strong>Fecha creación:</strong> {createdDate}</span>
                             <span><strong>Comprador:</strong> {buyer}</span>
-                            <span><strong>Supervisor:</strong> {isApproved ? supervisorName : supervisor}</span>
+                            <span><strong>Supervisor:</strong> {isApproved || isRejected ? supervisorName : supervisor}</span>
                         </div>
                     }
                 />
@@ -102,7 +100,6 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         isApproved={isApproved}
                         supervisorName={supervisorName}
                         isRejected={isRejected}
-                        rejectionReason={rejectionReason}
                     />
                 </div>
                 <div className="licitacion-detail-right-col">
@@ -138,4 +135,3 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
 };
 
 export default LicitacionDetailTemplate;
-

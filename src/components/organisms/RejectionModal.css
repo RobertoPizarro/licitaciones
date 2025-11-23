@@ -8,10 +8,7 @@
   color: #ef4444;
 }
 
-.rejection-summary {
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
-}
+/* Remove the rejection-summary override to use default licitacion-summary styles */
 
 .rejection-reason-field {
   display: flex;

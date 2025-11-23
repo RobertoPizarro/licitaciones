@@ -15,7 +15,7 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .summary-item {
@@ -23,6 +23,12 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
+  padding: 4px 0;
+}
+
+.summary-item:not(:last-child) {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
 }
 
 .summary-label {

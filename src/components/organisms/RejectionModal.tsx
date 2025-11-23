@@ -4,6 +4,7 @@ import ConfirmationModal from '../molecules/ConfirmationModal';
 import Alert from '../atoms/Alert';
 import Textarea from '../atoms/Textarea';
 import Label from '../atoms/Label';
+import Button from '../atoms/Button';
 import './RejectionModal.css';
 
 interface RejectionModalProps {
@@ -48,15 +49,22 @@ const RejectionModal: React.FC<RejectionModalProps> = ({
         <ConfirmationModal
             isOpen={isOpen}
             onClose={handleClose}
-            onConfirm={handleConfirm}
             title="Rechazar solicitud"
-            confirmText="Confirmar Rechazo"
-            cancelText="Cancelar"
-            confirmVariant="danger"
             icon={<XCircle size={24} className="rejection-icon" />}
+            customFooter={
+                <>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="secondary" onClick={handleConfirm}>
+                        <XCircle size={16} />
+                        Confirmar Rechazo
+                    </Button>
+                </>
+            }
         >
             <div className="rejection-modal-content">
-                <div className="licitacion-summary rejection-summary">
+                <div className="licitacion-summary">
                     <div className="summary-item">
                         <span className="summary-label">ID:</span>
                         <span className="summary-value">{licitacionId}</span>

@@ -64,8 +64,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 <TimelineItem
                     stepNumber={1}
                     title="Rechazada"
-                    description={`Invitación Mario Altamirano (Supervisor)`}
-                    status="completed"
+                    description="Invitación Mario Altamirano (Supervisor)"
+                    status="pending"
                     timestamp={timestamps['BORRADOR']}
                 />
             ) : (

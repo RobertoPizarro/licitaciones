@@ -6,13 +6,14 @@ import './ConfirmationModal.css';
 interface ConfirmationModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: () => void;
+    onConfirm?: () => void;
     title: string;
     children: React.ReactNode;
     confirmText?: string;
     cancelText?: string;
     confirmVariant?: 'primary' | 'danger';
     icon?: React.ReactNode;
+    customFooter?: React.ReactNode;
 }
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
@@ -24,7 +25,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
     confirmText = 'Confirmar',
     cancelText = 'Cancelar',
     confirmVariant = 'primary',
-    icon
+    icon,
+    customFooter
 }) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -39,12 +41,18 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
                 </div>
 
                 <div className="confirmation-modal-footer">
-                    <Button variant="secondary" onClick={onClose}>
-                        {cancelText}
-                    </Button>
-                    <Button variant={confirmVariant} onClick={onConfirm}>
-                        {confirmText}
-                    </Button>
+                    {customFooter || (
+                        <>
+                            <Button variant="secondary" onClick={onClose}>
+                                {cancelText}
+                            </Button>
+                            {onConfirm && (
+                                <Button variant={confirmVariant} onClick={onConfirm}>
+                                    {confirmText}
+                                </Button>
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
         </Modal>
