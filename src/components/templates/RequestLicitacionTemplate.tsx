@@ -95,8 +95,21 @@ const RequestLicitacionTemplate: React.FC = () => {
             <h2>Ítems Solicitados</h2>
             <p>Datos heredados de la solicitud de compra.</p>
           </CardHeader>
-          <CardBody>
-            {items.map((item) => <ReadOnlyItem key={item.id} item={item} />)}
+          <CardBody className="items-table-body">
+            <table className="items-table">
+              <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>Descripción</th>
+                  <th className="text-center">Cantidad / Horas</th>
+                  <th className="text-right">Precio Uni. / Tarifa</th>
+                  <th className="text-right">Total Item</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item) => <ReadOnlyItem key={item.id} item={item} />)}
+              </tbody>
+            </table>
           </CardBody>
         </Card>
 

@@ -1,41 +1,11 @@
-.readonly-item-card {
+/* Styles for ReadOnlyItem when used as table row */
+.readonly-item-row {
+  transition: background-color 0.2s;
+}
+
+.readonly-item-row:hover {
   background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
 }
 
-.readonly-item-card:last-child {
-  margin-bottom: 0;
-}
-
-.readonly-item-grid {
-  display: grid;
-  grid-template-columns: 1fr 2.5fr 1fr 1fr 1fr;
-  gap: 0.5rem 1.5rem;
-  align-items: start;
-}
-
-.readonly-item-grid label {
-  font-size: 0.8rem;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.25rem;
-  display: block;
-}
-
-.readonly-item-grid p {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #1f2937;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.readonly-item-grid .total-column {
-  text-align: right;
-}
+/* Import shared table styles */
+@import "../organisms/LicitacionItemsTable.css";
