@@ -64,8 +64,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 <>
                     <TimelineItem
                         stepNumber={1}
-                        title="Rechazada"
-                        description="Solicitud rechaza por Mario Altamirano (Supervisor)"
+                        title="Cancelada"
+                        description="Solicitud cancelada por Mario Altamirano (Supervisor)"
                         status="completed"
                         timestamp={timestamps['BORRADOR']}
                         isRejected={true}
@@ -96,7 +96,7 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                             </Button>
                             <Button variant="secondary" size="sm" onClick={onReject}>
                                 <XCircle size={16} />
-                                Rechazar Solicitud
+                                Cancelar Solicitud
                             </Button>
                         </>
                     )}

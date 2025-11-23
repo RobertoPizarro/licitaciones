@@ -31,7 +31,7 @@ const RejectionModal: React.FC<RejectionModalProps> = ({
 
     const handleConfirm = () => {
         if (!rejectionReason.trim()) {
-            setError('El motivo del rechazo es obligatorio');
+            setError('El motivo de la cancelación es obligatorio');
             return;
         }
         onConfirm();
@@ -49,7 +49,7 @@ const RejectionModal: React.FC<RejectionModalProps> = ({
         <ConfirmationModal
             isOpen={isOpen}
             onClose={handleClose}
-            title="Rechazar solicitud"
+            title="Cancelar solicitud"
             icon={<XCircle size={24} className="rejection-icon" />}
             customFooter={
                 <>
@@ -58,7 +58,7 @@ const RejectionModal: React.FC<RejectionModalProps> = ({
                     </Button>
                     <Button variant="secondary" onClick={handleConfirm}>
                         <XCircle size={16} />
-                        Confirmar Rechazo
+                        Confirmar Cancelación
                     </Button>
                 </>
             }
@@ -84,12 +84,12 @@ const RejectionModal: React.FC<RejectionModalProps> = ({
                 </div>
 
                 <Alert variant="warning">
-                    <p className="alert-title">El rechazo cancelara la licitación completamente</p>
+                    <p className="alert-title">La cancelación anulará la licitación completamente</p>
                 </Alert>
 
                 <div className="rejection-reason-field">
                     <Label htmlFor="rejection-reason">
-                        Motivo del rechazo <span className="required-mark">*</span>
+                        Motivo de la cancelación <span className="required-mark">*</span>
                     </Label>
                     <Textarea
                         id="rejection-reason"
@@ -98,7 +98,7 @@ const RejectionModal: React.FC<RejectionModalProps> = ({
                             setRejectionReason(e.target.value);
                             if (error) setError('');
                         }}
-                        placeholder="Describa detalladamente el motivo del rechazo..."
+                        placeholder="Describa detalladamente el motivo de la cancelación..."
                         rows={4}
                     />
                     {error && <span className="error-text">{error}</span>}

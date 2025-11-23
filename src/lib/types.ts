@@ -32,7 +32,7 @@ export type LicitacionStatus =
   | "ADJUDICADO"
   | "CON_CONTRATO"
   | "FINALIZADA"
-  | "RECHAZADA";
+  | "CANCELADA";
 
 /**
  * Representa un documento requerido en una licitación
