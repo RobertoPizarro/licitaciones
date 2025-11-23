@@ -15,23 +15,6 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
-.licitacion-detail-header-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-}
-
-.back-button {
-  background: white;
-  border: 1px solid #d1d5db;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  color: #374151;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
 
 .back-button:hover {
   background-color: #f3f4f6;

@@ -9,7 +9,7 @@ import LicitacionItemsTable from '../organisms/LicitacionItemsTable';
 import LicitacionProposals from '../organisms/LicitacionProposals';
 import LicitacionRequiredDocs from '../organisms/LicitacionRequiredDocs';
 import ApprovalModal from '../organisms/ApprovalModal';
-import RejectionModal from '../organisms/RejectionModal';
+import CancellationModal from '../organisms/CancellationModal';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
 
@@ -21,6 +21,8 @@ interface LicitacionDetailTemplateProps {
     supervisor: string;
     currentStatus: LicitacionStatus;
     timestamps: Partial<Record<LicitacionStatus, string>>;
+    estimatedAmount: number;
+    maxBudget: number;
     onApprove: () => void;
     onReject: () => void;
 }
@@ -33,28 +35,26 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     supervisor,
     currentStatus,
     timestamps,
+    estimatedAmount,
+    maxBudget,
     onApprove,
     onReject
 }) => {
     // Modal states
     const [showApprovalModal, setShowApprovalModal] = useState(false);
-    const [showRejectionModal, setShowRejectionModal] = useState(false);
+    const [showCancellationModal, setShowCancellationModal] = useState(false);
 
     // Approval/Rejection states
     const [isApproved, setIsApproved] = useState(false);
     const [isRejected, setIsRejected] = useState(false);
     const [supervisorName, setSupervisorName] = useState(supervisor);
 
-    // Hardcoded data for modal (in real app, this would come from props)
-    const estimatedAmount = 39000;
-    const maxBudget = 45000;
-
     const handleApproveClick = () => {
         setShowApprovalModal(true);
     };
 
-    const handleRejectClick = () => {
-        setShowRejectionModal(true);
+    const handleCancelClick = () => {
+        setShowCancellationModal(true);
     };
 
     const handleApprovalConfirm = () => {
@@ -64,10 +64,10 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         onApprove();
     };
 
-    const handleRejectionConfirm = () => {
+    const handleCancellationConfirm = () => {
         setIsRejected(true);
         setSupervisorName('Mario Altamirano');
-        setShowRejectionModal(false);
+        setShowCancellationModal(false);
         onReject();
     };
 
@@ -97,7 +97,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         currentStatus={currentStatus}
                         timestamps={timestamps}
                         onApprove={handleApproveClick}
-                        onReject={handleRejectClick}
+                        onReject={handleCancelClick}
                         isApproved={isApproved}
                         supervisorName={supervisorName}
                         isRejected={isRejected}
@@ -122,10 +122,10 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 maxBudget={maxBudget}
             />
 
-            <RejectionModal
-                isOpen={showRejectionModal}
-                onClose={() => setShowRejectionModal(false)}
-                onConfirm={handleRejectionConfirm}
+            <CancellationModal
+                isOpen={showCancellationModal}
+                onClose={() => setShowCancellationModal(false)}
+                onConfirm={handleCancellationConfirm}
                 licitacionId={id}
                 buyer={buyer}
                 estimatedAmount={estimatedAmount}

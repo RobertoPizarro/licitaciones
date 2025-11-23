@@ -14,7 +14,9 @@ const LicitacionDetailPage: React.FC = () => {
         title: "Compra de equipos de cómputo",
         createdDate: "01/11/2025",
         buyer: "Juan Pérez",
-        supervisor: "---"
+        supervisor: "---",
+        estimatedAmount: 39000,
+        maxBudget: 45000
     };
 
     // Función helper para generar timestamp actual
@@ -59,6 +61,8 @@ const LicitacionDetailPage: React.FC = () => {
             supervisor={licitacionData.supervisor}
             currentStatus={currentStatus}
             timestamps={timestamps}
+            estimatedAmount={licitacionData.estimatedAmount}
+            maxBudget={licitacionData.maxBudget}
             onApprove={handleApprove}
             onReject={handleReject}
         />

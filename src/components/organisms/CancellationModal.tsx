@@ -5,9 +5,9 @@ import Alert from '../atoms/Alert';
 import Textarea from '../atoms/Textarea';
 import Label from '../atoms/Label';
 import Button from '../atoms/Button';
-import './RejectionModal.css';
+import './CancellationModal.css';
 
-interface RejectionModalProps {
+interface CancellationModalProps {
     isOpen: boolean;
     onClose: () => void;
     onConfirm: () => void;
@@ -17,7 +17,7 @@ interface RejectionModalProps {
     maxBudget: number;
 }
 
-const RejectionModal: React.FC<RejectionModalProps> = ({
+const CancellationModal: React.FC<CancellationModalProps> = ({
     isOpen,
     onClose,
     onConfirm,
@@ -108,4 +108,4 @@ const RejectionModal: React.FC<RejectionModalProps> = ({
     );
 };
 
-export default RejectionModal;
+export default CancellationModal;
