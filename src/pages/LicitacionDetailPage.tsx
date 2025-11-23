@@ -16,7 +16,9 @@ const LicitacionDetailPage: React.FC = () => {
         buyer: "Juan Pérez",
         supervisor: "---",
         estimatedAmount: 39000,
-        maxBudget: 45000
+        maxBudget: 45000,
+        proveedoresCount: 8,
+        propuestasRegistradas: 3
     };
 
     // Función helper para generar timestamp actual
@@ -52,6 +54,24 @@ const LicitacionDetailPage: React.FC = () => {
         console.log('Solicitud rechazada');
     };
 
+    const handleFinalizarInvitacion = () => {
+        // Guardar timestamp de NUEVA y cambiar a EN_INVITACION
+        setTimestamps(prev => ({
+            ...prev,
+            ['NUEVA']: getCurrentTimestamp()
+        }));
+        setCurrentStatus('EN_INVITACION');
+    };
+
+    const handleFinalizarRegistro = () => {
+        // Guardar timestamp de EN_INVITACION y cambiar a CON_PROPUESTAS
+        setTimestamps(prev => ({
+            ...prev,
+            ['EN_INVITACION']: getCurrentTimestamp()
+        }));
+        setCurrentStatus('CON_PROPUESTAS');
+    };
+
     return (
         <LicitacionDetailTemplate
             id={licitacionData.id}
@@ -63,8 +83,12 @@ const LicitacionDetailPage: React.FC = () => {
             timestamps={timestamps}
             estimatedAmount={licitacionData.estimatedAmount}
             maxBudget={licitacionData.maxBudget}
+            proveedoresCount={licitacionData.proveedoresCount}
+            propuestasRegistradas={licitacionData.propuestasRegistradas}
             onApprove={handleApprove}
             onReject={handleReject}
+            onFinalizarInvitacion={handleFinalizarInvitacion}
+            onFinalizarRegistro={handleFinalizarRegistro}
         />
     );
 };

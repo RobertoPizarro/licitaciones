@@ -1,7 +1,7 @@
 import React from 'react';
-import { CheckCircle, XCircle, Send, Flag } from 'lucide-react';
 import TimelineItem from '../molecules/TimelineItem';
 import Button from '../atoms/Button';
+import { CheckCircle, XCircle, Send, Flag, PencilLine, ArrowRight } from 'lucide-react';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionTimeline.css';
 
@@ -13,6 +13,12 @@ interface LicitacionTimelineProps {
     isApproved?: boolean;
     supervisorName?: string;
     isRejected?: boolean;
+    proveedoresCount?: number;
+    propuestasRegistradas?: number;
+    onRegistrarPropuesta?: () => void;
+    onFinalizarInvitacion?: () => void;
+    onFinalizarRegistro?: () => void;
+    onEnviarEvaluacion?: () => void;
 }
 
 // Mapeo del orden de los estados
@@ -34,8 +40,14 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
     onApprove,
     onReject,
     isApproved = false,
-    supervisorName = '',
-    isRejected = false
+    supervisorName,
+    isRejected = false,
+    proveedoresCount = 8,
+    propuestasRegistradas = 3,
+    onRegistrarPropuesta,
+    onFinalizarInvitacion,
+    onFinalizarRegistro,
+    onEnviarEvaluacion
 }) => {
     // Determinar el índice del estado actual
     const currentIndex = statusOrder.indexOf(currentStatus);
@@ -83,7 +95,7 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 <TimelineItem
                     stepNumber={1}
                     title="Borrador"
-                    description={isApproved ? `Aprobada por ${supervisorName || 'Mario Altamirano (Supervisor)'}` : "Licitación a la espera de aprobación"}
+                    description={isApproved ? `Aprobada por ${supervisorName || 'Mario Altamirano'}` : "Licitación a la espera de aprobación"}
                     status={getStepStatus('BORRADOR')}
                     timestamp={timestamps['BORRADOR']}
                     statusText={getStatusText('BORRADOR')}
@@ -107,7 +119,13 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 <TimelineItem
                     stepNumber={2}
                     title="Nueva"
-                    description={isApproved ? "Invitando proveedores" : "Aprobada por supervisor"}
+                    description={
+                        currentStatus === 'EN_INVITACION' || timestamps['EN_INVITACION']
+                            ? `Invitaciones enviadas a ${proveedoresCount} proveedores`
+                            : isApproved
+                                ? "Invitando proveedores"
+                                : "Aprobada por supervisor"
+                    }
                     status={getStepStatus('NUEVA')}
                     timestamp={timestamps['NUEVA']}
                     statusText={getStatusText('NUEVA')}
@@ -118,7 +136,7 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                                 <Send size={16} />
                                 Invitar proveedores
                             </Button>
-                            <Button variant="secondary" size="sm" onClick={() => alert('Finalizar invitación - Por implementar')}>
+                            <Button variant="secondary" size="sm" onClick={onFinalizarInvitacion}>
                                 <Flag size={16} />
                                 Finalizar invitación
                             </Button>
@@ -130,20 +148,44 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
             <TimelineItem
                 stepNumber={3}
                 title="En invitación"
-                description="Invitación enviada a los proveedores"
+                description={
+                    currentStatus === 'CON_PROPUESTAS' || getStepStatus('EN_INVITACION') === 'completed'
+                        ? `${propuestasRegistradas} de ${proveedoresCount} propuestas registradas`
+                        : "Registrando propuesta de los proveedores"
+                }
                 status={getStepStatus('EN_INVITACION')}
                 timestamp={timestamps['EN_INVITACION']}
                 statusText={getStatusText('EN_INVITACION')}
-            />
+            >
+                {currentStatus === 'EN_INVITACION' && (
+                    <>
+                        <Button variant="primary" size="sm" onClick={onRegistrarPropuesta}>
+                            <PencilLine size={16} />
+                            Registrar propuesta
+                        </Button>
+                        <Button variant="secondary" size="sm" onClick={onFinalizarRegistro}>
+                            <ArrowRight size={16} />
+                            Finalizar registro
+                        </Button>
+                    </>
+                )}
+            </TimelineItem>
 
             <TimelineItem
                 stepNumber={4}
                 title="Con propuestas"
-                description="Propuestas registradas"
+                description="Pendiente del envío a la evaluación"
                 status={getStepStatus('CON_PROPUESTAS')}
                 timestamp={timestamps['CON_PROPUESTAS']}
                 statusText={getStatusText('CON_PROPUESTAS')}
-            />
+            >
+                {currentStatus === 'CON_PROPUESTAS' && (
+                    <Button variant="primary" size="sm" onClick={onEnviarEvaluacion}>
+                        <Send size={16} />
+                        Enviar a evaluación
+                    </Button>
+                )}
+            </TimelineItem>
 
             <TimelineItem
                 stepNumber={5}

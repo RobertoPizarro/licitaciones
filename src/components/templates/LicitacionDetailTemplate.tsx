@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowLeftFromLine } from 'lucide-react';
 import PageHeader from '../molecules/PageHeader';
@@ -23,8 +22,12 @@ interface LicitacionDetailTemplateProps {
     timestamps: Partial<Record<LicitacionStatus, string>>;
     estimatedAmount: number;
     maxBudget: number;
+    proveedoresCount?: number;
+    propuestasRegistradas?: number;
     onApprove: () => void;
     onReject: () => void;
+    onFinalizarInvitacion?: () => void;
+    onFinalizarRegistro?: () => void;
 }
 
 const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
@@ -37,8 +40,12 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     timestamps,
     estimatedAmount,
     maxBudget,
+    proveedoresCount,
+    propuestasRegistradas,
     onApprove,
-    onReject
+    onReject,
+    onFinalizarInvitacion,
+    onFinalizarRegistro
 }) => {
     // Modal states
     const [showApprovalModal, setShowApprovalModal] = useState(false);
@@ -71,6 +78,10 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         onReject();
     };
 
+    const handleRegistrarPropuesta = () => {
+        alert('Registrar propuesta - Por implementar');
+    };
+
     return (
         <>
             <div className="licitacion-detail-header-wrapper">
@@ -101,6 +112,12 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         isApproved={isApproved}
                         supervisorName={supervisorName}
                         isRejected={isRejected}
+                        proveedoresCount={proveedoresCount}
+                        propuestasRegistradas={propuestasRegistradas}
+                        onRegistrarPropuesta={handleRegistrarPropuesta}
+                        onFinalizarInvitacion={onFinalizarInvitacion}
+                        onFinalizarRegistro={onFinalizarRegistro}
+                        onEnviarEvaluacion={() => alert('Enviar a evaluación - Por implementar')}
                     />
                 </div>
                 <div className="licitacion-detail-right-col">
