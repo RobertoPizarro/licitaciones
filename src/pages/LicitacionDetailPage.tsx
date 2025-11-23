@@ -18,7 +18,8 @@ const LicitacionDetailPage: React.FC = () => {
         estimatedAmount: 39000,
         maxBudget: 45000,
         proveedoresCount: 8,
-        propuestasRegistradas: 3
+        propuestasRegistradas: 3,
+        propuestasAprobadasTecnicamente: 2
     };
 
     // Función helper para generar timestamp actual
@@ -72,6 +73,25 @@ const LicitacionDetailPage: React.FC = () => {
         setCurrentStatus('CON_PROPUESTAS');
     };
 
+    const handleEnviarEvaluacion = () => {
+        // Guardar timestamp de CON_PROPUESTAS y cambiar a EVALUACION_TECNICA
+        setTimestamps(prev => ({
+            ...prev,
+            ['CON_PROPUESTAS']: getCurrentTimestamp()
+        }));
+        setCurrentStatus('EVALUACION_TECNICA');
+    };
+
+    const handleIniciarEvaluacionTecnica = () => {
+        // Guardar timestamp de EVALUACION_TECNICA y cambiar a EVALUACION_ECONOMIA
+        setTimestamps(prev => ({
+            ...prev,
+            ['EVALUACION_TECNICA']: getCurrentTimestamp()
+        }));
+        setCurrentStatus('EVALUACION_ECONOMIA');
+    };
+
+
     return (
         <LicitacionDetailTemplate
             id={licitacionData.id}
@@ -85,10 +105,13 @@ const LicitacionDetailPage: React.FC = () => {
             maxBudget={licitacionData.maxBudget}
             proveedoresCount={licitacionData.proveedoresCount}
             propuestasRegistradas={licitacionData.propuestasRegistradas}
+            propuestasAprobadasTecnicamente={licitacionData.propuestasAprobadasTecnicamente}
             onApprove={handleApprove}
             onReject={handleReject}
             onFinalizarInvitacion={handleFinalizarInvitacion}
             onFinalizarRegistro={handleFinalizarRegistro}
+            onEnviarEvaluacion={handleEnviarEvaluacion}
+            onIniciarEvaluacionTecnica={handleIniciarEvaluacionTecnica}
         />
     );
 };

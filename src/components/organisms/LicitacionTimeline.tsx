@@ -1,7 +1,7 @@
 import React from 'react';
 import TimelineItem from '../molecules/TimelineItem';
 import Button from '../atoms/Button';
-import { CheckCircle, XCircle, Send, Flag, PencilLine, ArrowRight } from 'lucide-react';
+import { CheckCircle, XCircle, Send, Flag, PencilLine, ArrowRight, Settings } from 'lucide-react';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionTimeline.css';
 
@@ -15,10 +15,12 @@ interface LicitacionTimelineProps {
     isRejected?: boolean;
     proveedoresCount?: number;
     propuestasRegistradas?: number;
+    propuestasAprobadasTecnicamente?: number;
     onRegistrarPropuesta?: () => void;
     onFinalizarInvitacion?: () => void;
     onFinalizarRegistro?: () => void;
     onEnviarEvaluacion?: () => void;
+    onIniciarEvaluacionTecnica?: () => void;
 }
 
 // Mapeo del orden de los estados
@@ -44,10 +46,12 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
     isRejected = false,
     proveedoresCount = 8,
     propuestasRegistradas = 3,
+    propuestasAprobadasTecnicamente = 2,
     onRegistrarPropuesta,
     onFinalizarInvitacion,
     onFinalizarRegistro,
-    onEnviarEvaluacion
+    onEnviarEvaluacion,
+    onIniciarEvaluacionTecnica
 }) => {
     // Determinar el índice del estado actual
     const currentIndex = statusOrder.indexOf(currentStatus);
@@ -174,7 +178,11 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
             <TimelineItem
                 stepNumber={4}
                 title="Con propuestas"
-                description="Pendiente del envío a la evaluación"
+                description={
+                    currentStatus === 'EVALUACION_TECNICA' || getStepStatus('CON_PROPUESTAS') === 'completed'
+                        ? "Enviado a evaluación"
+                        : "Pendiente del envío a la evaluación"
+                }
                 status={getStepStatus('CON_PROPUESTAS')}
                 timestamp={timestamps['CON_PROPUESTAS']}
                 statusText={getStatusText('CON_PROPUESTAS')}
@@ -190,20 +198,38 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
             <TimelineItem
                 stepNumber={5}
                 title="En evaluación - Comité Técnico"
-                description="Validación de documentación y especificaciones técnicas"
+                description={
+                    currentStatus === 'EVALUACION_ECONOMIA' || getStepStatus('EVALUACION_TECNICA') === 'completed'
+                        ? `${propuestasAprobadasTecnicamente} de ${propuestasRegistradas} propuestas aprobadas técnicamente`
+                        : "Validando documentos y especificaciones técnicas"
+                }
                 status={getStepStatus('EVALUACION_TECNICA')}
                 timestamp={timestamps['EVALUACION_TECNICA']}
                 statusText={getStatusText('EVALUACION_TECNICA')}
-            />
+            >
+                {currentStatus === 'EVALUACION_TECNICA' && (
+                    <Button variant="primary" size="sm" onClick={onIniciarEvaluacionTecnica}>
+                        <Settings size={16} />
+                        Iniciar evaluación
+                    </Button>
+                )}
+            </TimelineItem>
 
             <TimelineItem
                 stepNumber={6}
                 title="En evaluación - Comité de Economía"
-                description="Análisis de criterios económicos y financieros"
+                description="Analizando los criterios económicos y financieros"
                 status={getStepStatus('EVALUACION_ECONOMIA')}
                 timestamp={timestamps['EVALUACION_ECONOMIA']}
                 statusText={getStatusText('EVALUACION_ECONOMIA')}
-            />
+            >
+                {currentStatus === 'EVALUACION_ECONOMIA' && (
+                    <Button variant="primary" size="sm" onClick={() => alert('Iniciar evaluación económica - Por implementar')}>
+                        <Settings size={16} />
+                        Iniciar evaluación
+                    </Button>
+                )}
+            </TimelineItem>
 
             <TimelineItem
                 stepNumber={7}

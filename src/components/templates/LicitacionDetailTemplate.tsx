@@ -24,10 +24,13 @@ interface LicitacionDetailTemplateProps {
     maxBudget: number;
     proveedoresCount?: number;
     propuestasRegistradas?: number;
+    propuestasAprobadasTecnicamente?: number;
     onApprove: () => void;
     onReject: () => void;
     onFinalizarInvitacion?: () => void;
     onFinalizarRegistro?: () => void;
+    onEnviarEvaluacion?: () => void;
+    onIniciarEvaluacionTecnica?: () => void;
 }
 
 const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
@@ -42,10 +45,13 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     maxBudget,
     proveedoresCount,
     propuestasRegistradas,
+    propuestasAprobadasTecnicamente,
     onApprove,
     onReject,
     onFinalizarInvitacion,
-    onFinalizarRegistro
+    onFinalizarRegistro,
+    onEnviarEvaluacion,
+    onIniciarEvaluacionTecnica
 }) => {
     // Modal states
     const [showApprovalModal, setShowApprovalModal] = useState(false);
@@ -114,10 +120,12 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         isRejected={isRejected}
                         proveedoresCount={proveedoresCount}
                         propuestasRegistradas={propuestasRegistradas}
+                        propuestasAprobadasTecnicamente={propuestasAprobadasTecnicamente}
                         onRegistrarPropuesta={handleRegistrarPropuesta}
                         onFinalizarInvitacion={onFinalizarInvitacion}
                         onFinalizarRegistro={onFinalizarRegistro}
-                        onEnviarEvaluacion={() => alert('Enviar a evaluación - Por implementar')}
+                        onEnviarEvaluacion={onEnviarEvaluacion}
+                        onIniciarEvaluacionTecnica={onIniciarEvaluacionTecnica}
                     />
                 </div>
                 <div className="licitacion-detail-right-col">
