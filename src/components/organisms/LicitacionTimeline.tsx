@@ -61,13 +61,24 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
             <h3 className="timeline-header-title">Flujo del proceso de licitación</h3>
 
             {isRejected ? (
-                <TimelineItem
-                    stepNumber={1}
-                    title="Rechazada"
-                    description="Invitación Mario Altamirano (Supervisor)"
-                    status="pending"
-                    timestamp={timestamps['BORRADOR']}
-                />
+                <>
+                    <TimelineItem
+                        stepNumber={1}
+                        title="Rechazada"
+                        description="Solicitud rechaza por Mario Altamirano (Supervisor)"
+                        status="completed"
+                        timestamp={timestamps['BORRADOR']}
+                        isRejected={true}
+                    />
+
+                    <TimelineItem
+                        stepNumber={2}
+                        title="Nueva"
+                        description="Aprobada por supervisor"
+                        status="pending"
+                        statusText="Pendiente"
+                    />
+                </>
             ) : (
                 <TimelineItem
                     stepNumber={1}

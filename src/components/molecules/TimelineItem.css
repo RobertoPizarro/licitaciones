@@ -2,8 +2,8 @@
   display: flex;
   gap: 1rem;
   position: relative;
-  min-height: 80px; /* Aumentado para más espacio */
-  margin-bottom: 2.5rem; /* Mayor separación entre estados */
+  min-height: 80px;
+  margin-bottom: 2.5rem;
 }
 
 .timeline-item:last-child {
@@ -20,7 +20,7 @@
 }
 
 .timeline-marker {
-  width: 32px; /* Aumentado ligeramente para mejor presencia visual */
+  width: 32px;
   height: 32px;
   border-radius: 50%;
   display: flex;
@@ -39,7 +39,7 @@
 }
 
 .timeline-marker.completed {
-  background-color: #3b82f6; /* Azul en lugar de verde */
+  background-color: #3b82f6;
   color: white;
 }
 
@@ -48,23 +48,33 @@
   color: #9ca3af;
 }
 
+.timeline-marker.rejected {
+  background-color: #d1d5db !important;
+  color: #4b5563 !important;
+}
+
 .timeline-line {
   position: absolute;
-  top: 32px; /* Comienza justo después del marker */
+  top: 32px;
   left: 50%;
   transform: translateX(-50%);
   width: 2px;
-  height: calc(100% + 2.5rem); /* Ajustado al nuevo margin-bottom */
+  height: calc(100% + 2.5rem);
   background-color: #e5e7eb;
   z-index: 1;
 }
 
 .timeline-item:last-child .timeline-line {
-  display: none; /* No mostrar línea en el último item */
+  display: none;
 }
 
 .timeline-item.completed .timeline-line {
-  background-color: #3b82f6; /* Línea azul para items completados */
+  background-color: #3b82f6;
+}
+
+/* Grey line for rejected items */
+.timeline-item:has(.timeline-marker.rejected) .timeline-line {
+  background-color: #e5e7eb !important;
 }
 
 .timeline-content {

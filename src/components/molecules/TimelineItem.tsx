@@ -1,6 +1,6 @@
 import React from 'react';
 import './TimelineItem.css';
-import { Check, Hourglass } from 'lucide-react';
+import { Check, Hourglass, X } from 'lucide-react';
 
 interface TimelineItemProps {
     stepNumber: number;
@@ -10,6 +10,7 @@ interface TimelineItemProps {
     timestamp?: string; // Hora en que se completó este paso
     statusText?: string; // Texto de estado ("---" o "Pendiente")
     children?: React.ReactNode;
+    isRejected?: boolean; // Para mostrar icono de X
 }
 
 const TimelineItem: React.FC<TimelineItemProps> = ({
@@ -19,10 +20,14 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
     status,
     timestamp,
     statusText,
-    children
+    children,
+    isRejected = false
 }) => {
     // Determinar qué mostrar en el marker
     const renderMarkerContent = () => {
+        if (isRejected) {
+            return <X size={16} />;
+        }
         if (status === 'completed') {
             return <Check size={16} />;
         }
@@ -35,7 +40,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
     return (
         <div className={`timeline-item ${status}`}>
             <div className="timeline-marker-container">
-                <div className={`timeline-marker ${status}`}>
+                <div className={`timeline-marker ${status} ${isRejected ? 'rejected' : ''}`.trim()}>
                     {renderMarkerContent()}
                 </div>
                 <div className="timeline-line" />

@@ -41,7 +41,12 @@ const LicitacionDetailPage: React.FC = () => {
     };
 
     const handleReject = () => {
-        // Por ahora solo log, luego implementar lógica
+        // Guardar timestamp del estado actual antes de cambiar
+        setTimestamps(prev => ({
+            ...prev,
+            [currentStatus]: getCurrentTimestamp()
+        }));
+        // La licitación rechazada se maneja en el template, no cambiamos el status aquí
         console.log('Solicitud rechazada');
     };
 

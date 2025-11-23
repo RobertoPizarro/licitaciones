@@ -64,8 +64,9 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         onApprove();
     };
 
-    const handleRejectionConfirm = (reason: string) => {
+    const handleRejectionConfirm = () => {
         setIsRejected(true);
+        setSupervisorName('Mario Altamirano');
         setShowRejectionModal(false);
         onReject();
     };

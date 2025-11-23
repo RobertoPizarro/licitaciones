@@ -10,7 +10,7 @@ import './RejectionModal.css';
 interface RejectionModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: (reason: string) => void;
+    onConfirm: () => void;
     licitacionId: string;
     buyer: string;
     estimatedAmount: number;
@@ -34,7 +34,7 @@ const RejectionModal: React.FC<RejectionModalProps> = ({
             setError('El motivo del rechazo es obligatorio');
             return;
         }
-        onConfirm(rejectionReason);
+        onConfirm();
         setRejectionReason('');
         setError('');
     };
