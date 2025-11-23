@@ -65,7 +65,7 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                     <TimelineItem
                         stepNumber={1}
                         title="Cancelada"
-                        description="Solicitud cancelada por Mario Altamirano (Supervisor)"
+                        description="Solicitud cancelada por Mario Altamirano"
                         status="completed"
                         timestamp={timestamps['BORRADOR']}
                         isRejected={true}

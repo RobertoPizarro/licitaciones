@@ -59,7 +59,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
 
     const handleApprovalConfirm = () => {
         setIsApproved(true);
-        setSupervisorName('Mario Altamirano (Supervisor)');
+        setSupervisorName('Mario Altamirano');
         setShowApprovalModal(false);
         onApprove();
     };
