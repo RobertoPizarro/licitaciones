@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowLeftFromLine } from 'lucide-react';
 import PageHeader from '../molecules/PageHeader';
 import Button from '../atoms/Button';
 import LicitacionTimeline from '../organisms/LicitacionTimeline';
@@ -38,7 +39,8 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                     }
                 />
                 <Button variant="secondary" size="sm" onClick={() => window.history.back()}>
-                    ← Volver
+                    <ArrowLeftFromLine size={16} />
+                    Volver
                 </Button>
             </div>
 

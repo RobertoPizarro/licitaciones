@@ -3,7 +3,7 @@ import './PageHeader.css';
 
 interface PageHeaderProps {
     title: string;
-    description?: string;
+    description?: React.ReactNode;
     className?: string;
 }
 
@@ -13,7 +13,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, description, className }
     return (
         <header className={headerClassName}>
             <h1>{title}</h1>
-            {description && <p>{description}</p>}
+            {description && <div className="page-header-description">{description}</div>}
         </header>
     );
 };

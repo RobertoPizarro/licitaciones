@@ -11,7 +11,7 @@ const LicitacionProposals: React.FC = () => {
                 <h2>Propuestas Recibidas (0)</h2>
             </CardHeader>
             <CardBody>
-                <EmptyState message="No hay propuestas recibidas" />
+                <EmptyState message="No hay propuestas recibidas" variant="error" />
             </CardBody>
         </Card>
     );
