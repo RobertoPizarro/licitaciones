@@ -9,7 +9,7 @@ const LicitacionRequiredDocs: React.FC = () => {
     return (
         <Card>
             <CardHeader>
-                <h2>DOCUMENTOS REQUERIDOS</h2>
+                <h2>Documentos Requeridos</h2>
             </CardHeader>
             <CardBody>
                 <DocCategoryBlock

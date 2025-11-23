@@ -1,5 +1,6 @@
 import React from 'react';
 import PageHeader from '../molecules/PageHeader';
+import Button from '../atoms/Button';
 import LicitacionTimeline from '../organisms/LicitacionTimeline';
 import LicitacionGeneralInfo from '../organisms/LicitacionGeneralInfo';
 import LicitacionItemsTable from '../organisms/LicitacionItemsTable';
@@ -27,11 +28,18 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
             <div className="licitacion-detail-header-wrapper">
                 <PageHeader
                     title={title}
-                    description={`ID: ${id}   Fecha creación: ${createdDate}   Comprador: ${buyer}   Supervisor: ${supervisor}`}
+                    description={
+                        <div className="header-metadata">
+                            <span><strong>ID:</strong> {id}</span>
+                            <span><strong>Fecha creación:</strong> {createdDate}</span>
+                            <span><strong>Comprador:</strong> {buyer}</span>
+                            <span><strong>Supervisor:</strong> {supervisor}</span>
+                        </div>
+                    }
                 />
-                <button className="back-button" onClick={() => window.history.back()}>
+                <Button variant="secondary" size="sm" onClick={() => window.history.back()}>
                     ← Volver
-                </button>
+                </Button>
             </div>
 
             <div className="licitacion-detail-layout">

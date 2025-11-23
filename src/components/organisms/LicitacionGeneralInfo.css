@@ -1,7 +1,7 @@
 .general-info-grid {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .general-info-grid .readonly-field {
@@ -9,7 +9,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #f3f4f6;
-  padding-bottom: 0.75rem;
+  padding-bottom: 1rem;
 }
 
 .general-info-grid .readonly-field:last-child {
@@ -19,11 +19,13 @@
 
 .general-info-grid .readonly-field label {
   margin-bottom: 0;
-  color: #6b7280;
+  color: #9ca3af; /* Lighter gray for labels */
   font-weight: 400;
+  font-size: 0.9rem;
 }
 
 .general-info-grid .readonly-field p {
   font-weight: 500;
-  color: #111827;
+  color: #374151; /* Darker gray for values */
+  font-size: 0.95rem;
 }

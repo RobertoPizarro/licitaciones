@@ -9,7 +9,7 @@ const LicitacionGeneralInfo: React.FC = () => {
     return (
         <Card>
             <CardHeader>
-                <h2>INFORMACIÓN GENERAL</h2>
+                <h2>Información General</h2>
             </CardHeader>
             <CardBody>
                 <div className="general-info-grid">
