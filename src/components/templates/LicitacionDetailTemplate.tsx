@@ -17,6 +17,7 @@ interface LicitacionDetailTemplateProps {
     buyer: string;
     supervisor: string;
     currentStatus: LicitacionStatus;
+    timestamps: Partial<Record<LicitacionStatus, string>>;
     onApprove: () => void;
     onReject: () => void;
 }
@@ -28,6 +29,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     buyer,
     supervisor,
     currentStatus,
+    timestamps,
     onApprove,
     onReject
 }) => {
@@ -55,6 +57,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 <div className="licitacion-detail-left-col">
                     <LicitacionTimeline
                         currentStatus={currentStatus}
+                        timestamps={timestamps}
                         onApprove={onApprove}
                         onReject={onReject}
                     />

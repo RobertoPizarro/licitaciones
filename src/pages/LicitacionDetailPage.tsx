@@ -6,6 +6,9 @@ const LicitacionDetailPage: React.FC = () => {
     // Estado de la licitación - Por ahora local, luego vendrá del backend
     const [currentStatus, setCurrentStatus] = useState<LicitacionStatus>('BORRADOR');
 
+    // Timestamps de cuando se completó cada estado (simulado por ahora)
+    const [timestamps, setTimestamps] = useState<Partial<Record<LicitacionStatus, string>>>({});
+
     const licitacionData = {
         id: "2025001",
         title: "Compra de equipos de cómputo",
@@ -14,8 +17,26 @@ const LicitacionDetailPage: React.FC = () => {
         supervisor: "---"
     };
 
+    // Función helper para generar timestamp actual
+    const getCurrentTimestamp = () => {
+        const now = new Date();
+        return now.toLocaleString('es-PE', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+    };
+
     // Handlers para cambiar de estado
     const handleApprove = () => {
+        // Guardar timestamp del estado actual antes de cambiar
+        setTimestamps(prev => ({
+            ...prev,
+            [currentStatus]: getCurrentTimestamp()
+        }));
         setCurrentStatus('NUEVA');
     };
 
@@ -32,6 +53,7 @@ const LicitacionDetailPage: React.FC = () => {
             buyer={licitacionData.buyer}
             supervisor={licitacionData.supervisor}
             currentStatus={currentStatus}
+            timestamps={timestamps}
             onApprove={handleApprove}
             onReject={handleReject}
         />

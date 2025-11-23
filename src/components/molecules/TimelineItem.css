@@ -2,8 +2,8 @@
   display: flex;
   gap: 1rem;
   position: relative;
-  min-height: 60px; /* Altura mínima consistente para todos los items */
-  margin-bottom: 1.5rem; /* Espaciado uniforme entre items */
+  min-height: 80px; /* Aumentado para más espacio */
+  margin-bottom: 2.5rem; /* Mayor separación entre estados */
 }
 
 .timeline-item:last-child {
@@ -39,7 +39,7 @@
 }
 
 .timeline-marker.completed {
-  background-color: #10b981;
+  background-color: #3b82f6; /* Azul en lugar de verde */
   color: white;
 }
 
@@ -54,7 +54,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 2px;
-  height: calc(100% + 1.5rem); /* Se extiende hasta el siguiente item */
+  height: calc(100% + 2.5rem); /* Ajustado al nuevo margin-bottom */
   background-color: #e5e7eb;
   z-index: 1;
 }
@@ -64,7 +64,7 @@
 }
 
 .timeline-item.completed .timeline-line {
-  background-color: #10b981; /* Línea verde para items completados */
+  background-color: #3b82f6; /* Línea azul para items completados */
 }
 
 .timeline-content {
@@ -110,4 +110,19 @@
   margin-top: 0.75rem;
   display: flex;
   gap: 0.75rem;
+}
+
+.timeline-timestamp {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.timeline-status-text {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.875rem;
+  color: #d1d5db;
+  font-weight: 400;
+  font-style: italic;
 }

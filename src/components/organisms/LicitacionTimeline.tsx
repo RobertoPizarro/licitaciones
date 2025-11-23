@@ -7,6 +7,7 @@ import './LicitacionTimeline.css';
 
 interface LicitacionTimelineProps {
     currentStatus: LicitacionStatus;
+    timestamps: Partial<Record<LicitacionStatus, string>>;
     onApprove: () => void;
     onReject: () => void;
 }
@@ -26,6 +27,7 @@ const statusOrder: LicitacionStatus[] = [
 
 const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
     currentStatus,
+    timestamps,
     onApprove,
     onReject
 }) => {
@@ -40,6 +42,14 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
         return 'pending';
     };
 
+    // Función helper para obtener el texto de estado
+    const getStatusText = (stepStatus: LicitacionStatus): string | undefined => {
+        const status = getStepStatus(stepStatus);
+        if (status === 'active') return '---';
+        if (status === 'pending') return 'Pendiente';
+        return undefined; // Los completados no tienen statusText, solo timestamp
+    };
+
     return (
         <div className="licitacion-timeline">
             <h3 className="timeline-header-title">Flujo del proceso de licitación</h3>
@@ -49,6 +59,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 title="Borrador"
                 description="Licitación a la espera de aprobación"
                 status={getStepStatus('BORRADOR')}
+                timestamp={timestamps['BORRADOR']}
+                statusText={getStatusText('BORRADOR')}
             >
                 {currentStatus === 'BORRADOR' && (
                     <>
@@ -69,6 +81,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 title="Nueva"
                 description="Aprobada por supervisor"
                 status={getStepStatus('NUEVA')}
+                timestamp={timestamps['NUEVA']}
+                statusText={getStatusText('NUEVA')}
             />
 
             <TimelineItem
@@ -76,6 +90,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 title="En invitación"
                 description="Invitación enviada a los proveedores"
                 status={getStepStatus('EN_INVITACION')}
+                timestamp={timestamps['EN_INVITACION']}
+                statusText={getStatusText('EN_INVITACION')}
             />
 
             <TimelineItem
@@ -83,6 +99,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 title="Con propuestas"
                 description="Propuestas registradas"
                 status={getStepStatus('CON_PROPUESTAS')}
+                timestamp={timestamps['CON_PROPUESTAS']}
+                statusText={getStatusText('CON_PROPUESTAS')}
             />
 
             <TimelineItem
@@ -90,6 +108,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 title="En evaluación - Comité Técnico"
                 description="Validación de documentación y especificaciones técnicas"
                 status={getStepStatus('EVALUACION_TECNICA')}
+                timestamp={timestamps['EVALUACION_TECNICA']}
+                statusText={getStatusText('EVALUACION_TECNICA')}
             />
 
             <TimelineItem
@@ -97,6 +117,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 title="En evaluación - Comité de Economía"
                 description="Análisis de criterios económicos y financieros"
                 status={getStepStatus('EVALUACION_ECONOMIA')}
+                timestamp={timestamps['EVALUACION_ECONOMIA']}
+                statusText={getStatusText('EVALUACION_ECONOMIA')}
             />
 
             <TimelineItem
@@ -104,6 +126,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 title="Adjudicado"
                 description="Proveedor ganador seleccionado"
                 status={getStepStatus('ADJUDICADO')}
+                timestamp={timestamps['ADJUDICADO']}
+                statusText={getStatusText('ADJUDICADO')}
             />
 
             <TimelineItem
@@ -111,6 +135,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 title="Con contrato"
                 description="Contrato de adjudicación generado"
                 status={getStepStatus('CON_CONTRATO')}
+                timestamp={timestamps['CON_CONTRATO']}
+                statusText={getStatusText('CON_CONTRATO')}
             />
 
             <TimelineItem
@@ -118,6 +144,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 title="Finalizada"
                 description="Licitación finalizada"
                 status={getStepStatus('FINALIZADA')}
+                timestamp={timestamps['FINALIZADA']}
+                statusText={getStatusText('FINALIZADA')}
             />
         </div>
     );

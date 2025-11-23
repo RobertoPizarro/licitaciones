@@ -1,13 +1,14 @@
 import React from 'react';
 import './TimelineItem.css';
-import { Check } from 'lucide-react';
+import { Check, Hourglass } from 'lucide-react';
 
 interface TimelineItemProps {
     stepNumber: number;
     title: string;
     description?: string;
     status: 'active' | 'completed' | 'pending';
-    isLast?: boolean;
+    timestamp?: string; // Hora en que se completó este paso
+    statusText?: string; // Texto de estado ("---" o "Pendiente")
     children?: React.ReactNode;
 }
 
@@ -16,13 +17,26 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
     title,
     description,
     status,
+    timestamp,
+    statusText,
     children
 }) => {
+    // Determinar qué mostrar en el marker
+    const renderMarkerContent = () => {
+        if (status === 'completed') {
+            return <Check size={16} />;
+        }
+        if (status === 'active') {
+            return <Hourglass size={16} />;
+        }
+        return stepNumber;
+    };
+
     return (
         <div className={`timeline-item ${status}`}>
             <div className="timeline-marker-container">
                 <div className={`timeline-marker ${status}`}>
-                    {status === 'completed' ? <Check size={14} /> : stepNumber}
+                    {renderMarkerContent()}
                 </div>
                 <div className="timeline-line" />
             </div>
@@ -32,6 +46,8 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
                     {status === 'active' && <span className="status-badge">Estado actual</span>}
                 </div>
                 {description && <p className="timeline-description">{description}</p>}
+                {timestamp && <p className="timeline-timestamp">{timestamp}</p>}
+                {statusText && <p className="timeline-status-text">{statusText}</p>}
                 {children && <div className="timeline-actions">{children}</div>}
             </div>
         </div>
