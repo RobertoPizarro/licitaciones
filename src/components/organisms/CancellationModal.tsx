@@ -64,22 +64,22 @@ const CancellationModal: React.FC<CancellationModalProps> = ({
             }
         >
             <div className="rejection-modal-content">
-                <div className="licitacion-summary">
-                    <div className="summary-item">
-                        <span className="summary-label">ID:</span>
-                        <span className="summary-value">{licitacionId}</span>
+                <div className="licitacion-info-card">
+                    <div className="info-item">
+                        <span className="info-label">ID:</span>
+                        <span className="info-value">{licitacionId}</span>
                     </div>
-                    <div className="summary-item">
-                        <span className="summary-label">Comprador:</span>
-                        <span className="summary-value">{buyer}</span>
+                    <div className="info-item">
+                        <span className="info-label">Comprador:</span>
+                        <span className="info-value">{buyer}</span>
                     </div>
-                    <div className="summary-item">
-                        <span className="summary-label">Monto estimado:</span>
-                        <span className="summary-value">S/ {estimatedAmount.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <div className="info-item">
+                        <span className="info-label">Monto estimado:</span>
+                        <span className="info-value">S/ {estimatedAmount.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     </div>
-                    <div className="summary-item">
-                        <span className="summary-label">Presupuesto máximo:</span>
-                        <span className="summary-value">S/ {maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <div className="info-item">
+                        <span className="info-label">Presupuesto máximo:</span>
+                        <span className="info-value">S/ {maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     </div>
                 </div>
 

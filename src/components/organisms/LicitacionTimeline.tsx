@@ -1,7 +1,7 @@
 import React from 'react';
 import TimelineItem from '../molecules/TimelineItem';
 import Button from '../atoms/Button';
-import { CheckCircle, XCircle, Send, Flag, PencilLine, ArrowRight, Settings, FileText } from 'lucide-react';
+import { CheckCircle, XCircle, Send, Mail, Flag, PencilLine, ArrowRight, Settings, FileText } from 'lucide-react';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionTimeline.css';
 
@@ -18,6 +18,7 @@ interface LicitacionTimelineProps {
     propuestasAprobadasTecnicamente?: number;
     propuestasAprobadasEconomicamente?: number;
     onRegistrarPropuesta?: () => void;
+    onInvitarProveedores?: () => void;
     onFinalizarInvitacion?: () => void;
     onFinalizarRegistro?: () => void;
     onEnviarEvaluacion?: () => void;
@@ -53,6 +54,7 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
     propuestasAprobadasTecnicamente = 2,
     propuestasAprobadasEconomicamente = 1,
     onRegistrarPropuesta,
+    onInvitarProveedores,
     onFinalizarInvitacion,
     onFinalizarRegistro,
     onEnviarEvaluacion,
@@ -147,8 +149,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 >
                     {currentStatus === 'NUEVA' && isApproved && (
                         <>
-                            <Button variant="primary" size="sm" onClick={() => alert('Invitar proveedores - Por implementar')}>
-                                <Send size={16} />
+                            <Button variant="primary" size="sm" onClick={onInvitarProveedores}>
+                                <Mail size={16} />
                                 Invitar proveedores
                             </Button>
                             <Button variant="secondary" size="sm" onClick={onFinalizarInvitacion}>

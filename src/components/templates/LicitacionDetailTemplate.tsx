@@ -9,6 +9,8 @@ import LicitacionProposals from '../organisms/LicitacionProposals';
 import LicitacionRequiredDocs from '../organisms/LicitacionRequiredDocs';
 import ApprovalModal from '../organisms/ApprovalModal';
 import CancellationModal from '../organisms/CancellationModal';
+import InviteSuppliersModal from '../organisms/InviteSuppliersModal';
+import FinalizeInvitationModal from '../organisms/FinalizeInvitationModal';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
 
@@ -64,11 +66,16 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     // Modal states
     const [showApprovalModal, setShowApprovalModal] = useState(false);
     const [showCancellationModal, setShowCancellationModal] = useState(false);
+    const [showInviteModal, setShowInviteModal] = useState(false);
+    const [showFinalizeInviteModal, setShowFinalizeInviteModal] = useState(false);
 
     // Approval/Rejection states
     const [isApproved, setIsApproved] = useState(false);
     const [isRejected, setIsRejected] = useState(false);
     const [supervisorName, setSupervisorName] = useState(supervisor);
+
+    // Supplier invitation states
+    const [invitedSuppliers, setInvitedSuppliers] = useState<string[]>([]);
 
     const handleApproveClick = () => {
         setShowApprovalModal(true);
@@ -94,6 +101,19 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
 
     const handleRegistrarPropuesta = () => {
         alert('Registrar propuesta - Por implementar');
+    };
+
+    const handleInviteSuppliers = () => {
+        setShowInviteModal(true);
+    };
+
+    const handleFinalizarInvitacionClick = () => {
+        setShowFinalizeInviteModal(true);
+    };
+
+    const handleConfirmFinalizeInvitation = () => {
+        setShowFinalizeInviteModal(false);
+        onFinalizarInvitacion?.();
     };
 
     return (
@@ -131,7 +151,8 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         propuestasAprobadasTecnicamente={propuestasAprobadasTecnicamente}
                         propuestasAprobadasEconomicamente={propuestasAprobadasEconomicamente}
                         onRegistrarPropuesta={handleRegistrarPropuesta}
-                        onFinalizarInvitacion={onFinalizarInvitacion}
+                        onInvitarProveedores={handleInviteSuppliers}
+                        onFinalizarInvitacion={handleFinalizarInvitacionClick}
                         onFinalizarRegistro={onFinalizarRegistro}
                         onEnviarEvaluacion={onEnviarEvaluacion}
                         onIniciarEvaluacionTecnica={onIniciarEvaluacionTecnica}
@@ -167,6 +188,28 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 buyer={buyer}
                 estimatedAmount={estimatedAmount}
                 maxBudget={maxBudget}
+            />
+
+            <InviteSuppliersModal
+                isOpen={showInviteModal}
+                onClose={() => setShowInviteModal(false)}
+                licitacionId={id}
+                licitacionTitle={title}
+                estimatedAmount={estimatedAmount}
+                maxBudget={maxBudget}
+                onSuppliersInvited={setInvitedSuppliers}
+            />
+
+            <FinalizeInvitationModal
+                isOpen={showFinalizeInviteModal}
+                onClose={() => setShowFinalizeInviteModal(false)}
+                onConfirm={handleConfirmFinalizeInvitation}
+                licitacionId={id}
+                buyer={buyer}
+                supervisor={supervisorName}
+                estimatedAmount={estimatedAmount}
+                maxBudget={maxBudget}
+                invitedSuppliers={invitedSuppliers}
             />
         </>
     );
