@@ -2,7 +2,6 @@ import React from 'react';
 import LicitacionDetailTemplate from '../components/templates/LicitacionDetailTemplate';
 
 const LicitacionDetailPage: React.FC = () => {
-    // Mock Data matching the image
     const licitacionData = {
         id: "2025001",
         title: "Compra de equipos de cómputo",
