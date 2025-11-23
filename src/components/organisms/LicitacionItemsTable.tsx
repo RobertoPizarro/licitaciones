@@ -16,8 +16,8 @@ const LicitacionItemsTable: React.FC = () => {
                         <tr>
                             <th>Tipo</th>
                             <th>Descripción</th>
-                            <th className="text-center">Cantidad</th>
-                            <th className="text-right">Precio Unitario</th>
+                            <th className="text-center">Cantidad / Horas</th>
+                            <th className="text-right">Precio Uni. / Tarifa</th>
                             <th className="text-right">Total Item</th>
                         </tr>
                     </thead>

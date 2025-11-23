@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckCircle, XCircle } from 'lucide-react';
 import TimelineItem from '../molecules/TimelineItem';
 import Button from '../atoms/Button';
 import './LicitacionTimeline.css';
@@ -14,8 +15,14 @@ const LicitacionTimeline: React.FC = () => {
                 description="Licitación a la espera de aprobación"
                 status="active"
             >
-                <Button variant="primary" size="sm">Aprobar Solicitud</Button>
-                <Button variant="danger-outline" size="sm">Rechazar Solicitud</Button>
+                <Button variant="primary" size="sm">
+                    <CheckCircle size={16} />
+                    Aprobar Solicitud
+                </Button>
+                <Button variant="secondary" size="sm">
+                    <XCircle size={16} />
+                    Rechazar Solicitud
+                </Button>
             </TimelineItem>
 
             <TimelineItem
