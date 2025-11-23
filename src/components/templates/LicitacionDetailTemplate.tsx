@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { ArrowLeftFromLine } from 'lucide-react';
 import PageHeader from '../molecules/PageHeader';
 import Button from '../atoms/Button';
@@ -7,6 +8,8 @@ import LicitacionGeneralInfo from '../organisms/LicitacionGeneralInfo';
 import LicitacionItemsTable from '../organisms/LicitacionItemsTable';
 import LicitacionProposals from '../organisms/LicitacionProposals';
 import LicitacionRequiredDocs from '../organisms/LicitacionRequiredDocs';
+import ApprovalModal from '../organisms/ApprovalModal';
+import RejectionModal from '../organisms/RejectionModal';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
 
@@ -33,6 +36,42 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     onApprove,
     onReject
 }) => {
+    // Modal states
+    const [showApprovalModal, setShowApprovalModal] = useState(false);
+    const [showRejectionModal, setShowRejectionModal] = useState(false);
+
+    // Approval/Rejection states
+    const [isApproved, setIsApproved] = useState(false);
+    const [isRejected, setIsRejected] = useState(false);
+    const [supervisorName, setSupervisorName] = useState(supervisor);
+    const [rejectionReason, setRejectionReason] = useState('');
+
+    // Hardcoded data for modal (in real app, this would come from props)
+    const estimatedAmount = 39000;
+    const maxBudget = 45000;
+
+    const handleApproveClick = () => {
+        setShowApprovalModal(true);
+    };
+
+    const handleRejectClick = () => {
+        setShowRejectionModal(true);
+    };
+
+    const handleApprovalConfirm = () => {
+        setIsApproved(true);
+        setSupervisorName('Mario Altamirano (Supervisor)');
+        setShowApprovalModal(false);
+        onApprove();
+    };
+
+    const handleRejectionConfirm = (reason: string) => {
+        setIsRejected(true);
+        setRejectionReason(reason);
+        setShowRejectionModal(false);
+        onReject();
+    };
+
     return (
         <>
             <div className="licitacion-detail-header-wrapper">
@@ -43,7 +82,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                             <span><strong>ID:</strong> {id}</span>
                             <span><strong>Fecha creación:</strong> {createdDate}</span>
                             <span><strong>Comprador:</strong> {buyer}</span>
-                            <span><strong>Supervisor:</strong> {supervisor}</span>
+                            <span><strong>Supervisor:</strong> {isApproved ? supervisorName : supervisor}</span>
                         </div>
                     }
                 />
@@ -58,8 +97,12 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                     <LicitacionTimeline
                         currentStatus={currentStatus}
                         timestamps={timestamps}
-                        onApprove={onApprove}
-                        onReject={onReject}
+                        onApprove={handleApproveClick}
+                        onReject={handleRejectClick}
+                        isApproved={isApproved}
+                        supervisorName={supervisorName}
+                        isRejected={isRejected}
+                        rejectionReason={rejectionReason}
                     />
                 </div>
                 <div className="licitacion-detail-right-col">
@@ -69,8 +112,30 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                     <LicitacionRequiredDocs />
                 </div>
             </div>
+
+            {/* Modals */}
+            <ApprovalModal
+                isOpen={showApprovalModal}
+                onClose={() => setShowApprovalModal(false)}
+                onConfirm={handleApprovalConfirm}
+                licitacionId={id}
+                buyer={buyer}
+                estimatedAmount={estimatedAmount}
+                maxBudget={maxBudget}
+            />
+
+            <RejectionModal
+                isOpen={showRejectionModal}
+                onClose={() => setShowRejectionModal(false)}
+                onConfirm={handleRejectionConfirm}
+                licitacionId={id}
+                buyer={buyer}
+                estimatedAmount={estimatedAmount}
+                maxBudget={maxBudget}
+            />
         </>
     );
 };
 
 export default LicitacionDetailTemplate;
+

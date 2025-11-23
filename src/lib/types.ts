@@ -31,7 +31,8 @@ export type LicitacionStatus =
   | "EVALUACION_ECONOMIA"
   | "ADJUDICADO"
   | "CON_CONTRATO"
-  | "FINALIZADA";
+  | "FINALIZADA"
+  | "RECHAZADA";
 
 /**
  * Representa un documento requerido en una licitación

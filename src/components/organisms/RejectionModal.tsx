@@ -1,0 +1,103 @@
+import React, { useState } from 'react';
+import { XCircle } from 'lucide-react';
+import ConfirmationModal from '../molecules/ConfirmationModal';
+import Alert from '../atoms/Alert';
+import Textarea from '../atoms/Textarea';
+import Label from '../atoms/Label';
+import './RejectionModal.css';
+
+interface RejectionModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: (reason: string) => void;
+    licitacionId: string;
+    buyer: string;
+    estimatedAmount: number;
+    maxBudget: number;
+}
+
+const RejectionModal: React.FC<RejectionModalProps> = ({
+    isOpen,
+    onClose,
+    onConfirm,
+    licitacionId,
+    buyer,
+    estimatedAmount,
+    maxBudget
+}) => {
+    const [rejectionReason, setRejectionReason] = useState('');
+    const [error, setError] = useState('');
+
+    const handleConfirm = () => {
+        if (!rejectionReason.trim()) {
+            setError('El motivo del rechazo es obligatorio');
+            return;
+        }
+        onConfirm(rejectionReason);
+        setRejectionReason('');
+        setError('');
+    };
+
+    const handleClose = () => {
+        setRejectionReason('');
+        setError('');
+        onClose();
+    };
+
+    return (
+        <ConfirmationModal
+            isOpen={isOpen}
+            onClose={handleClose}
+            onConfirm={handleConfirm}
+            title="Rechazar solicitud"
+            confirmText="Confirmar Rechazo"
+            cancelText="Cancelar"
+            confirmVariant="danger"
+            icon={<XCircle size={24} className="rejection-icon" />}
+        >
+            <div className="rejection-modal-content">
+                <div className="licitacion-summary rejection-summary">
+                    <div className="summary-item">
+                        <span className="summary-label">ID:</span>
+                        <span className="summary-value">{licitacionId}</span>
+                    </div>
+                    <div className="summary-item">
+                        <span className="summary-label">Comprador:</span>
+                        <span className="summary-value">{buyer}</span>
+                    </div>
+                    <div className="summary-item">
+                        <span className="summary-label">Monto estimado:</span>
+                        <span className="summary-value">S/ {estimatedAmount.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    </div>
+                    <div className="summary-item">
+                        <span className="summary-label">Presupuesto máximo:</span>
+                        <span className="summary-value">S/ {maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    </div>
+                </div>
+
+                <Alert variant="warning">
+                    <p className="alert-title">El rechazo cancelara la licitación completamente</p>
+                </Alert>
+
+                <div className="rejection-reason-field">
+                    <Label htmlFor="rejection-reason">
+                        Motivo del rechazo <span className="required-mark">*</span>
+                    </Label>
+                    <Textarea
+                        id="rejection-reason"
+                        value={rejectionReason}
+                        onChange={(e) => {
+                            setRejectionReason(e.target.value);
+                            if (error) setError('');
+                        }}
+                        placeholder="Describa detalladamente el motivo del rechazo..."
+                        rows={4}
+                    />
+                    {error && <span className="error-text">{error}</span>}
+                </div>
+            </div>
+        </ConfirmationModal>
+    );
+};
+
+export default RejectionModal;

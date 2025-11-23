@@ -1,0 +1,50 @@
+.approval-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.approval-icon {
+  color: #3b82f6;
+}
+
+.licitacion-summary {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.summary-label {
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+}
+
+.summary-value {
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.alert-title {
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.alert-title + p {
+  margin: 0 0 4px 0;
+}
+
+.alert-title ~ p:last-child {
+  margin: 0;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, Send, Flag } from 'lucide-react';
 import TimelineItem from '../molecules/TimelineItem';
 import Button from '../atoms/Button';
 import { LicitacionStatus } from '../../lib/types';
@@ -10,6 +10,9 @@ interface LicitacionTimelineProps {
     timestamps: Partial<Record<LicitacionStatus, string>>;
     onApprove: () => void;
     onReject: () => void;
+    isApproved?: boolean;
+    supervisorName?: string;
+    isRejected?: boolean;
 }
 
 // Mapeo del orden de los estados
@@ -29,7 +32,10 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
     currentStatus,
     timestamps,
     onApprove,
-    onReject
+    onReject,
+    isApproved = false,
+    supervisorName = '',
+    isRejected = false
 }) => {
     // Determinar el índice del estado actual
     const currentIndex = statusOrder.indexOf(currentStatus);
@@ -54,36 +60,61 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
         <div className="licitacion-timeline">
             <h3 className="timeline-header-title">Flujo del proceso de licitación</h3>
 
-            <TimelineItem
-                stepNumber={1}
-                title="Borrador"
-                description="Licitación a la espera de aprobación"
-                status={getStepStatus('BORRADOR')}
-                timestamp={timestamps['BORRADOR']}
-                statusText={getStatusText('BORRADOR')}
-            >
-                {currentStatus === 'BORRADOR' && (
-                    <>
-                        <Button variant="primary" size="sm" onClick={onApprove}>
-                            <CheckCircle size={16} />
-                            Aprobar Solicitud
-                        </Button>
-                        <Button variant="secondary" size="sm" onClick={onReject}>
-                            <XCircle size={16} />
-                            Rechazar Solicitud
-                        </Button>
-                    </>
-                )}
-            </TimelineItem>
+            {isRejected ? (
+                <TimelineItem
+                    stepNumber={1}
+                    title="Rechazada"
+                    description={`Invitación Mario Altamirano (Supervisor)`}
+                    status="completed"
+                    timestamp={timestamps['BORRADOR']}
+                />
+            ) : (
+                <TimelineItem
+                    stepNumber={1}
+                    title="Borrador"
+                    description={isApproved ? `Aprobada por ${supervisorName || 'Mario Altamirano (Supervisor)'}` : "Licitación a la espera de aprobación"}
+                    status={getStepStatus('BORRADOR')}
+                    timestamp={timestamps['BORRADOR']}
+                    statusText={getStatusText('BORRADOR')}
+                >
+                    {currentStatus === 'BORRADOR' && !isApproved && (
+                        <>
+                            <Button variant="primary" size="sm" onClick={onApprove}>
+                                <CheckCircle size={16} />
+                                Aprobar Solicitud
+                            </Button>
+                            <Button variant="secondary" size="sm" onClick={onReject}>
+                                <XCircle size={16} />
+                                Rechazar Solicitud
+                            </Button>
+                        </>
+                    )}
+                </TimelineItem>
+            )}
 
-            <TimelineItem
-                stepNumber={2}
-                title="Nueva"
-                description="Aprobada por supervisor"
-                status={getStepStatus('NUEVA')}
-                timestamp={timestamps['NUEVA']}
-                statusText={getStatusText('NUEVA')}
-            />
+            {!isRejected && (
+                <TimelineItem
+                    stepNumber={2}
+                    title="Nueva"
+                    description={isApproved ? "Invitando proveedores" : "Aprobada por supervisor"}
+                    status={getStepStatus('NUEVA')}
+                    timestamp={timestamps['NUEVA']}
+                    statusText={getStatusText('NUEVA')}
+                >
+                    {currentStatus === 'NUEVA' && isApproved && (
+                        <>
+                            <Button variant="primary" size="sm" onClick={() => alert('Invitar proveedores - Por implementar')}>
+                                <Send size={16} />
+                                Invitar proveedores
+                            </Button>
+                            <Button variant="secondary" size="sm" onClick={() => alert('Finalizar invitación - Por implementar')}>
+                                <Flag size={16} />
+                                Finalizar invitación
+                            </Button>
+                        </>
+                    )}
+                </TimelineItem>
+            )}
 
             <TimelineItem
                 stepNumber={3}
