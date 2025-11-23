@@ -39,7 +39,7 @@
 
 .licitacion-detail-layout {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 450px 1fr;
   gap: 2rem;
   align-items: start;
 }
