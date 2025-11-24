@@ -324,7 +324,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 fechaLimite="10 Nov 2025"
                 comprador={buyer}
                 suppliers={mockSuppliersForRegistration.filter(s => registeredProposals.some(p => p.id === s.id))}
-                onFinishEvaluation={onIniciarEvaluacionEconomica}
+                onFinishEvaluation={onIniciarEvaluacionTecnica}
             />
         </>
     );
