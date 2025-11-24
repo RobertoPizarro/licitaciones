@@ -128,7 +128,8 @@ export interface ProviderEvaluation {
   providerName: string;
   providerRuc: string;
   documentsEvaluation: DocumentEvaluation[];
-  notes: string;
+  status: "approved" | "rejected";
+  rejectionReason?: string;
   evaluatedCount: number; // documentos con status !== null
   approvedCount: number; // documentos con status === 'correct'
   rejectedCount: number; // documentos con status === 'incorrect'
