@@ -1,8 +1,9 @@
 import React from 'react';
-import { CheckCircle, AlertTriangle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import Modal from '../atoms/Modal';
 import Button from '../atoms/Button';
 import NoteBox from '../atoms/NoteBox';
+import Alert from '../atoms/Alert';
 import './FinalizeProposalsModal.css';
 
 interface FinalizeProposalsModalProps {
@@ -89,10 +90,9 @@ const FinalizeProposalsModal: React.FC<FinalizeProposalsModalProps> = ({
                     )}
 
                     {suppliersWithoutDocs > 0 && (
-                        <div className="warning-alert">
-                            <AlertTriangle size={20} />
+                        <Alert variant="warning">
                             <span>Hay {suppliersWithoutDocs} proveedores sin documentos registrados</span>
-                        </div>
+                        </Alert>
                     )}
 
                     <NoteBox>

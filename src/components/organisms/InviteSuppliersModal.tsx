@@ -3,6 +3,10 @@ import { Mail, Download } from 'lucide-react';
 import Modal from '../atoms/Modal';
 import Button from '../atoms/Button';
 import Badge from '../atoms/Badge';
+import Label from '../atoms/Label';
+import Input from '../atoms/Input';
+import Textarea from '../atoms/Textarea';
+import Checkbox from '../atoms/Checkbox';
 import './InviteSuppliersModal.css';
 
 interface Supplier {
@@ -143,8 +147,7 @@ Juan Pérez - Módulo de Compras`;
                                     className={`supplier-item ${selectedSuppliers.includes(supplier.id) ? 'selected' : ''}`}
                                     onClick={() => handleToggleSupplier(supplier.id)}
                                 >
-                                    <input
-                                        type="checkbox"
+                                    <Checkbox
                                         checked={selectedSuppliers.includes(supplier.id)}
                                         onChange={() => handleToggleSupplier(supplier.id)}
                                         className="supplier-checkbox"
@@ -166,8 +169,8 @@ Juan Pérez - Módulo de Compras`;
                         <>
                             <div className="email-section">
                                 <div className="form-field">
-                                    <label>Correos Electrónicos</label>
-                                    <input
+                                    <Label>Correos Electrónicos</Label>
+                                    <Input
                                         type="text"
                                         value={getSelectedEmails()}
                                         readOnly
@@ -176,8 +179,8 @@ Juan Pérez - Módulo de Compras`;
                                 </div>
 
                                 <div className="form-field">
-                                    <label>Asunto</label>
-                                    <input
+                                    <Label>Asunto</Label>
+                                    <Input
                                         type="text"
                                         value={emailSubject}
                                         readOnly
@@ -186,8 +189,8 @@ Juan Pérez - Módulo de Compras`;
                                 </div>
 
                                 <div className="form-field">
-                                    <label>Descripción del correo</label>
-                                    <textarea
+                                    <Label>Descripción del correo</Label>
+                                    <Textarea
                                         value={emailBody}
                                         readOnly
                                         className="readonly-textarea"

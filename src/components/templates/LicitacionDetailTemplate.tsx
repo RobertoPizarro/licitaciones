@@ -13,6 +13,7 @@ import InviteSuppliersModal from '../organisms/InviteSuppliersModal';
 import FinalizeInvitationModal from '../organisms/FinalizeInvitationModal';
 import RegisterProposalModal from '../organisms/RegisterProposalModal';
 import FinalizeProposalsModal from '../organisms/FinalizeProposalsModal';
+import { Proposal } from '../molecules/ProposalCard';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
 
@@ -81,6 +82,10 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     // Supplier invitation states
     const [invitedSuppliers, setInvitedSuppliers] = useState<string[]>([]);
 
+    // Proposal registration states
+    const [registeredProposals, setRegisteredProposals] = useState<Proposal[]>([]);
+    const [isCancelledNoProposals, setIsCancelledNoProposals] = useState(false);
+
     const handleApproveClick = () => {
         setShowApprovalModal(true);
     };
@@ -120,15 +125,32 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         setShowFinalizeProposalsModal(true);
     };
 
-    const handleRegisterProposalConfirm = (supplierId: number, files: File[]) => {
-        // Here we would handle the file upload and state update
-        console.log(`Registered proposal for supplier ${supplierId} with ${files.length} files`);
+    const handleRegisterProposalConfirm = (supplierId: number, _files: File[]) => {
+        const supplier = mockSuppliersForRegistration.find(s => s.id === supplierId);
+        if (supplier) {
+            const newProposal: Proposal = {
+                id: supplier.id,
+                supplierName: supplier.name,
+                ruc: supplier.ruc,
+                technicalStatus: 'Pending',
+                economicStatus: 'Pending'
+            };
+
+            // Check if already registered to avoid duplicates
+            if (!registeredProposals.find(p => p.id === supplierId)) {
+                setRegisteredProposals(prev => [...prev, newProposal]);
+            }
+        }
         setShowRegisterProposalModal(false);
     };
 
     const handleConfirmFinalizeProposals = () => {
         setShowFinalizeProposalsModal(false);
-        onFinalizarRegistro?.();
+        if (registeredProposals.length === 0) {
+            setIsCancelledNoProposals(true);
+        } else {
+            onFinalizarRegistro?.();
+        }
     };
 
     const handleInviteSuppliers = () => {
@@ -187,12 +209,13 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         onIniciarEvaluacionEconomica={onIniciarEvaluacionEconomica}
                         onGenerarContrato={onGenerarContrato}
                         onEnviarOrdenCompra={onEnviarOrdenCompra}
+                        isCancelledNoProposals={isCancelledNoProposals}
                     />
                 </div>
                 <div className="licitacion-detail-right-col">
                     <LicitacionGeneralInfo />
                     <LicitacionItemsTable />
-                    <LicitacionProposals />
+                    <LicitacionProposals proposals={registeredProposals} />
                     <LicitacionRequiredDocs />
                 </div>
             </div>
@@ -258,8 +281,8 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 supervisorName={supervisorName}
                 estimatedAmount={estimatedAmount}
                 maxBudget={maxBudget}
-                suppliersWithProposals={["TechSupply S.A.C.", "Computadoras del Perú S.A.", "Distribuidora PC E.I.R.L."]}
-                suppliersWithoutDocs={5}
+                suppliersWithProposals={registeredProposals.map(p => p.supplierName)}
+                suppliersWithoutDocs={Math.max(0, (invitedSuppliers.length > 0 ? invitedSuppliers.length : mockSuppliersForRegistration.length) - registeredProposals.length)}
             />
         </>
     );

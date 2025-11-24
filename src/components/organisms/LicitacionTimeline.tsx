@@ -26,6 +26,7 @@ interface LicitacionTimelineProps {
     onIniciarEvaluacionEconomica?: () => void;
     onGenerarContrato?: () => void;
     onEnviarOrdenCompra?: () => void;
+    isCancelledNoProposals?: boolean;
 }
 
 // Mapeo del orden de los estados
@@ -61,7 +62,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
     onIniciarEvaluacionTecnica,
     onIniciarEvaluacionEconomica,
     onGenerarContrato,
-    onEnviarOrdenCompra
+    onEnviarOrdenCompra,
+    isCancelledNoProposals = false
 }) => {
     // Determinar el índice del estado actual
     const currentIndex = statusOrder.indexOf(currentStatus);
@@ -162,31 +164,42 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 </TimelineItem>
             )}
 
-            <TimelineItem
-                stepNumber={3}
-                title="En invitación"
-                description={
-                    currentStatus === 'CON_PROPUESTAS' || getStepStatus('EN_INVITACION') === 'completed'
-                        ? `${propuestasRegistradas} de ${proveedoresCount} propuestas registradas`
-                        : "Registrando propuesta de los proveedores"
-                }
-                status={getStepStatus('EN_INVITACION')}
-                timestamp={timestamps['EN_INVITACION']}
-                statusText={getStatusText('EN_INVITACION')}
-            >
-                {currentStatus === 'EN_INVITACION' && (
-                    <>
-                        <Button variant="primary" size="sm" onClick={onRegistrarPropuesta}>
-                            <PencilLine size={16} />
-                            Registrar propuesta
-                        </Button>
-                        <Button variant="secondary" size="sm" onClick={onFinalizarRegistro}>
-                            <ArrowRight size={16} />
-                            Finalizar registro
-                        </Button>
-                    </>
-                )}
-            </TimelineItem>
+            {isCancelledNoProposals ? (
+                <TimelineItem
+                    stepNumber={3}
+                    title="Cancelada"
+                    description="Licitación cancelada debido a la falta de propuestas"
+                    status="completed"
+                    timestamp={timestamps['EN_INVITACION']}
+                    isRejected={true}
+                />
+            ) : (
+                <TimelineItem
+                    stepNumber={3}
+                    title="En invitación"
+                    description={
+                        currentStatus === 'CON_PROPUESTAS' || getStepStatus('EN_INVITACION') === 'completed'
+                            ? `${propuestasRegistradas} de ${proveedoresCount} propuestas registradas`
+                            : "Registrando propuesta de los proveedores"
+                    }
+                    status={getStepStatus('EN_INVITACION')}
+                    timestamp={timestamps['EN_INVITACION']}
+                    statusText={getStatusText('EN_INVITACION')}
+                >
+                    {currentStatus === 'EN_INVITACION' && (
+                        <>
+                            <Button variant="primary" size="sm" onClick={onRegistrarPropuesta}>
+                                <PencilLine size={16} />
+                                Registrar propuesta
+                            </Button>
+                            <Button variant="secondary" size="sm" onClick={onFinalizarRegistro}>
+                                <ArrowRight size={16} />
+                                Finalizar registro
+                            </Button>
+                        </>
+                    )}
+                </TimelineItem>
+            )}
 
             <TimelineItem
                 stepNumber={4}

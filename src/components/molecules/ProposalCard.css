@@ -1,0 +1,48 @@
+.proposal-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.proposal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.proposal-supplier-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.proposal-ruc {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.proposal-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.proposal-statuses {
+  display: flex;
+  gap: 12px;
+}
+
+.status-icon {
+  margin-right: 6px;
+  color: #6b7280;
+}
+
+.proposal-actions {
+  display: flex;
+  gap: 8px;
+}

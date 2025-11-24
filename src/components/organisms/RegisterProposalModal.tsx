@@ -4,6 +4,7 @@ import Modal from '../atoms/Modal';
 import Button from '../atoms/Button';
 import NoteBox from '../atoms/NoteBox';
 import Select from '../atoms/Select';
+import Label from '../atoms/Label';
 import './RegisterProposalModal.css';
 
 interface Supplier {
@@ -87,9 +88,9 @@ const RegisterProposalModal: React.FC<RegisterProposalModalProps> = ({
 
                 <div className="register-proposal-body">
                     <div className="form-field">
-                        <label>
+                        <Label>
                             Seleccionar Proveedor <span className="required">*</span>
-                        </label>
+                        </Label>
                         <Select
                             value={selectedSupplierId || ''}
                             onChange={(e) => setSelectedSupplierId(Number(e.target.value))}
@@ -129,7 +130,7 @@ const RegisterProposalModal: React.FC<RegisterProposalModalProps> = ({
 
                             <div className="documents-section">
                                 <div className="documents-header">
-                                    <label>Documentos de la Propuesta</label>
+                                    <Label>Documentos de la Propuesta</Label>
                                     <span className="file-count">{files.length} archivo(s)</span>
                                 </div>
 
@@ -168,13 +169,14 @@ const RegisterProposalModal: React.FC<RegisterProposalModalProps> = ({
                                     </div>
                                 )}
 
-                                <NoteBox>
-                                    <p>
-                                        El comité Técnico evaluará la completitud y validez de todos los documentos cargados.
-                                        Asegúrese de incluir la documentación enviada por el proveedor.
-                                    </p>
-                                </NoteBox>
                             </div>
+
+                            <NoteBox>
+                                <p>
+                                    El comité Técnico evaluará la completitud y validez de todos los documentos cargados.
+                                    Asegúrese de incluir la documentación enviada por el proveedor.
+                                </p>
+                            </NoteBox>
                         </>
                     )}
                 </div>
