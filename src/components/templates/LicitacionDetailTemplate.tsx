@@ -268,7 +268,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 onClose={() => setShowRegisterProposalModal(false)}
                 licitacionId={id}
                 licitacionTitle={title}
-                suppliers={mockSuppliersForRegistration}
+                suppliers={mockSuppliersForRegistration.filter(s => invitedSuppliers.includes(s.name))}
                 onRegisterProposal={handleRegisterProposalConfirm}
             />
 
