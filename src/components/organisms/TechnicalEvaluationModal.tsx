@@ -4,7 +4,6 @@ import WideModal from '../atoms/WideModal';
 import Button from '../atoms/Button';
 import EvaluationModalHeader from '../molecules/EvaluationModalHeader';
 import ProviderSelectorCard from '../molecules/ProviderSelectorCard';
-import NotesTextarea from '../molecules/NotesTextarea';
 import DocumentsChecklist from '../molecules/DocumentsChecklist';
 import EvaluableDocumentsList from './EvaluableDocumentsList';
 import { DocumentEvaluation, ProviderEvaluation } from '../../lib/types';
@@ -184,12 +183,6 @@ const TechnicalEvaluationModal: React.FC<TechnicalEvaluationModalProps> = ({
                         <EvaluableDocumentsList
                             evaluations={documentEvaluations}
                             onEvaluationChange={handleEvaluationChange}
-                            disabled={!selectedSupplierId}
-                        />
-
-                        <NotesTextarea
-                            value={notes}
-                            onChange={setNotes}
                             disabled={!selectedSupplierId}
                         />
 
