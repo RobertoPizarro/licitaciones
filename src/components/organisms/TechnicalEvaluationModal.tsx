@@ -62,6 +62,13 @@ const TechnicalEvaluationModal: React.FC<TechnicalEvaluationModalProps> = ({
     // Total documents count (hardcoded: 3 legal + 3 technical + 3 financial = 9)
     const totalDocuments = 9;
 
+    // Calculate document stats for current provider
+    const currentDocStats = useMemo(() => {
+        const evaluations = Array.from(documentEvaluations.values());
+        const evaluated = evaluations.filter(e => e.status !== null).length;
+        return { evaluated };
+    }, [documentEvaluations]);
+
     // Calculate evaluation status
     const hasIncorrectDocs = useMemo(() => {
         return Array.from(documentEvaluations.values())
@@ -74,21 +81,27 @@ const TechnicalEvaluationModal: React.FC<TechnicalEvaluationModalProps> = ({
             evals.every(doc => doc.status === 'correct');
     }, [documentEvaluations]);
 
+    const hasMissingDocs = useMemo(() => {
+        return missingDocuments.size > 0;
+    }, [missingDocuments]);
+
+    const shouldReject = useMemo(() => {
+        return hasIncorrectDocs || hasMissingDocs;
+    }, [hasIncorrectDocs, hasMissingDocs]);
+
     const canSave = useMemo(() => {
         if (!selectedSupplierId) return false;
 
-        if (hasIncorrectDocs) {
+        // All documents must be evaluated
+        if (currentDocStats.evaluated !== totalDocuments) return false;
+
+        // If rejecting (incorrect docs or missing docs), need justification
+        if (shouldReject) {
             return rejectionJustification.trim().length > 0;
         }
-        return allDocsCorrect;
-    }, [selectedSupplierId, hasIncorrectDocs, allDocsCorrect, rejectionJustification]);
 
-    // Calculate document stats for current provider
-    const currentDocStats = useMemo(() => {
-        const evaluations = Array.from(documentEvaluations.values());
-        const evaluated = evaluations.filter(e => e.status !== null).length;
-        return { evaluated };
-    }, [documentEvaluations]);
+        return allDocsCorrect;
+    }, [selectedSupplierId, shouldReject, allDocsCorrect, rejectionJustification, currentDocStats.evaluated, totalDocuments]);
 
     const selectedSupplier = suppliers.find(s => s.id === selectedSupplierId);
 
@@ -135,7 +148,8 @@ const TechnicalEvaluationModal: React.FC<TechnicalEvaluationModalProps> = ({
     const handleSave = () => {
         if (!selectedSupplier) return;
 
-        const evaluationStatus: 'approved' | 'rejected' = allDocsCorrect ? 'approved' : 'rejected';
+        const evaluationStatus: 'approved' | 'rejected' =
+            (allDocsCorrect && !hasMissingDocs) ? 'approved' : 'rejected';
 
         const evaluation: ProviderEvaluation = {
             providerId: selectedSupplier.id,
@@ -143,9 +157,9 @@ const TechnicalEvaluationModal: React.FC<TechnicalEvaluationModalProps> = ({
             providerRuc: selectedSupplier.ruc,
             documentsEvaluation: Array.from(documentEvaluations.values()),
             status: evaluationStatus,
-            rejectionReason: hasIncorrectDocs ? rejectionJustification : undefined,
+            rejectionReason: shouldReject ? rejectionJustification : undefined,
             evaluatedCount: currentDocStats.evaluated,
-            approvedCount: 0, // Logic for provider approval would go here
+            approvedCount: 0,
             rejectedCount: 0
         };
 
@@ -180,7 +194,6 @@ const TechnicalEvaluationModal: React.FC<TechnicalEvaluationModalProps> = ({
     };
 
     const handleFinish = () => {
-        // Call callback to transition to next state (Economic Evaluation)
         if (onFinishEvaluation) {
             onFinishEvaluation();
         }
@@ -219,6 +232,7 @@ const TechnicalEvaluationModal: React.FC<TechnicalEvaluationModalProps> = ({
                             checkedDocuments={missingDocuments}
                             onToggleDocument={handleToggleMissingDocument}
                             disabled={!selectedSupplierId}
+                            showCounter={true}
                         />
 
                         <EvaluatedProvidersList evaluatedProviders={evaluatedProvidersList} />
@@ -239,7 +253,7 @@ const TechnicalEvaluationModal: React.FC<TechnicalEvaluationModalProps> = ({
                             disabled={!selectedSupplierId}
                         />
 
-                        {allDocsCorrect && (
+                        {allDocsCorrect && !hasMissingDocs && (
                             <Alert variant="success">
                                 <strong>Resultado: PROVEEDOR APROBADO</strong>
                                 <br />
@@ -247,14 +261,24 @@ const TechnicalEvaluationModal: React.FC<TechnicalEvaluationModalProps> = ({
                             </Alert>
                         )}
 
-                        {hasIncorrectDocs && (
-                            <>
-                                <Alert variant="error">
-                                    <strong>Proveedor será RECHAZADO</strong>
-                                    <br />
-                                    • Tiene documentos marcados como incorrectos
-                                </Alert>
+                        {hasMissingDocs && (
+                            <Alert variant="error">
+                                <strong>Proveedor será RECHAZADO</strong>
+                                <br />
+                                • Faltan {missingDocuments.size} documento(s) requerido(s)
+                            </Alert>
+                        )}
 
+                        {hasIncorrectDocs && (
+                            <Alert variant="error">
+                                <strong>Proveedor será RECHAZADO</strong>
+                                <br />
+                                • Tiene documentos marcados como incorrectos
+                            </Alert>
+                        )}
+
+                        {shouldReject && currentDocStats.evaluated === totalDocuments && (
+                            <>
                                 <RejectionJustification
                                     value={rejectionJustification}
                                     onChange={setRejectionJustification}

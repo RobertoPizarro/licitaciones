@@ -6,12 +6,14 @@ interface DocumentsChecklistProps {
     disabled?: boolean;
     checkedDocuments: Set<string>;
     onToggleDocument: (documentId: string) => void;
+    showCounter?: boolean;
 }
 
 const DocumentsChecklist: React.FC<DocumentsChecklistProps> = ({
     disabled = false,
     checkedDocuments,
-    onToggleDocument
+    onToggleDocument,
+    showCounter = false
 }) => {
     // Hardcoded documents matching the evaluation list
     const documentCategories = [
@@ -71,6 +73,12 @@ const DocumentsChecklist: React.FC<DocumentsChecklistProps> = ({
                     </div>
                 ))}
             </div>
+
+            {showCounter && checkedDocuments.size > 0 && (
+                <div className="missing-docs-counter">
+                    {checkedDocuments.size} documento(s) faltante(s) marcado(s)
+                </div>
+            )}
 
             {disabled && (
                 <div className="checklist-footer-message">
