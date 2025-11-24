@@ -14,6 +14,7 @@ import FinalizeInvitationModal from '../organisms/FinalizeInvitationModal';
 import RegisterProposalModal from '../organisms/RegisterProposalModal';
 import FinalizeProposalsModal from '../organisms/FinalizeProposalsModal';
 import SendToEvaluationModal from '../organisms/SendToEvaluationModal';
+import TechnicalEvaluationModal from '../organisms/TechnicalEvaluationModal';
 import { Proposal } from '../molecules/ProposalCard';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
@@ -75,6 +76,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     const [showRegisterProposalModal, setShowRegisterProposalModal] = useState(false);
     const [showFinalizeProposalsModal, setShowFinalizeProposalsModal] = useState(false);
     const [showSendToEvaluationModal, setShowSendToEvaluationModal] = useState(false);
+    const [showTechnicalEvaluationModal, setShowTechnicalEvaluationModal] = useState(false);
 
     // Approval/Rejection states
     const [isApproved, setIsApproved] = useState(false);
@@ -164,6 +166,10 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         onEnviarEvaluacion?.();
     };
 
+    const handleIniciarEvaluacionTecnica = () => {
+        setShowTechnicalEvaluationModal(true);
+    };
+
     const handleInviteSuppliers = () => {
         setShowInviteModal(true);
     };
@@ -216,7 +222,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         onFinalizarInvitacion={handleFinalizarInvitacionClick}
                         onFinalizarRegistro={handleFinalizarRegistroClick}
                         onEnviarEvaluacion={handleSendToEvaluation}
-                        onIniciarEvaluacionTecnica={onIniciarEvaluacionTecnica}
+                        onIniciarEvaluacionTecnica={handleIniciarEvaluacionTecnica}
                         onIniciarEvaluacionEconomica={onIniciarEvaluacionEconomica}
                         onGenerarContrato={onGenerarContrato}
                         onEnviarOrdenCompra={onEnviarOrdenCompra}
@@ -306,6 +312,19 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 estimatedAmount={estimatedAmount}
                 maxBudget={maxBudget}
                 suppliersWithProposals={registeredProposals.map(p => p.supplierName)}
+            />
+
+            <TechnicalEvaluationModal
+                isOpen={showTechnicalEvaluationModal}
+                onClose={() => setShowTechnicalEvaluationModal(false)}
+                licitacionId={id}
+                licitacionTitle={title}
+                presupuesto={`S/. ${maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2 })}`}
+                solicitudOrigen="N° 2025123"
+                fechaLimite="10 Nov 2025"
+                comprador={buyer}
+                suppliers={mockSuppliersForRegistration.filter(s => registeredProposals.some(p => p.id === s.id))}
+                onFinishEvaluation={onIniciarEvaluacionEconomica}
             />
         </>
     );

@@ -100,3 +100,46 @@ export interface FilterBarProps {
   onApplyFilters: () => void;
   onClearFilters: () => void;
 }
+
+// ==================================================================
+// EVALUATION TYPES
+// ==================================================================
+
+/**
+ * Estado de evaluación de un documento: null (no evaluado), 'correct', 'incorrect'
+ */
+export type DocumentEvaluationStatus = "correct" | "incorrect" | null;
+
+/**
+ * Evaluación de un documento individual
+ */
+export interface DocumentEvaluation {
+  documentId: string;
+  documentName: string;
+  fileSize: string;
+  status: DocumentEvaluationStatus; // null = no evaluado aún
+}
+
+/**
+ * Evaluación completa de un proveedor por el comité técnico
+ */
+export interface ProviderEvaluation {
+  providerId: number;
+  providerName: string;
+  providerRuc: string;
+  documentsEvaluation: DocumentEvaluation[];
+  notes: string;
+  evaluatedCount: number; // documentos con status !== null
+  approvedCount: number; // documentos con status === 'correct'
+  rejectedCount: number; // documentos con status === 'incorrect'
+}
+
+/**
+ * Props para LicitacionGeneralInfo (ahora parametrizable)
+ */
+export interface LicitacionGeneralInfoProps {
+  presupuesto?: string;
+  solicitudOrigen?: string;
+  fechaLimite?: string;
+  comprador?: string;
+}

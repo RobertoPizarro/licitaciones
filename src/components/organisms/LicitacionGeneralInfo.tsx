@@ -3,9 +3,15 @@ import Card from '../atoms/Card';
 import CardHeader from '../atoms/CardHeader';
 import CardBody from '../atoms/CardBody';
 import ReadOnlyField from '../molecules/ReadOnlyField';
+import { LicitacionGeneralInfoProps } from '../../lib/types';
 import './LicitacionGeneralInfo.css';
 
-const LicitacionGeneralInfo: React.FC = () => {
+const LicitacionGeneralInfo: React.FC<LicitacionGeneralInfoProps> = ({
+    presupuesto = 'S/. 45,000.00',
+    solicitudOrigen = 'N° 2025123',
+    fechaLimite = '10 Nov 2025',
+    comprador = 'Juan Pérez'
+}) => {
     return (
         <Card>
             <CardHeader>
@@ -13,10 +19,10 @@ const LicitacionGeneralInfo: React.FC = () => {
             </CardHeader>
             <CardBody>
                 <div className="general-info-grid">
-                    <ReadOnlyField label="Presupuesto Máximo" value="S/. 45,000.00" />
-                    <ReadOnlyField label="Solicitud de Origen" value="N° 2025123" />
-                    <ReadOnlyField label="Fecha límite para recibir propuestas" value="10 Nov 2025" />
-                    <ReadOnlyField label="Comprador" value="Juan Pérez" />
+                    <ReadOnlyField label="Presupuesto Máximo" value={presupuesto} />
+                    <ReadOnlyField label="Solicitud de Origen" value={solicitudOrigen} />
+                    <ReadOnlyField label="Fecha límite para recibir propuestas" value={fechaLimite} />
+                    <ReadOnlyField label="Comprador" value={comprador} />
                 </div>
             </CardBody>
         </Card>
