@@ -93,6 +93,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     // Technical evaluation states
     const [technicalEvaluations, setTechnicalEvaluations] = useState<Map<number, 'approved' | 'rejected'>>(new Map());
     const [isCancelledNoApprovals, setIsCancelledNoApprovals] = useState(false);
+    const [cancellationTimestamp, setCancellationTimestamp] = useState<string | undefined>(undefined);
 
     const handleApproveClick = () => {
         setShowApprovalModal(true);
@@ -198,6 +199,14 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         if (approvedCount === 0) {
             // No providers passed: cancel
             setIsCancelledNoApprovals(true);
+            setCancellationTimestamp(new Date().toLocaleString('es-PE', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            }));
             setShowTechnicalEvaluationModal(false);
             // DO NOT call onIniciarEvaluacionTecnica
         } else {
@@ -250,7 +259,10 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 <div className="licitacion-detail-left-col">
                     <LicitacionTimeline
                         currentStatus={currentStatus}
-                        timestamps={timestamps}
+                        timestamps={{
+                            ...timestamps,
+                            ...(cancellationTimestamp ? { EVALUACION_TECNICA: cancellationTimestamp } : {})
+                        }}
                         onApprove={handleApproveClick}
                         onReject={handleCancelClick}
                         isApproved={isApproved}
