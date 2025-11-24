@@ -3,6 +3,7 @@ import { FileText, Upload } from 'lucide-react';
 import Modal from '../atoms/Modal';
 import Button from '../atoms/Button';
 import NoteBox from '../atoms/NoteBox';
+import Select from '../atoms/Select';
 import './RegisterProposalModal.css';
 
 interface Supplier {
@@ -89,10 +90,9 @@ const RegisterProposalModal: React.FC<RegisterProposalModalProps> = ({
                         <label>
                             Seleccionar Proveedor <span className="required">*</span>
                         </label>
-                        <select
+                        <Select
                             value={selectedSupplierId || ''}
                             onChange={(e) => setSelectedSupplierId(Number(e.target.value))}
-                            className="supplier-select"
                         >
                             <option value="">-- Seleccione un proveedor --</option>
                             {suppliers.map(supplier => (
@@ -100,7 +100,7 @@ const RegisterProposalModal: React.FC<RegisterProposalModalProps> = ({
                                     {supplier.name} - RUC: {supplier.ruc}
                                 </option>
                             ))}
-                        </select>
+                        </Select>
                     </div>
 
                     {!selectedSupplier && (
