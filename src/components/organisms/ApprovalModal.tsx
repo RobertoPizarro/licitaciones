@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import ConfirmationModal from '../molecules/ConfirmationModal';
-import Alert from '../atoms/Alert';
+import NoteBox from '../atoms/NoteBox';
 import './ApprovalModal.css';
 
 interface ApprovalModalProps {
@@ -54,11 +54,9 @@ const ApprovalModal: React.FC<ApprovalModalProps> = ({
                     </div>
                 </div>
 
-                <Alert variant="info">
-                    <p className="alert-title">Nota:</p>
-                    <p>¿Está seguro que desea aprobar la solicitud?</p>
-                    <p>Una vez aprobada, se enviará al siguiente nivel del flujo de licitación.</p>
-                </Alert>
+                <NoteBox>
+                    <p>¿Está seguro que desea aprobar la solicitud? Una vez aprobada, se enviará al siguiente nivel del flujo de licitación.</p>
+                </NoteBox>
             </div>
         </ConfirmationModal>
     );

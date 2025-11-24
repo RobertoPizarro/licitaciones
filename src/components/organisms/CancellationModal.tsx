@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { XCircle } from 'lucide-react';
 import ConfirmationModal from '../molecules/ConfirmationModal';
-import Alert from '../atoms/Alert';
+import NoteBox from '../atoms/NoteBox';
 import Textarea from '../atoms/Textarea';
 import Label from '../atoms/Label';
 import Button from '../atoms/Button';
@@ -83,9 +83,9 @@ const CancellationModal: React.FC<CancellationModalProps> = ({
                     </div>
                 </div>
 
-                <Alert variant="warning">
-                    <p className="alert-title">La cancelación anulará la licitación completamente</p>
-                </Alert>
+                <NoteBox>
+                    <p>La cancelación anulará la licitación completamente</p>
+                </NoteBox>
 
                 <div className="rejection-reason-field">
                     <Label htmlFor="rejection-reason">

@@ -11,6 +11,8 @@ import ApprovalModal from '../organisms/ApprovalModal';
 import CancellationModal from '../organisms/CancellationModal';
 import InviteSuppliersModal from '../organisms/InviteSuppliersModal';
 import FinalizeInvitationModal from '../organisms/FinalizeInvitationModal';
+import RegisterProposalModal from '../organisms/RegisterProposalModal';
+import FinalizeProposalsModal from '../organisms/FinalizeProposalsModal';
 import { LicitacionStatus } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
 
@@ -68,6 +70,8 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     const [showCancellationModal, setShowCancellationModal] = useState(false);
     const [showInviteModal, setShowInviteModal] = useState(false);
     const [showFinalizeInviteModal, setShowFinalizeInviteModal] = useState(false);
+    const [showRegisterProposalModal, setShowRegisterProposalModal] = useState(false);
+    const [showFinalizeProposalsModal, setShowFinalizeProposalsModal] = useState(false);
 
     // Approval/Rejection states
     const [isApproved, setIsApproved] = useState(false);
@@ -99,8 +103,32 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         onReject();
     };
 
+    // Mock suppliers for registration (should come from API/Props in real app)
+    const mockSuppliersForRegistration = [
+        { id: 1, name: "Tech Solutions SAC", ruc: "20123456789", email: "ventas@techsolutions.com" },
+        { id: 2, name: "Computadoras del Perú SA", ruc: "20987654321", email: "contacto@computadoras.pe" },
+        { id: 3, name: "Digital Store EIRL", ruc: "20456789123", email: "info@digitalstore.com" },
+        { id: 4, name: "TechMart Perú S.A.C.", ruc: "20789123456", email: "ventas@techmart.pe" },
+        { id: 5, name: "Global Tech Solutions S.A.", ruc: "20321654987", email: "cotizaciones@globaltech.com.pe" }
+    ];
+
     const handleRegistrarPropuesta = () => {
-        alert('Registrar propuesta - Por implementar');
+        setShowRegisterProposalModal(true);
+    };
+
+    const handleFinalizarRegistroClick = () => {
+        setShowFinalizeProposalsModal(true);
+    };
+
+    const handleRegisterProposalConfirm = (supplierId: number, files: File[]) => {
+        // Here we would handle the file upload and state update
+        console.log(`Registered proposal for supplier ${supplierId} with ${files.length} files`);
+        setShowRegisterProposalModal(false);
+    };
+
+    const handleConfirmFinalizeProposals = () => {
+        setShowFinalizeProposalsModal(false);
+        onFinalizarRegistro?.();
     };
 
     const handleInviteSuppliers = () => {
@@ -153,7 +181,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         onRegistrarPropuesta={handleRegistrarPropuesta}
                         onInvitarProveedores={handleInviteSuppliers}
                         onFinalizarInvitacion={handleFinalizarInvitacionClick}
-                        onFinalizarRegistro={onFinalizarRegistro}
+                        onFinalizarRegistro={handleFinalizarRegistroClick}
                         onEnviarEvaluacion={onEnviarEvaluacion}
                         onIniciarEvaluacionTecnica={onIniciarEvaluacionTecnica}
                         onIniciarEvaluacionEconomica={onIniciarEvaluacionEconomica}
@@ -210,6 +238,28 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 estimatedAmount={estimatedAmount}
                 maxBudget={maxBudget}
                 invitedSuppliers={invitedSuppliers}
+            />
+
+            <RegisterProposalModal
+                isOpen={showRegisterProposalModal}
+                onClose={() => setShowRegisterProposalModal(false)}
+                licitacionId={id}
+                licitacionTitle={title}
+                suppliers={mockSuppliersForRegistration}
+                onRegisterProposal={handleRegisterProposalConfirm}
+            />
+
+            <FinalizeProposalsModal
+                isOpen={showFinalizeProposalsModal}
+                onClose={() => setShowFinalizeProposalsModal(false)}
+                onConfirm={handleConfirmFinalizeProposals}
+                licitacionId={id}
+                buyerName={buyer}
+                supervisorName={supervisorName}
+                estimatedAmount={estimatedAmount}
+                maxBudget={maxBudget}
+                suppliersWithProposals={["TechSupply S.A.C.", "Computadoras del Perú S.A.", "Distribuidora PC E.I.R.L."]}
+                suppliersWithoutDocs={5}
             />
         </>
     );

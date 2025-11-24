@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import ConfirmationModal from '../molecules/ConfirmationModal';
-import Alert from '../atoms/Alert';
+import NoteBox from '../atoms/NoteBox';
 import './FinalizeInvitationModal.css';
 
 interface FinalizeInvitationModalProps {
@@ -73,11 +73,9 @@ const FinalizeInvitationModal: React.FC<FinalizeInvitationModalProps> = ({
                     </div>
                 )}
 
-                <Alert variant="info">
-                    <p className="alert-title">Nota:</p>
-                    <p>¿Confirma que ha enviado todas las invitaciones a los proveedores seleccionados?</p>
-                    <p>La licitación pasará al siguiente estado y ya no podrá modificar las invitaciones</p>
-                </Alert>
+                <NoteBox>
+                    <p>¿Confirma que ha enviado todas las invitaciones a los proveedores seleccionados? La licitación pasará al siguiente estado y ya no podrá modificar las invitaciones</p>
+                </NoteBox>
             </div>
         </ConfirmationModal>
     );
