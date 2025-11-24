@@ -52,8 +52,8 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     timestamps,
     estimatedAmount,
     maxBudget,
-    proveedoresCount,
-    propuestasRegistradas,
+    proveedoresCount: _proveedoresCount,
+    propuestasRegistradas: _propuestasRegistradas,
     propuestasAprobadasTecnicamente,
     propuestasAprobadasEconomicamente,
     onApprove,
@@ -196,8 +196,8 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         isApproved={isApproved}
                         supervisorName={supervisorName}
                         isRejected={isRejected}
-                        proveedoresCount={proveedoresCount}
-                        propuestasRegistradas={propuestasRegistradas}
+                        proveedoresCount={invitedSuppliers.length}
+                        propuestasRegistradas={registeredProposals.length}
                         propuestasAprobadasTecnicamente={propuestasAprobadasTecnicamente}
                         propuestasAprobadasEconomicamente={propuestasAprobadasEconomicamente}
                         onRegistrarPropuesta={handleRegistrarPropuesta}

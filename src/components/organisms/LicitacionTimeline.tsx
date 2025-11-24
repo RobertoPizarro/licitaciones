@@ -155,10 +155,12 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                                 <Mail size={16} />
                                 Invitar proveedores
                             </Button>
-                            <Button variant="secondary" size="sm" onClick={onFinalizarInvitacion}>
-                                <Flag size={16} />
-                                Finalizar invitación
-                            </Button>
+                            {proveedoresCount > 0 && (
+                                <Button variant="secondary" size="sm" onClick={onFinalizarInvitacion}>
+                                    <Flag size={16} />
+                                    Finalizar invitación
+                                </Button>
+                            )}
                         </>
                     )}
                 </TimelineItem>
@@ -192,10 +194,12 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                                 <PencilLine size={16} />
                                 Registrar propuesta
                             </Button>
-                            <Button variant="secondary" size="sm" onClick={onFinalizarRegistro}>
-                                <ArrowRight size={16} />
-                                Finalizar registro
-                            </Button>
+                            {propuestasRegistradas > 0 && (
+                                <Button variant="secondary" size="sm" onClick={onFinalizarRegistro}>
+                                    <ArrowRight size={16} />
+                                    Finalizar registro
+                                </Button>
+                            )}
                         </>
                     )}
                 </TimelineItem>
