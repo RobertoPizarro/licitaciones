@@ -3,6 +3,7 @@ import { Send } from 'lucide-react';
 import Modal from '../atoms/Modal';
 import Button from '../atoms/Button';
 import NoteBox from '../atoms/NoteBox';
+import LicitacionInfoCard from '../molecules/LicitacionInfoCard';
 import './SendToEvaluationModal.css';
 
 interface SendToEvaluationModalProps {
@@ -48,32 +49,13 @@ const SendToEvaluationModal: React.FC<SendToEvaluationModalProps> = ({
                 </div>
 
                 <div className="send-evaluation-body">
-                    <div className="licitacion-info-card">
-                        <div className="info-item">
-                            <span className="info-label">ID:</span>
-                            <span className="info-value">{licitacionId}</span>
-                        </div>
-                        <div className="info-item">
-                            <span className="info-label">Comprador:</span>
-                            <span className="info-value">{buyer}</span>
-                        </div>
-                        <div className="info-item">
-                            <span className="info-label">Supervisor:</span>
-                            <span className="info-value">{supervisor}</span>
-                        </div>
-                        <div className="info-item">
-                            <span className="info-label">Monto estimado:</span>
-                            <span className="info-value">
-                                S/ {estimatedAmount.toLocaleString('es-PE', { minimumFractionDigits: 2 })}
-                            </span>
-                        </div>
-                        <div className="info-item">
-                            <span className="info-label">Presupuesto máximo:</span>
-                            <span className="info-value">
-                                S/ {maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2 })}
-                            </span>
-                        </div>
-                    </div>
+                    <LicitacionInfoCard
+                        id={licitacionId}
+                        buyer={buyer}
+                        supervisor={supervisor}
+                        estimatedAmount={estimatedAmount}
+                        maxBudget={maxBudget}
+                    />
 
                     {suppliersWithProposals.length > 0 && (
                         <div className="suppliers-proposals-section">

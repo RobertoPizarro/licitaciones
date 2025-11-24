@@ -3,44 +3,6 @@
   flex-direction: column;
   gap: 20px;
 }
-
-.finalize-icon {
-  color: #10b981;
-}
-
-/* Licitacion Info Card */
-.licitacion-info-card {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.info-label {
-  font-weight: 600;
-  color: #1e40af;
-  font-size: 14px;
-}
-
-.info-value {
-  color: #1e3a8a;
-  font-size: 14px;
-}
-
-/* Invited Suppliers Section */
-.invited-suppliers-section {
-  margin: 8px 0;
-}
-
 .invited-suppliers-section h4 {
   margin: 0 0 12px 0;
   font-size: 15px;

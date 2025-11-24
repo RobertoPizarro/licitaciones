@@ -8,33 +8,7 @@
   color: #10b981;
 }
 
-/* Licitacion Info Card */
-.licitacion-info-card {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.info-label {
-  font-weight: 600;
-  color: #1e40af;
-  font-size: 14px;
-}
-
-.info-value {
-  color: #1e3a8a;
-  font-size: 14px;
-}
+/* Licitacion Info Card styles are now in LicitacionInfoCard.css */
 
 .alert-title {
   font-weight: 600;

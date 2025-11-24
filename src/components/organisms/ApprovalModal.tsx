@@ -2,6 +2,7 @@ import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import ConfirmationModal from '../molecules/ConfirmationModal';
 import NoteBox from '../atoms/NoteBox';
+import LicitacionInfoCard from '../molecules/LicitacionInfoCard';
 import './ApprovalModal.css';
 
 interface ApprovalModalProps {
@@ -35,24 +36,12 @@ const ApprovalModal: React.FC<ApprovalModalProps> = ({
             icon={<CheckCircle size={24} className="approval-icon" />}
         >
             <div className="approval-modal-content">
-                <div className="licitacion-info-card">
-                    <div className="info-item">
-                        <span className="info-label">ID:</span>
-                        <span className="info-value">{licitacionId}</span>
-                    </div>
-                    <div className="info-item">
-                        <span className="info-label">Comprador:</span>
-                        <span className="info-value">{buyer}</span>
-                    </div>
-                    <div className="info-item">
-                        <span className="info-label">Monto estimado:</span>
-                        <span className="info-value">S/ {estimatedAmount.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                    </div>
-                    <div className="info-item">
-                        <span className="info-label">Presupuesto máximo:</span>
-                        <span className="info-value">S/ {maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                    </div>
-                </div>
+                <LicitacionInfoCard
+                    id={licitacionId}
+                    buyer={buyer}
+                    estimatedAmount={estimatedAmount}
+                    maxBudget={maxBudget}
+                />
 
                 <NoteBox>
                     <p>¿Está seguro que desea aprobar la solicitud? Una vez aprobada, se enviará al siguiente nivel del flujo de licitación.</p>

@@ -4,6 +4,7 @@ import Modal from '../atoms/Modal';
 import Button from '../atoms/Button';
 import NoteBox from '../atoms/NoteBox';
 import Alert from '../atoms/Alert';
+import LicitacionInfoCard from '../molecules/LicitacionInfoCard';
 import './FinalizeProposalsModal.css';
 
 interface FinalizeProposalsModalProps {
@@ -51,32 +52,13 @@ const FinalizeProposalsModal: React.FC<FinalizeProposalsModalProps> = ({
                 </div>
 
                 <div className="finalize-proposals-body">
-                    <div className="licitacion-info-card">
-                        <div className="info-item">
-                            <span className="info-label">ID:</span>
-                            <span className="info-value">{licitacionId}</span>
-                        </div>
-                        <div className="info-item">
-                            <span className="info-label">Comprador:</span>
-                            <span className="info-value">{buyerName}</span>
-                        </div>
-                        <div className="info-item">
-                            <span className="info-label">Supervisor:</span>
-                            <span className="info-value">{supervisorName}</span>
-                        </div>
-                        <div className="info-item">
-                            <span className="info-label">Monto estimado:</span>
-                            <span className="info-value">
-                                S/ {estimatedAmount.toLocaleString('es-PE', { minimumFractionDigits: 2 })}
-                            </span>
-                        </div>
-                        <div className="info-item">
-                            <span className="info-label">Presupuesto máximo:</span>
-                            <span className="info-value">
-                                S/ {maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2 })}
-                            </span>
-                        </div>
-                    </div>
+                    <LicitacionInfoCard
+                        id={licitacionId}
+                        buyer={buyerName}
+                        supervisor={supervisorName}
+                        estimatedAmount={estimatedAmount}
+                        maxBudget={maxBudget}
+                    />
 
                     {suppliersWithProposals.length > 0 && (
                         <div className="suppliers-proposals-section">

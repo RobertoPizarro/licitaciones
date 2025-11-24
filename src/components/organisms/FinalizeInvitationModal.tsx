@@ -2,6 +2,7 @@ import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import ConfirmationModal from '../molecules/ConfirmationModal';
 import NoteBox from '../atoms/NoteBox';
+import LicitacionInfoCard from '../molecules/LicitacionInfoCard';
 import './FinalizeInvitationModal.css';
 
 interface FinalizeInvitationModalProps {
@@ -39,28 +40,13 @@ const FinalizeInvitationModal: React.FC<FinalizeInvitationModalProps> = ({
             icon={<CheckCircle size={24} className="finalize-icon" />}
         >
             <div className="finalize-invitation-content">
-                <div className="licitacion-info-card">
-                    <div className="info-item">
-                        <span className="info-label">ID:</span>
-                        <span className="info-value">{licitacionId}</span>
-                    </div>
-                    <div className="info-item">
-                        <span className="info-label">Comprador:</span>
-                        <span className="info-value">{buyer}</span>
-                    </div>
-                    <div className="info-item">
-                        <span className="info-label">Supervisor:</span>
-                        <span className="info-value">{supervisor}</span>
-                    </div>
-                    <div className="info-item">
-                        <span className="info-label">Monto estimado:</span>
-                        <span className="info-value">S/ {estimatedAmount.toLocaleString('es-PE', { minimumFractionDigits: 2 })}</span>
-                    </div>
-                    <div className="info-item">
-                        <span className="info-label">Presupuesto máximo:</span>
-                        <span className="info-value">S/ {maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2 })}</span>
-                    </div>
-                </div>
+                <LicitacionInfoCard
+                    id={licitacionId}
+                    buyer={buyer}
+                    supervisor={supervisor}
+                    estimatedAmount={estimatedAmount}
+                    maxBudget={maxBudget}
+                />
 
                 {invitedSuppliers.length > 0 && (
                     <div className="invited-suppliers-section">
