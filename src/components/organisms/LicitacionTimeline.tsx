@@ -27,6 +27,7 @@ interface LicitacionTimelineProps {
     onGenerarContrato?: () => void;
     onEnviarOrdenCompra?: () => void;
     isCancelledNoProposals?: boolean;
+    isCancelledNoApprovals?: boolean;
 }
 
 // Mapeo del orden de los estados
@@ -63,7 +64,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
     onIniciarEvaluacionEconomica,
     onGenerarContrato,
     onEnviarOrdenCompra,
-    isCancelledNoProposals = false
+    isCancelledNoProposals = false,
+    isCancelledNoApprovals = false
 }) => {
     // Determinar el índice del estado actual
     const currentIndex = statusOrder.indexOf(currentStatus);
@@ -225,25 +227,36 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 )}
             </TimelineItem>
 
-            <TimelineItem
-                stepNumber={5}
-                title="En evaluación - Comité Técnico"
-                description={
-                    currentStatus === 'EVALUACION_ECONOMIA' || getStepStatus('EVALUACION_TECNICA') === 'completed'
-                        ? `${propuestasAprobadasTecnicamente} de ${propuestasRegistradas} propuestas aprobadas técnicamente`
-                        : "Validando documentos y especificaciones técnicas"
-                }
-                status={getStepStatus('EVALUACION_TECNICA')}
-                timestamp={timestamps['EVALUACION_TECNICA']}
-                statusText={getStatusText('EVALUACION_TECNICA')}
-            >
-                {currentStatus === 'EVALUACION_TECNICA' && (
-                    <Button variant="primary" size="sm" onClick={onIniciarEvaluacionTecnica}>
-                        <Settings size={16} />
-                        Iniciar evaluación
-                    </Button>
-                )}
-            </TimelineItem>
+            {isCancelledNoApprovals ? (
+                <TimelineItem
+                    stepNumber={5}
+                    title="Cancelada"
+                    description="Ningún proveedor pasó la evaluación técnica"
+                    status="completed"
+                    timestamp={timestamps['EVALUACION_TECNICA']}
+                    isRejected={true}
+                />
+            ) : (
+                <TimelineItem
+                    stepNumber={5}
+                    title="En evaluación - Comité Técnico"
+                    description={
+                        currentStatus === 'EVALUACION_ECONOMIA' || getStepStatus('EVALUACION_TECNICA') === 'completed'
+                            ? `${propuestasAprobadasTecnicamente} de ${propuestasRegistradas} propuestas aprobadas técnicamente`
+                            : "Validando documentos y especificaciones técnicas"
+                    }
+                    status={getStepStatus('EVALUACION_TECNICA')}
+                    timestamp={timestamps['EVALUACION_TECNICA']}
+                    statusText={getStatusText('EVALUACION_TECNICA')}
+                >
+                    {currentStatus === 'EVALUACION_TECNICA' && (
+                        <Button variant="primary" size="sm" onClick={onIniciarEvaluacionTecnica}>
+                            <Settings size={16} />
+                            Iniciar evaluación
+                        </Button>
+                    )}
+                </TimelineItem>
+            )}
 
             <TimelineItem
                 stepNumber={6}

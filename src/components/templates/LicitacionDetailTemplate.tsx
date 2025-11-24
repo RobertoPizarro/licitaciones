@@ -90,6 +90,10 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     const [registeredProposals, setRegisteredProposals] = useState<Proposal[]>([]);
     const [isCancelledNoProposals, setIsCancelledNoProposals] = useState(false);
 
+    // Technical evaluation states
+    const [technicalEvaluations, setTechnicalEvaluations] = useState<Map<number, 'approved' | 'rejected'>>(new Map());
+    const [isCancelledNoApprovals, setIsCancelledNoApprovals] = useState(false);
+
     const handleApproveClick = () => {
         setShowApprovalModal(true);
     };
@@ -166,6 +170,45 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         onEnviarEvaluacion?.();
     };
 
+    const handleSaveEvaluation = (evaluation: any) => {
+        // Update technical evaluations map
+        setTechnicalEvaluations(prev => {
+            const newMap = new Map(prev);
+            newMap.set(evaluation.providerId, evaluation.status);
+            return newMap;
+        });
+
+        // Update proposal status in registered proposals
+        setRegisteredProposals(prev => prev.map(proposal => {
+            if (proposal.id === evaluation.providerId) {
+                return {
+                    ...proposal,
+                    technicalStatus: evaluation.status === 'approved' ? 'Approved' : 'Rejected'
+                };
+            }
+            return proposal;
+        }));
+    };
+
+    const handleFinishTechnicalEvaluation = () => {
+        // Count how many providers were approved
+        const approvedCount = Array.from(technicalEvaluations.values())
+            .filter(status => status === 'approved').length;
+
+        if (approvedCount === 0) {
+            // No providers passed: cancel
+            setIsCancelledNoApprovals(true);
+            setShowTechnicalEvaluationModal(false);
+            // DO NOT call onIniciarEvaluacionTecnica
+        } else {
+            // At least one provider passed: continue to economic evaluation
+            setShowTechnicalEvaluationModal(false);
+            if (onIniciarEvaluacionTecnica) {
+                onIniciarEvaluacionTecnica();
+            }
+        }
+    };
+
     const handleIniciarEvaluacionTecnica = () => {
         setShowTechnicalEvaluationModal(true);
     };
@@ -227,6 +270,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         onGenerarContrato={onGenerarContrato}
                         onEnviarOrdenCompra={onEnviarOrdenCompra}
                         isCancelledNoProposals={isCancelledNoProposals}
+                        isCancelledNoApprovals={isCancelledNoApprovals}
                     />
                 </div>
                 <div className="licitacion-detail-right-col">
@@ -319,12 +363,14 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 onClose={() => setShowTechnicalEvaluationModal(false)}
                 licitacionId={id}
                 licitacionTitle={title}
-                presupuesto={`S/. ${maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2 })}`}
-                solicitudOrigen="N° 2025123"
-                fechaLimite="10 Nov 2025"
-                comprador={buyer}
-                suppliers={mockSuppliersForRegistration.filter(s => registeredProposals.some(p => p.id === s.id))}
-                onFinishEvaluation={onIniciarEvaluacionTecnica}
+                suppliers={registeredProposals.map(p => ({
+                    id: p.id,
+                    name: p.supplierName,
+                    ruc: p.ruc,
+                    email: `${p.supplierName.toLowerCase().replace(/\s/g, '')}@example.com`
+                }))}
+                onSaveEvaluation={handleSaveEvaluation}
+                onFinishEvaluation={handleFinishTechnicalEvaluation}
             />
         </>
     );

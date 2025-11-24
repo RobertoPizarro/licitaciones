@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Hourglass } from 'lucide-react';
+import { Eye, Hourglass, Check, X } from 'lucide-react';
 import Button from '../atoms/Button';
 import Badge from '../atoms/Badge';
 import './ProposalCard.css';
@@ -27,14 +27,45 @@ const ProposalCard: React.FC<ProposalCardProps> = ({ proposal, onViewDetails }) 
 
             <div className="proposal-body">
                 <div className="proposal-statuses">
-                    <Badge variant="neutral">
-                        <Hourglass size={14} className="status-icon" />
-                        Eval. Técnica Pendiente
-                    </Badge>
-                    <Badge variant="neutral">
-                        <Hourglass size={14} className="status-icon" />
-                        Eval. Económica Pendiente
-                    </Badge>
+                    {/* Technical Status Badge */}
+                    {proposal.technicalStatus === 'Pending' && (
+                        <Badge variant="neutral">
+                            <Hourglass size={14} className="status-icon" />
+                            Eval. Técnica Pendiente
+                        </Badge>
+                    )}
+                    {proposal.technicalStatus === 'Approved' && (
+                        <Badge variant="info">
+                            <Check size={14} className="status-icon" />
+                            Eval. Técnica Aprobada
+                        </Badge>
+                    )}
+                    {proposal.technicalStatus === 'Rejected' && (
+                        <Badge variant="neutral">
+                            <X size={14} className="status-icon" />
+                            Eval. Técnica No aprobada
+                        </Badge>
+                    )}
+
+                    {/* Economic Status Badge */}
+                    {proposal.economicStatus === 'Pending' && (
+                        <Badge variant="neutral">
+                            <Hourglass size={14} className="status-icon" />
+                            Eval. Económica Pendiente
+                        </Badge>
+                    )}
+                    {proposal.economicStatus === 'Approved' && (
+                        <Badge variant="info">
+                            <Check size={14} className="status-icon" />
+                            Eval. Económica Aprobada
+                        </Badge>
+                    )}
+                    {proposal.economicStatus === 'Rejected' && (
+                        <Badge variant="neutral">
+                            <X size={14} className="status-icon" />
+                            Eval. Económica No aprobada
+                        </Badge>
+                    )}
                 </div>
 
                 <div className="proposal-actions">
