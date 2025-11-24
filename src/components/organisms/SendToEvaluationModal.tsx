@@ -1,7 +1,6 @@
 import React from 'react';
 import { Send } from 'lucide-react';
-import Modal from '../atoms/Modal';
-import Button from '../atoms/Button';
+import ConfirmationModal from '../molecules/ConfirmationModal';
 import NoteBox from '../atoms/NoteBox';
 import LicitacionInfoCard from '../molecules/LicitacionInfoCard';
 import './SendToEvaluationModal.css';
@@ -37,52 +36,41 @@ const SendToEvaluationModal: React.FC<SendToEvaluationModalProps> = ({
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <div className="send-evaluation-modal">
-                <div className="send-evaluation-header">
-                    <div className="send-header-icon">
-                        <Send size={24} />
+        <ConfirmationModal
+            isOpen={isOpen}
+            onClose={onClose}
+            onConfirm={handleConfirm}
+            title="Enviar a Evaluación"
+            confirmText="Confirmar"
+            cancelText="Cancelar"
+            confirmVariant="primary"
+            icon={<Send size={24} className="send-icon" />}
+        >
+            <div className="send-evaluation-body">
+                <LicitacionInfoCard
+                    id={licitacionId}
+                    buyer={buyer}
+                    supervisor={supervisor}
+                    estimatedAmount={estimatedAmount}
+                    maxBudget={maxBudget}
+                />
+
+                {suppliersWithProposals.length > 0 && (
+                    <div className="suppliers-proposals-section">
+                        <h4>Proveedores con propuestas:</h4>
+                        <ul className="suppliers-proposals-list">
+                            {suppliersWithProposals.map((supplier, index) => (
+                                <li key={index}>{supplier}</li>
+                            ))}
+                        </ul>
                     </div>
-                    <div className="send-header-text">
-                        <h2>Enviar a Evaluación</h2>
-                    </div>
-                </div>
+                )}
 
-                <div className="send-evaluation-body">
-                    <LicitacionInfoCard
-                        id={licitacionId}
-                        buyer={buyer}
-                        supervisor={supervisor}
-                        estimatedAmount={estimatedAmount}
-                        maxBudget={maxBudget}
-                    />
-
-                    {suppliersWithProposals.length > 0 && (
-                        <div className="suppliers-proposals-section">
-                            <h4>Proveedores con propuestas:</h4>
-                            <ul className="suppliers-proposals-list">
-                                {suppliersWithProposals.map((supplier, index) => (
-                                    <li key={index}>{supplier}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-
-                    <NoteBox title="Nota:">
-                        <p>¿Confirma el envió a evaluación? La licitación pasará al siguiente estado y tendra que esperar a que finalize la evaluación</p>
-                    </NoteBox>
-                </div>
-
-                <div className="send-evaluation-footer">
-                    <Button variant="secondary" onClick={onClose}>
-                        Cancelar
-                    </Button>
-                    <Button variant="primary" onClick={handleConfirm}>
-                        Confirmar
-                    </Button>
-                </div>
+                <NoteBox title="Nota:">
+                    <p>¿Confirma el envió a evaluación? La licitación pasará al siguiente estado y tendra que esperar a que finalize la evaluación</p>
+                </NoteBox>
             </div>
-        </Modal>
+        </ConfirmationModal>
     );
 };
 

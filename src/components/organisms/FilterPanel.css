@@ -16,10 +16,6 @@
   flex: 1 1 200px;
 }
 
-.search-filter {
-  /* Estilos específicos para el campo de búsqueda si es necesario */
-}
-
 .filter-actions {
   display: flex;
   flex-flow: wrap;
