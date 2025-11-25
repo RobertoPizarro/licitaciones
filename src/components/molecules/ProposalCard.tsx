@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Hourglass, Check, X } from 'lucide-react';
+import { Eye, Hourglass, Check, X, Trophy } from 'lucide-react';
 import Button from '../atoms/Button';
 import Badge from '../atoms/Badge';
 import './ProposalCard.css';
@@ -10,6 +10,7 @@ export interface Proposal {
     ruc: string;
     technicalStatus: 'Pending' | 'Approved' | 'Rejected';
     economicStatus: 'Pending' | 'Approved' | 'Rejected';
+    isWinner?: boolean;
 }
 
 interface ProposalCardProps {
@@ -27,6 +28,14 @@ const ProposalCard: React.FC<ProposalCardProps> = ({ proposal, onViewDetails }) 
 
             <div className="proposal-body">
                 <div className="proposal-statuses">
+                    {/* Winner Badge */}
+                    {proposal.isWinner && (
+                        <Badge variant="info" className="winner-badge">
+                            <Trophy size={14} className="status-icon" />
+                            Ganador
+                        </Badge>
+                    )}
+
                     {/* Technical Status Badge */}
                     {proposal.technicalStatus === 'Pending' && (
                         <Badge variant="neutral">

@@ -35,11 +35,21 @@
 .proposal-statuses {
   display: flex;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .status-icon {
   margin-right: 6px;
   color: #6b7280;
+}
+
+/* Winner Badge Styling */
+.winner-badge {
+  font-weight: 600;
+}
+
+.winner-badge .status-icon {
+  color: #ffffff;
 }
 
 .proposal-actions {

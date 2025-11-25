@@ -1,0 +1,60 @@
+.economic-criteria-info {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.criteria-title {
+  margin: 0 0 16px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.criteria-title::before {
+  content: "📊";
+  font-size: 18px;
+}
+
+.criteria-item {
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.criteria-item:last-child {
+  margin-bottom: 0;
+}
+
+.criteria-score {
+  background: #dbeafe;
+  border-left: 4px solid #3b82f6;
+}
+
+.criteria-budget {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+}
+
+.criteria-justification {
+  background: #ede9fe;
+  border-left: 4px solid #8b5cf6;
+}
+
+.criteria-header {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.criteria-description {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.4;
+}

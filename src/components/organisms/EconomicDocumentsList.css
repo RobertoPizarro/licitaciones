@@ -1,0 +1,121 @@
+.economic-documents-list {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.economic-documents-list.disabled {
+  opacity: 0.6;
+}
+
+.econ-docs-title {
+  margin: 0 0 16px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.econ-docs-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.econ-docs-empty-state p {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+}
+
+.econ-docs-empty-state .empty-subtext {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.econ-docs-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.econ-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.econ-doc-item:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.econ-doc-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #dbeafe;
+  border-radius: 6px;
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.econ-doc-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.econ-doc-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.econ-doc-size {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.econ-doc-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.econ-doc-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.econ-doc-action-btn:hover {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+.econ-doc-action-btn:active {
+  transform: scale(0.95);
+}

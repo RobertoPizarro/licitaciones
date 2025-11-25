@@ -143,4 +143,30 @@ export interface LicitacionGeneralInfoProps {
   solicitudOrigen?: string;
   fechaLimite?: string;
   comprador?: string;
+  proveedoresTecnicamenteAprobados?: number;
+}
+
+// ==================================================================
+// ECONOMIC EVALUATION TYPES
+// ==================================================================
+
+/**
+ * Evaluación económica de un proveedor
+ */
+export interface EconomicEvaluation {
+  providerId: number;
+  providerName: string;
+  providerRuc: string;
+  score?: number; // 0-100, undefined si rechazado
+  justification: string;
+  status: "approved" | "rejected";
+  isRejected: boolean; // Indica si se marcó checkbox de rechazo
+}
+
+/**
+ * Resultado final con ganador
+ */
+export interface EconomicEvaluationResults {
+  evaluations: EconomicEvaluation[];
+  winnerId?: number; // ID del proveedor ganador (mayor puntuación)
 }

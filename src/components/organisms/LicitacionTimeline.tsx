@@ -28,6 +28,7 @@ interface LicitacionTimelineProps {
     onEnviarOrdenCompra?: () => void;
     isCancelledNoProposals?: boolean;
     isCancelledNoApprovals?: boolean;
+    isCancelledNoEconomicApprovals?: boolean;
 }
 
 // Mapeo del orden de los estados
@@ -65,7 +66,8 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
     onGenerarContrato,
     onEnviarOrdenCompra,
     isCancelledNoProposals = false,
-    isCancelledNoApprovals = false
+    isCancelledNoApprovals = false,
+    isCancelledNoEconomicApprovals = false
 }) => {
     // Determinar el índice del estado actual
     const currentIndex = statusOrder.indexOf(currentStatus);
@@ -258,25 +260,36 @@ const LicitacionTimeline: React.FC<LicitacionTimelineProps> = ({
                 </TimelineItem>
             )}
 
-            <TimelineItem
-                stepNumber={6}
-                title="En evaluación - Comité de Economía"
-                description={
-                    currentStatus === 'ADJUDICADO' || getStepStatus('EVALUACION_ECONOMIA') === 'completed'
-                        ? `${propuestasAprobadasEconomicamente} de ${propuestasAprobadasTecnicamente} propuestas aprobadas económicamente`
-                        : "Analizando los criterios económicos y financieros"
-                }
-                status={getStepStatus('EVALUACION_ECONOMIA')}
-                timestamp={timestamps['EVALUACION_ECONOMIA']}
-                statusText={getStatusText('EVALUACION_ECONOMIA')}
-            >
-                {currentStatus === 'EVALUACION_ECONOMIA' && (
-                    <Button variant="primary" size="sm" onClick={onIniciarEvaluacionEconomica}>
-                        <Settings size={16} />
-                        Iniciar evaluación
-                    </Button>
-                )}
-            </TimelineItem>
+            {isCancelledNoEconomicApprovals ? (
+                <TimelineItem
+                    stepNumber={6}
+                    title="Cancelada"
+                    description="Ningún proveedor pasó la evaluación económica"
+                    status="completed"
+                    timestamp={timestamps['EVALUACION_ECONOMIA']}
+                    isRejected={true}
+                />
+            ) : (
+                <TimelineItem
+                    stepNumber={6}
+                    title="En evaluación - Comité de Economía"
+                    description={
+                        currentStatus === 'ADJUDICADO' || getStepStatus('EVALUACION_ECONOMIA') === 'completed'
+                            ? `${propuestasAprobadasEconomicamente} de ${propuestasAprobadasTecnicamente} propuestas aprobadas económicamente`
+                            : "Analizando los criterios económicos y financieros"
+                    }
+                    status={getStepStatus('EVALUACION_ECONOMIA')}
+                    timestamp={timestamps['EVALUACION_ECONOMIA']}
+                    statusText={getStatusText('EVALUACION_ECONOMIA')}
+                >
+                    {currentStatus === 'EVALUACION_ECONOMIA' && (
+                        <Button variant="primary" size="sm" onClick={onIniciarEvaluacionEconomica}>
+                            <Settings size={16} />
+                            Iniciar evaluación
+                        </Button>
+                    )}
+                </TimelineItem>
+            )}
 
             <TimelineItem
                 stepNumber={7}

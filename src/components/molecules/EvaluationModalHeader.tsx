@@ -13,6 +13,7 @@ interface EvaluationModalHeaderProps {
     onClose: () => void;
     onFinish: () => void;
     canFinish?: boolean;
+    evaluationType?: 'técnica' | 'económica';
 }
 
 const EvaluationModalHeader: React.FC<EvaluationModalHeaderProps> = ({
@@ -24,8 +25,11 @@ const EvaluationModalHeader: React.FC<EvaluationModalHeaderProps> = ({
     rejectedProviders,
     onClose,
     onFinish,
-    canFinish = false
+    canFinish = false,
+    evaluationType = 'técnica'
 }) => {
+    const evaluationTypeTitle = evaluationType === 'técnica' ? 'Evaluación Técnica' : 'Evaluación Económica';
+
     return (
         <div className="evaluation-modal-header">
             <div className="header-top-row">
@@ -34,7 +38,7 @@ const EvaluationModalHeader: React.FC<EvaluationModalHeaderProps> = ({
                         <ClipboardCheck size={24} />
                     </div>
                     <div className="eval-header-text">
-                        <h2>Evaluación Técnica - {licitacionTitle}</h2>
+                        <h2>{evaluationTypeTitle} - {licitacionTitle}</h2>
                         <p className="eval-subtitle">ID: {licitacionId} | Comprador: Juan Pérez</p>
                     </div>
                 </div>
