@@ -330,7 +330,8 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         currentStatus={currentStatus}
                         timestamps={{
                             ...timestamps,
-                            ...(cancellationTimestamp ? { EVALUACION_TECNICA: cancellationTimestamp } : {})
+                            ...(cancellationTimestamp ? { EVALUACION_TECNICA: cancellationTimestamp } : {}),
+                            ...(economicCancellationTimestamp ? { EVALUACION_ECONOMIA: economicCancellationTimestamp } : {})
                         }}
                         onApprove={handleApproveClick}
                         onReject={handleCancelClick}
