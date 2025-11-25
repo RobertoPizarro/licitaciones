@@ -26,8 +26,8 @@
 }
 
 .criteria-score {
-  background: #f1f0f0;
-  border-left: 4px solid #dededf;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
 }
 
 .criteria-header {
