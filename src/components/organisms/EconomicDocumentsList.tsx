@@ -45,6 +45,7 @@ const EconomicDocumentsList: React.FC<EconomicDocumentsListProps> = ({ disabled 
                             onView={() => handleView(doc.name)}
                             onDownload={() => handleDownload(doc.name)}
                             disabled={disabled}
+                            showEvaluationButtons={false}
                         />
                     ))}
                 </div>

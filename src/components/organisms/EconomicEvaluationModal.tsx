@@ -205,7 +205,9 @@ const EconomicEvaluationModal: React.FC<EconomicEvaluationModalProps> = ({
 
                         <EconomicCriteriaInfo />
 
-                        <EconomicEvaluationResults evaluatedProviders={evaluatedProvidersList} />
+                        {evaluatedProvidersList.length > 0 && (
+                            <EconomicEvaluationResults evaluatedProviders={evaluatedProvidersList} />
+                        )}
                     </div>
 
                     <div className="evaluation-right-column">

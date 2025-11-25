@@ -12,6 +12,7 @@ interface EvaluableDocumentItemProps {
     onView?: () => void;
     onDownload?: () => void;
     disabled?: boolean;
+    showEvaluationButtons?: boolean;
 }
 
 const EvaluableDocumentItem: React.FC<EvaluableDocumentItemProps> = ({
@@ -21,7 +22,8 @@ const EvaluableDocumentItem: React.FC<EvaluableDocumentItemProps> = ({
     onStatusChange,
     onView,
     onDownload,
-    disabled = false
+    disabled = false,
+    showEvaluationButtons = true
 }) => {
     const handleView = () => {
         if (onView) {
@@ -67,7 +69,7 @@ const EvaluableDocumentItem: React.FC<EvaluableDocumentItemProps> = ({
                     />
                 </div>
 
-                {status !== null && (
+                {showEvaluationButtons && (
                     <EvaluationStatusButtons
                         value={status}
                         onChange={onStatusChange}
