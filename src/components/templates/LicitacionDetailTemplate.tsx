@@ -159,7 +159,6 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 setRegisteredProposals(prev => [...prev, newProposal]);
             }
         }
-        setShowRegisterProposalModal(false);
     };
 
     const handleConfirmFinalizeProposals = () => {

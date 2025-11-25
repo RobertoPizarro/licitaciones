@@ -63,7 +63,9 @@ const RegisterProposalModal: React.FC<RegisterProposalModalProps> = ({
     const handleRegister = () => {
         if (selectedSupplierId && onRegisterProposal) {
             onRegisterProposal(selectedSupplierId, files);
-            handleClose();
+            // Reset form instead of closing to allow registering another proposal
+            setSelectedSupplierId(null);
+            setFiles([]);
         }
     };
 
