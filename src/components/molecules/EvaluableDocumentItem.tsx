@@ -67,11 +67,13 @@ const EvaluableDocumentItem: React.FC<EvaluableDocumentItemProps> = ({
                     />
                 </div>
 
-                <EvaluationStatusButtons
-                    value={status}
-                    onChange={onStatusChange}
-                    disabled={disabled}
-                />
+                {status !== null && (
+                    <EvaluationStatusButtons
+                        value={status}
+                        onChange={onStatusChange}
+                        disabled={disabled}
+                    />
+                )}
             </div>
         </div>
     );

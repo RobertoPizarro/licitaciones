@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Download, FileText } from 'lucide-react';
+import EvaluableDocumentItem from '../molecules/EvaluableDocumentItem';
 import './EconomicDocumentsList.css';
 
 interface EconomicDocumentsListProps {
@@ -24,10 +24,7 @@ const EconomicDocumentsList: React.FC<EconomicDocumentsListProps> = ({ disabled 
 
     return (
         <div className={`economic-documents-list ${disabled ? 'disabled' : ''}`}>
-            <h3 className="econ-docs-title">
-                <FileText size={18} />
-                Documentos Económicos Presentados
-            </h3>
+            <h3 className="econ-docs-title">Documentos Económicos Presentados</h3>
 
             {disabled && (
                 <div className="econ-docs-empty-state">
@@ -39,31 +36,16 @@ const EconomicDocumentsList: React.FC<EconomicDocumentsListProps> = ({ disabled 
             {!disabled && (
                 <div className="econ-docs-items-container">
                     {documents.map(doc => (
-                        <div key={doc.id} className="econ-doc-item">
-                            <div className="econ-doc-icon">
-                                <FileText size={20} />
-                            </div>
-                            <div className="econ-doc-info">
-                                <div className="econ-doc-name">{doc.name}</div>
-                                <div className="econ-doc-size">{doc.size}</div>
-                            </div>
-                            <div className="econ-doc-actions">
-                                <button
-                                    className="econ-doc-action-btn"
-                                    onClick={() => handleView(doc.name)}
-                                    title="Ver documento"
-                                >
-                                    <Eye size={16} />
-                                </button>
-                                <button
-                                    className="econ-doc-action-btn"
-                                    onClick={() => handleDownload(doc.name)}
-                                    title="Descargar documento"
-                                >
-                                    <Download size={16} />
-                                </button>
-                            </div>
-                        </div>
+                        <EvaluableDocumentItem
+                            key={doc.id}
+                            documentName={doc.name}
+                            fileSize={doc.size}
+                            status={null}
+                            onStatusChange={() => { }} // No-op, economic docs don't have status evaluation
+                            onView={() => handleView(doc.name)}
+                            onDownload={() => handleDownload(doc.name)}
+                            disabled={disabled}
+                        />
                     ))}
                 </div>
             )}
