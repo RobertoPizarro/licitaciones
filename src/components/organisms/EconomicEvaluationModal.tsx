@@ -72,7 +72,7 @@ const EconomicEvaluationModal: React.FC<EconomicEvaluationModalProps> = ({
     }, [selectedSupplierId, score, justification, isRejected]);
 
     const handleSelectSupplier = (supplierId: number) => {
-        setSelectedSupplierId(supplierId);
+        setSelectedSupplierId(supplierId || null);
         // Reset form when changing supplier
         setScore('');
         setJustification('');

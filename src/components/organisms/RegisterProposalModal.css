@@ -61,7 +61,7 @@
   color: #374151;
 }
 
-.required {
+.register-proposal-modal .required {
   color: #ef4444;
 }
 
@@ -93,21 +93,22 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
-.info-row {
+.supplier-info-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.info-label {
+.supplier-info-card .info-label {
   font-weight: 600;
   color: #1e40af;
   font-size: 14px;
 }
 
-.info-value {
+.supplier-info-card .info-value {
   color: #1e3a8a;
   font-size: 14px;
 }

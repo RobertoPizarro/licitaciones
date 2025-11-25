@@ -114,15 +114,15 @@ const RegisterProposalModal: React.FC<RegisterProposalModalProps> = ({
                     {selectedSupplier && (
                         <>
                             <div className="supplier-info-card">
-                                <div className="info-row">
+                                <div className="supplier-info-row">
                                     <span className="info-label">Proveedor:</span>
                                     <span className="info-value">{selectedSupplier.name}</span>
                                 </div>
-                                <div className="info-row">
+                                <div className="supplier-info-row">
                                     <span className="info-label">RUC:</span>
                                     <span className="info-value">{selectedSupplier.ruc}</span>
                                 </div>
-                                <div className="info-row">
+                                <div className="supplier-info-row">
                                     <span className="info-label">Email:</span>
                                     <span className="info-value">{selectedSupplier.email}</span>
                                 </div>
