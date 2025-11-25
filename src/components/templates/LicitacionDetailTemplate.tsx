@@ -281,14 +281,14 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 minute: '2-digit',
                 hour12: true
             }));
+        } else {
+            // Call parent handler to update page-level state only if there are approved providers
+            if (onIniciarEvaluacionEconomica) {
+                onIniciarEvaluacionEconomica();
+            }
         }
 
         setShowEconomicEvaluationModal(false);
-
-        // Call parent handler to update page-level state
-        if (onIniciarEvaluacionEconomica) {
-            onIniciarEvaluacionEconomica();
-        }
     };
 
     const handleInviteSuppliers = () => {
