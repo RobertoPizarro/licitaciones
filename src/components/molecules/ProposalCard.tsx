@@ -31,7 +31,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({ proposal, onViewDetails }) 
                     {/* Winner Badge */}
                     {proposal.isWinner && (
                         <Badge variant="info" className="winner-badge">
-                            <Trophy size={14} className="status-icon" />
+                            <Trophy size={14} className="status-iconw" />
                             Ganador
                         </Badge>
                     )}
@@ -45,7 +45,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({ proposal, onViewDetails }) 
                     )}
                     {proposal.technicalStatus === 'Approved' && (
                         <Badge variant="info">
-                            <Check size={14} className="status-icon" />
+                            <Check size={14} className="status-iconw" />
                             Eval. Técnica Aprobada
                         </Badge>
                     )}
@@ -65,7 +65,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({ proposal, onViewDetails }) 
                     )}
                     {proposal.economicStatus === 'Approved' && (
                         <Badge variant="info">
-                            <Check size={14} className="status-icon" />
+                            <Check size={14} className="status-iconw" />
                             Eval. Económica Aprobada
                         </Badge>
                     )}

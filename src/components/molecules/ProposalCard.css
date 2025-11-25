@@ -40,16 +40,12 @@
 
 .status-icon {
   margin-right: 6px;
-  color: #6b7280;
+  color: #374151;
 }
 
-/* Winner Badge Styling */
-.winner-badge {
-  font-weight: 600;
-}
-
-.winner-badge .status-icon {
-  color: #ffffff;
+.status-iconw {
+  margin-right: 6px;
+  color: #1e40af;
 }
 
 .proposal-actions {
