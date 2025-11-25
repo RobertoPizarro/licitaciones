@@ -3,103 +3,20 @@
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 20px;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .results-title {
-  margin: 0 0 16px 0;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  color: #111827;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.results-title::before {
-  content: "🏆";
-  font-size: 18px;
+  color: #1e3a8a;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .results-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.result-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px;
-  border-radius: 6px;
-  border: 1px solid;
-  transition: all 0.2s ease;
-}
-
-.result-item.approved {
-  background: #d1fae5;
-  border-color: #10b981;
-}
-
-.result-item.rejected {
-  background: #fee2e2;
-  border-color: #ef4444;
-}
-
-.result-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.result-item.approved .result-icon {
-  color: #10b981;
-}
-
-.result-item.rejected .result-icon {
-  color: #ef4444;
-}
-
-.result-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.result-provider-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 4px;
-}
-
-.result-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.status-label {
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.result-item.approved .status-label {
-  color: #059669;
-}
-
-.result-item.rejected .status-label {
-  color: #dc2626;
-  text-transform: uppercase;
-}
-
-.result-score {
-  font-size: 12px;
-  font-weight: 600;
-  color: #3b82f6;
-  background: #dbeafe;
-  padding: 2px 8px;
-  border-radius: 4px;
 }

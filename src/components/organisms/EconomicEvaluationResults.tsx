@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, XCircle } from 'lucide-react';
+import EvaluatedProviderCard from '../molecules/EvaluatedProviderCard';
 import { EconomicEvaluation } from '../../lib/types';
 import './EconomicEvaluationResults.css';
 
@@ -18,36 +18,12 @@ const EconomicEvaluationResults: React.FC<EconomicEvaluationResultsProps> = ({ e
 
             <div className="results-list">
                 {evaluatedProviders.map(provider => (
-                    <div
+                    <EvaluatedProviderCard
                         key={provider.providerId}
-                        className={`result-item ${provider.status}`}
-                    >
-                        <div className="result-icon">
-                            {provider.status === 'approved' ? (
-                                <CheckCircle size={20} />
-                            ) : (
-                                <XCircle size={20} />
-                            )}
-                        </div>
-
-                        <div className="result-info">
-                            <div className="result-provider-name">{provider.providerName}</div>
-                            <div className="result-status">
-                                {provider.status === 'approved' ? (
-                                    <>
-                                        <span className="status-label">Aprobado</span>
-                                        {provider.score !== undefined && (
-                                            <span className="result-score">
-                                                Puntuación: {provider.score} / 100
-                                            </span>
-                                        )}
-                                    </>
-                                ) : (
-                                    <span className="status-label">RECHAZADO</span>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                        providerName={provider.providerName}
+                        status={provider.status}
+                        score={provider.status === 'approved' ? provider.score : undefined}
+                    />
                 ))}
             </div>
         </div>

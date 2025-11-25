@@ -13,14 +13,14 @@ const EconomicCriteriaInfo: React.FC = () => {
                 </div>
             </div>
 
-            <div className="criteria-item criteria-budget">
+            <div className="criteria-item criteria-score">
                 <div className="criteria-header">Cumplimiento Presupuestal</div>
                 <div className="criteria-description">
                     La oferta debe estar dentro del presupuesto máximo establecido
                 </div>
             </div>
 
-            <div className="criteria-item criteria-justification">
+            <div className="criteria-item criteria-score">
                 <div className="criteria-header">Justificación Obligatoria</div>
                 <div className="criteria-description">
                     Tanto aprobaciones como rechazos requieren justificación detallada

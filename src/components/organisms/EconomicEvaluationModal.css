@@ -44,18 +44,12 @@
 }
 
 .info-title {
-  margin: 0 0 16px 0;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  color: #111827;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.info-title::before {
-  content: "ℹ️";
-  font-size: 18px;
+  color: #1e3a8a;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .info-row {
@@ -85,7 +79,7 @@
 /* Rejection Checkbox */
 .rejection-checkbox-container {
   background: #fef3c7;
-  border: 1px solid #fbbf24;
+  border: 1px solid #dbd7ce;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;

@@ -7,18 +7,12 @@
 }
 
 .criteria-title {
-  margin: 0 0 16px 0;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  color: #111827;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.criteria-title::before {
-  content: "📊";
-  font-size: 18px;
+  color: #1e3a8a;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .criteria-item {
@@ -32,18 +26,8 @@
 }
 
 .criteria-score {
-  background: #dbeafe;
-  border-left: 4px solid #3b82f6;
-}
-
-.criteria-budget {
-  background: #fef3c7;
-  border-left: 4px solid #f59e0b;
-}
-
-.criteria-justification {
-  background: #ede9fe;
-  border-left: 4px solid #8b5cf6;
+  background: #f1f0f0;
+  border-left: 4px solid #dededf;
 }
 
 .criteria-header {
