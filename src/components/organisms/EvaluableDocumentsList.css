@@ -6,7 +6,6 @@
 
 .evaluable-documents-list.disabled {
   opacity: 0.6;
-  pointer-events: none;
 }
 
 .documents-title {
