@@ -15,8 +15,9 @@ import RegisterProposalModal from '../organisms/RegisterProposalModal';
 import FinalizeProposalsModal from '../organisms/FinalizeProposalsModal';
 import SendToEvaluationModal from '../organisms/SendToEvaluationModal';
 import TechnicalEvaluationModal from '../organisms/TechnicalEvaluationModal';
+import EconomicEvaluationModal from '../organisms/EconomicEvaluationModal';
 import { Proposal } from '../molecules/ProposalCard';
-import { LicitacionStatus } from '../../lib/types';
+import { LicitacionStatus, EconomicEvaluation } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
 
 interface LicitacionDetailTemplateProps {
@@ -42,6 +43,7 @@ interface LicitacionDetailTemplateProps {
     onIniciarEvaluacionEconomica?: () => void;
     onGenerarContrato?: () => void;
     onEnviarOrdenCompra?: () => void;
+    isCancelledNoEconomicApprovals?: boolean;
 }
 
 const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
@@ -66,7 +68,8 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     onIniciarEvaluacionTecnica,
     onIniciarEvaluacionEconomica,
     onGenerarContrato,
-    onEnviarOrdenCompra
+    onEnviarOrdenCompra,
+    isCancelledNoEconomicApprovals = false
 }) => {
     // Modal states
     const [showApprovalModal, setShowApprovalModal] = useState(false);
@@ -94,6 +97,12 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     const [technicalEvaluations, setTechnicalEvaluations] = useState<Map<number, 'approved' | 'rejected'>>(new Map());
     const [isCancelledNoApprovals, setIsCancelledNoApprovals] = useState(false);
     const [cancellationTimestamp, setCancellationTimestamp] = useState<string | undefined>(undefined);
+
+    // Economic evaluation states
+    const [showEconomicEvaluationModal, setShowEconomicEvaluationModal] = useState(false);
+    const [economicEvaluations, setEconomicEvaluations] = useState<EconomicEvaluation[]>([]);
+    const [winnerId, setWinnerId] = useState<number | undefined>(undefined);
+    const [economicCancellationTimestamp, setEconomicCancellationTimestamp] = useState<string | undefined>(undefined);
 
     const handleApproveClick = () => {
         setShowApprovalModal(true);
@@ -222,6 +231,66 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         setShowTechnicalEvaluationModal(true);
     };
 
+    const handleIniciarEvaluacionEconomica = () => {
+        setShowEconomicEvaluationModal(true);
+    };
+
+    const handleSaveEconomicEvaluation = (evaluation: EconomicEvaluation) => {
+        // Store economic evaluation
+        setEconomicEvaluations(prev => [...prev, evaluation]);
+
+        // Update proposal economic status
+        setRegisteredProposals(prev => prev.map(proposal => {
+            if (proposal.id === evaluation.providerId) {
+                return {
+                    ...proposal,
+                    economicStatus: evaluation.status === 'approved' ? 'Approved' : 'Rejected',
+                    isWinner: false // Will be set in handleFinishEconomicEvaluation
+                };
+            }
+            return proposal;
+        }));
+    };
+
+    const handleFinishEconomicEvaluation = (results: {
+        evaluations: EconomicEvaluation[];
+        winnerId?: number
+    }) => {
+        console.log('[Template] Economic evaluations finished:', results);
+
+        setEconomicEvaluations(results.evaluations);
+        setWinnerId(results.winnerId);
+
+        // Update proposals with winner
+        if (results.winnerId) {
+            setRegisteredProposals(prev => prev.map(proposal => ({
+                ...proposal,
+                isWinner: proposal.id === results.winnerId
+            })));
+        }
+
+        const approvedCount = results.evaluations.filter(e => e.status === 'approved').length;
+
+        if (approvedCount === 0) {
+            // No providers passed: cancel
+            setEconomicCancellationTimestamp(new Date().toLocaleString('es-PE', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            }));
+        }
+
+        setShowEconomicEvaluationModal(false);
+
+        // Call parent handler to update page-level state
+        if (onIniciarEvaluacionEconomica) {
+            onIniciarEvaluacionEconomica();
+        }
+    };
+
     const handleInviteSuppliers = () => {
         setShowInviteModal(true);
     };
@@ -278,11 +347,12 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         onFinalizarRegistro={handleFinalizarRegistroClick}
                         onEnviarEvaluacion={handleSendToEvaluation}
                         onIniciarEvaluacionTecnica={handleIniciarEvaluacionTecnica}
-                        onIniciarEvaluacionEconomica={onIniciarEvaluacionEconomica}
+                        onIniciarEvaluacionEconomica={handleIniciarEvaluacionEconomica}
                         onGenerarContrato={onGenerarContrato}
                         onEnviarOrdenCompra={onEnviarOrdenCompra}
                         isCancelledNoProposals={isCancelledNoProposals}
                         isCancelledNoApprovals={isCancelledNoApprovals}
+                        isCancelledNoEconomicApprovals={isCancelledNoEconomicApprovals || economicCancellationTimestamp !== undefined}
                     />
                 </div>
                 <div className="licitacion-detail-right-col">
@@ -383,6 +453,27 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 }))}
                 onSaveEvaluation={handleSaveEvaluation}
                 onFinishEvaluation={handleFinishTechnicalEvaluation}
+            />
+
+            <EconomicEvaluationModal
+                isOpen={showEconomicEvaluationModal}
+                onClose={() => setShowEconomicEvaluationModal(false)}
+                licitacionId={id}
+                licitacionTitle={title}
+                presupuesto={`S/. ${maxBudget.toLocaleString('es-PE', { minimumFractionDigits: 2 })}`}
+                solicitudOrigen={`Nº ${id}`}
+                proveedoresTecnicamenteAprobados={registeredProposals.filter(p => p.technicalStatus === 'Approved').length}
+                suppliers={registeredProposals
+                    .filter(p => p.technicalStatus === 'Approved')
+                    .map(p => ({
+                        id: p.id,
+                        name: p.supplierName,
+                        ruc: p.ruc,
+                        email: `${p.supplierName.toLowerCase().replace(/\s/g, '')}@example.com`
+                    }))
+                }
+                onSaveEvaluation={handleSaveEconomicEvaluation}
+                onFinishEvaluation={handleFinishEconomicEvaluation}
             />
         </>
     );
