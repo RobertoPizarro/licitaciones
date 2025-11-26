@@ -19,7 +19,8 @@ import EconomicEvaluationModal from '../organisms/EconomicEvaluationModal';
 import GenerateContractModal from '../organisms/GenerateContractModal';
 import SendToPurchaseOrderModal from '../organisms/SendToPurchaseOrderModal';
 import { Proposal } from '../molecules/ProposalCard';
-import { LicitacionStatus, EconomicEvaluation } from '../../lib/types';
+import { LicitacionStatus, EconomicEvaluation, Item, DocumentCategory } from '../../lib/types';
+import { Scale, Wrench, PiggyBank } from 'lucide-react';
 import './LicitacionDetailTemplate.css';
 
 interface LicitacionDetailTemplateProps {
@@ -323,6 +324,36 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         }
     };
 
+    // Mock data for LicitacionItemsTable (should come from API/Props in real app)
+    const mockItems: Item[] = [
+        {
+            id: '1',
+            type: 'Producto',
+            description: 'Laptops hp G10',
+            quantity: 15,
+            price: 2600.00
+        }
+    ];
+
+    // Mock data for LicitacionRequiredDocs (should come from API/Props in real app)
+    const mockDocumentCategories: DocumentCategory[] = [
+        {
+            title: 'Documentos Legales',
+            documents: ['RUC y Ficha RUC', 'DNI del Representante Legal', 'Acta de Constitución'],
+            icon: <Scale size={20} />
+        },
+        {
+            title: 'Documentos Técnicos',
+            documents: ['Ficha Técnica del Producto', 'Certificaciones de Calidad (ISO)', 'Catálogos y Brochures'],
+            icon: <Wrench size={20} />
+        },
+        {
+            title: 'Documentos Financieros',
+            documents: ['Propuesta Económica', 'Estados Financieros Auditados', 'Carta de Fianza'],
+            icon: <PiggyBank size={20} />
+        }
+    ];
+
     return (
         <>
             <div className="licitacion-detail-header-wrapper">
@@ -377,9 +408,9 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 </div>
                 <div className="licitacion-detail-right-col">
                     <LicitacionGeneralInfo />
-                    <LicitacionItemsTable />
+                    <LicitacionItemsTable items={mockItems} />
                     <LicitacionProposals proposals={registeredProposals} />
-                    <LicitacionRequiredDocs />
+                    <LicitacionRequiredDocs documentCategories={mockDocumentCategories} />
                 </div>
             </div>
 

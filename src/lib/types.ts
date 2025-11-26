@@ -42,6 +42,56 @@ export interface Documento {
   name: string;
 }
 
+/**
+ * Categoría de documentos con icono y lista
+ */
+export interface DocumentCategory {
+  title: string;
+  documents: string[];
+  icon?: React.ReactNode;
+}
+
+/**
+ * Proveedor/Supplier en el sistema
+ */
+export interface Provider {
+  id: number;
+  name: string;
+  ruc: string;
+  email: string;
+}
+
+/**
+ * Contrato de adjudicación
+ */
+export interface Contract {
+  id: string;
+  fileName: string;
+  fileSize: string;
+  uploadedAt: string;
+  licitacionId: string;
+  providerId: number;
+}
+
+/**
+ * Licitación completa con todos los detalles
+ */
+export interface LicitacionDetail {
+  id: string;
+  title: string;
+  createdDate: string;
+  buyer: string;
+  supervisor: string;
+  currentStatus: LicitacionStatus;
+  timestamps: Partial<Record<LicitacionStatus, string>>;
+  estimatedAmount: number;
+  maxBudget: number;
+  items: Item[];
+  requiredDocuments: Documento[];
+  providers?: Provider[];
+  contract?: Contract;
+}
+
 // ==================================================================
 // PROPS DE COMPONENTES COMPARTIDOS
 // ==================================================================
