@@ -29,16 +29,16 @@ const Sidebar: React.FC = () => {
       </div>
       <nav className="sidebar-nav">
         <ul>
-          <li className={getLinkClass('/')}>
-            <Link to="/"><FileText size={20} /> Solicitudes</Link>
+          <li>
+            <a href="#"><FileText size={20} /> Solicitudes</a>
           </li>
 
           <li><a href="#"><Users size={20} /> Proveedores</a></li>
 
           <li><a href="#"><Package size={20} /> Compras</a></li>
 
-          <li className={getLinkClass('/licitacioneslist')}>
-            <Link to="/licitacioneslist"><Megaphone size={20} /> Licitaciones</Link>
+          <li className={getLinkClass('/')}>
+            <Link to="/"><Megaphone size={20} /> Licitaciones</Link>
           </li>
 
           <li><a href="#"><FileCheck size={20} /> Órdenes</a></li>

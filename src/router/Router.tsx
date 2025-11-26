@@ -9,8 +9,8 @@ import LicitacionDetailPage from '../pages/LicitacionDetailPage';
 const Router: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/licitacioneslist" element={<LicitacionesListPage />} />
+      <Route path="/" element={<LicitacionesListPage />} />
+      <Route path="/solicitud" element={<HomePage />} />
       <Route path="/licitacion" element={<LicitacionPage />} />
       <Route path="/licitacion/detail" element={<LicitacionDetailPage />} />
     </Routes>
