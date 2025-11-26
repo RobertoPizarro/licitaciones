@@ -16,6 +16,7 @@ import FinalizeProposalsModal from '../organisms/FinalizeProposalsModal';
 import SendToEvaluationModal from '../organisms/SendToEvaluationModal';
 import TechnicalEvaluationModal from '../organisms/TechnicalEvaluationModal';
 import EconomicEvaluationModal from '../organisms/EconomicEvaluationModal';
+import GenerateContractModal from '../organisms/GenerateContractModal';
 import { Proposal } from '../molecules/ProposalCard';
 import { LicitacionStatus, EconomicEvaluation } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
@@ -100,8 +101,6 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
 
     // Economic evaluation states
     const [showEconomicEvaluationModal, setShowEconomicEvaluationModal] = useState(false);
-    const [economicEvaluations, setEconomicEvaluations] = useState<EconomicEvaluation[]>([]);
-    const [winnerId, setWinnerId] = useState<number | undefined>(undefined);
     const [economicCancellationTimestamp, setEconomicCancellationTimestamp] = useState<string | undefined>(undefined);
 
     const handleApproveClick = () => {
@@ -235,9 +234,6 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     };
 
     const handleSaveEconomicEvaluation = (evaluation: EconomicEvaluation) => {
-        // Store economic evaluation
-        setEconomicEvaluations(prev => [...prev, evaluation]);
-
         // Update proposal economic status
         setRegisteredProposals(prev => prev.map(proposal => {
             if (proposal.id === evaluation.providerId) {
@@ -256,9 +252,6 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         winnerId?: number
     }) => {
         console.log('[Template] Economic evaluations finished:', results);
-
-        setEconomicEvaluations(results.evaluations);
-        setWinnerId(results.winnerId);
 
         // Update proposals with winner
         if (results.winnerId) {
@@ -301,6 +294,20 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     const handleConfirmFinalizeInvitation = () => {
         setShowFinalizeInviteModal(false);
         onFinalizarInvitacion?.();
+    };
+
+    const [showGenerateContractModal, setShowGenerateContractModal] = useState(false);
+
+    const handleGenerarContrato = () => {
+        setShowGenerateContractModal(true);
+    };
+
+    const handleSaveContract = (file: File) => {
+        console.log('[Template] Contract saved:', file.name);
+        setShowGenerateContractModal(false);
+        if (onGenerarContrato) {
+            onGenerarContrato();
+        }
     };
 
     return (
@@ -348,7 +355,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         onEnviarEvaluacion={handleSendToEvaluation}
                         onIniciarEvaluacionTecnica={handleIniciarEvaluacionTecnica}
                         onIniciarEvaluacionEconomica={handleIniciarEvaluacionEconomica}
-                        onGenerarContrato={onGenerarContrato}
+                        onGenerarContrato={handleGenerarContrato}
                         onEnviarOrdenCompra={onEnviarOrdenCompra}
                         isCancelledNoProposals={isCancelledNoProposals}
                         isCancelledNoApprovals={isCancelledNoApprovals}
@@ -474,6 +481,20 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 }
                 onSaveEvaluation={handleSaveEconomicEvaluation}
                 onFinishEvaluation={handleFinishEconomicEvaluation}
+            />
+
+            <GenerateContractModal
+                isOpen={showGenerateContractModal}
+                onClose={() => setShowGenerateContractModal(false)}
+                licitacionId={id}
+                licitacionTitle={title}
+                winnerProvider={registeredProposals.find(p => p.isWinner) ? {
+                    id: registeredProposals.find(p => p.isWinner)!.id,
+                    name: registeredProposals.find(p => p.isWinner)!.supplierName,
+                    ruc: registeredProposals.find(p => p.isWinner)!.ruc,
+                    email: `${registeredProposals.find(p => p.isWinner)!.supplierName.toLowerCase().replace(/\s/g, '')}@example.com`
+                } : undefined}
+                onSaveContract={handleSaveContract}
             />
         </>
     );
