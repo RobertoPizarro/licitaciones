@@ -17,6 +17,7 @@ import SendToEvaluationModal from '../organisms/SendToEvaluationModal';
 import TechnicalEvaluationModal from '../organisms/TechnicalEvaluationModal';
 import EconomicEvaluationModal from '../organisms/EconomicEvaluationModal';
 import GenerateContractModal from '../organisms/GenerateContractModal';
+import SendToPurchaseOrderModal from '../organisms/SendToPurchaseOrderModal';
 import { Proposal } from '../molecules/ProposalCard';
 import { LicitacionStatus, EconomicEvaluation } from '../../lib/types';
 import './LicitacionDetailTemplate.css';
@@ -297,6 +298,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
     };
 
     const [showGenerateContractModal, setShowGenerateContractModal] = useState(false);
+    const [showSendToPurchaseOrderModal, setShowSendToPurchaseOrderModal] = useState(false);
 
     const handleGenerarContrato = () => {
         setShowGenerateContractModal(true);
@@ -307,6 +309,17 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         setShowGenerateContractModal(false);
         if (onGenerarContrato) {
             onGenerarContrato();
+        }
+    };
+
+    const handleSendToPurchaseOrderClick = () => {
+        setShowSendToPurchaseOrderModal(true);
+    };
+
+    const handleSendToPurchaseOrderConfirm = () => {
+        setShowSendToPurchaseOrderModal(false);
+        if (onEnviarOrdenCompra) {
+            onEnviarOrdenCompra();
         }
     };
 
@@ -356,7 +369,7 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                         onIniciarEvaluacionTecnica={handleIniciarEvaluacionTecnica}
                         onIniciarEvaluacionEconomica={handleIniciarEvaluacionEconomica}
                         onGenerarContrato={handleGenerarContrato}
-                        onEnviarOrdenCompra={onEnviarOrdenCompra}
+                        onEnviarOrdenCompra={handleSendToPurchaseOrderClick}
                         isCancelledNoProposals={isCancelledNoProposals}
                         isCancelledNoApprovals={isCancelledNoApprovals}
                         isCancelledNoEconomicApprovals={isCancelledNoEconomicApprovals || economicCancellationTimestamp !== undefined}
@@ -495,6 +508,18 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                     email: `${registeredProposals.find(p => p.isWinner)!.supplierName.toLowerCase().replace(/\s/g, '')}@example.com`
                 } : undefined}
                 onSaveContract={handleSaveContract}
+            />
+
+            <SendToPurchaseOrderModal
+                isOpen={showSendToPurchaseOrderModal}
+                onClose={() => setShowSendToPurchaseOrderModal(false)}
+                onConfirm={handleSendToPurchaseOrderConfirm}
+                licitacionId={id}
+                buyer={buyer}
+                supervisor={isApproved || isRejected ? supervisorName : supervisor}
+                estimatedAmount={estimatedAmount}
+                maxBudget={maxBudget}
+                providerName={registeredProposals.find(p => p.isWinner)?.supplierName || "Proveedor Ganador"}
             />
         </>
     );
