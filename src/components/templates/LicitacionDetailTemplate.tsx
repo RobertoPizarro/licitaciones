@@ -354,6 +354,30 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
         }
     ];
 
+    // Mock data for InviteSuppliersModal (should come from Providers API in real app)
+    const mockAvailableSuppliers = [
+        { id: 1, name: "Tech Solutions SAC", ruc: "20123456789", email: "ventas@techsolutions.com", category: "Tecnología" },
+        { id: 2, name: "Computadoras del Perú SA", ruc: "20987654321", email: "contacto@computadoras.pe", category: "Tecnología" },
+        { id: 3, name: "Digital Store EIRL", ruc: "20456789123", email: "info@digitalstore.com", category: "Tecnología" },
+        { id: 4, name: "TechMart Perú S.A.C.", ruc: "20789123456", email: "ventas@techmart.pe", category: "Tecnología" },
+        { id: 5, name: "Global Tech Solutions S.A.", ruc: "20321654987", email: "cotizaciones@globaltech.com.pe", category: "Tecnología" },
+        { id: 6, name: "ElectroSystems del Sur E.I.R.L.", ruc: "20147258369", email: "ventas@electrosur.pe", category: "Tecnología" },
+        { id: 7, name: "Distribuidora Integral S.A.C.", ruc: "20963852741", email: "info@distintegral.com", category: "Tecnología" },
+        { id: 8, name: "Computación Integral Andina S.A.", ruc: "20258741963", email: "cotizaciones@compuandina.pe", category: "Tecnología" }
+    ];
+
+    const mockRequiredDocuments = [
+        "RUC y Ficha RUC",
+        "DNI del Representante Legal",
+        "Vigencia de Poder del Representante Legal",
+        "Ficha Técnica del Producto",
+        "Certificaciones de Calidad (ISO)",
+        "Referencias Comerciales",
+        "Propuesta Económica",
+        "Estados Financieros Auditados",
+        "Carta de Fianza"
+    ];
+
     return (
         <>
             <div className="licitacion-detail-header-wrapper">
@@ -442,6 +466,8 @@ const LicitacionDetailTemplate: React.FC<LicitacionDetailTemplateProps> = ({
                 licitacionTitle={title}
                 estimatedAmount={estimatedAmount}
                 maxBudget={maxBudget}
+                availableSuppliers={mockAvailableSuppliers}
+                requiredDocuments={mockRequiredDocuments}
                 onSuppliersInvited={setInvitedSuppliers}
             />
 

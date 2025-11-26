@@ -24,31 +24,10 @@ interface InviteSuppliersModalProps {
     licitacionTitle: string;
     estimatedAmount: number;
     maxBudget: number;
+    availableSuppliers: Supplier[];
+    requiredDocuments: string[];
     onSuppliersInvited?: (suppliers: string[]) => void;
 }
-
-const mockSuppliers: Supplier[] = [
-    { id: 1, name: "Tech Solutions SAC", ruc: "20123456789", email: "ventas@techsolutions.com", category: "Tecnología" },
-    { id: 2, name: "Computadoras del Perú SA", ruc: "20987654321", email: "contacto@computadoras.pe", category: "Tecnología" },
-    { id: 3, name: "Digital Store EIRL", ruc: "20456789123", email: "info@digitalstore.com", category: "Tecnología" },
-    { id: 4, name: "TechMart Perú S.A.C.", ruc: "20789123456", email: "ventas@techmart.pe", category: "Tecnología" },
-    { id: 5, name: "Global Tech Solutions S.A.", ruc: "20321654987", email: "cotizaciones@globaltech.com.pe", category: "Tecnología" },
-    { id: 6, name: "ElectroSystems del Sur E.I.R.L.", ruc: "20147258369", email: "ventas@electrosur.pe", category: "Tecnología" },
-    { id: 7, name: "Distribuidora Integral S.A.C.", ruc: "20963852741", email: "info@distintegral.com", category: "Tecnología" },
-    { id: 8, name: "Computación Integral Andina S.A.", ruc: "20258741963", email: "cotizaciones@compuandina.pe", category: "Tecnología" }
-];
-
-const requiredDocs = [
-    "RUC y Ficha RUC",
-    "DNI del Representante Legal",
-    "Vigencia de Poder del Representante Legal",
-    "Ficha Técnica del Producto",
-    "Certificaciones de Calidad (ISO)",
-    "Referencias Comerciales",
-    "Propuesta Económica",
-    "Estados Financieros Auditados",
-    "Carta de Fianza"
-];
 
 const InviteSuppliersModal: React.FC<InviteSuppliersModalProps> = ({
     isOpen,
@@ -56,6 +35,8 @@ const InviteSuppliersModal: React.FC<InviteSuppliersModalProps> = ({
     licitacionId,
     licitacionTitle,
     maxBudget,
+    availableSuppliers,
+    requiredDocuments,
     onSuppliersInvited
 }) => {
     const [selectedSuppliers, setSelectedSuppliers] = useState<number[]>([]);
@@ -71,14 +52,14 @@ const InviteSuppliersModal: React.FC<InviteSuppliersModalProps> = ({
     };
 
     const getSelectedEmails = () => {
-        return mockSuppliers
+        return availableSuppliers
             .filter(s => selectedSuppliers.includes(s.id))
             .map(s => s.email)
             .join(', ');
     };
 
     const getSelectedSupplierNames = () => {
-        return mockSuppliers
+        return availableSuppliers
             .filter(s => selectedSuppliers.includes(s.id))
             .map(s => s.name);
     };
@@ -141,7 +122,7 @@ Juan Pérez - Módulo de Compras`;
                         </div>
 
                         <div className="suppliers-list">
-                            {mockSuppliers.map(supplier => (
+                            {availableSuppliers.map(supplier => (
                                 <div
                                     key={supplier.id}
                                     className={`supplier-item ${selectedSuppliers.includes(supplier.id) ? 'selected' : ''}`}
@@ -203,7 +184,7 @@ Juan Pérez - Módulo de Compras`;
                                         <h4>Documentos Requeridos (Plantillas)</h4>
                                     </div>
                                     <ul className="documents-list">
-                                        {requiredDocs.map((doc, index) => (
+                                        {requiredDocuments.map((doc, index) => (
                                             <li key={index}>{doc}</li>
                                         ))}
                                     </ul>
