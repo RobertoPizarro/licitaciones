@@ -1,73 +1,31 @@
-# React + TypeScript + Vite
+# 🛒 Módulo de Compras
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto consiste en el desarrollo de un **Módulo de Compras** que incluye las siguientes funcionalidades principales:
 
-Currently, two official plugins are available:
+- Gestión de Solicitudes de Compra (RFQ) y Licitaciones.  
+- Registro, edición y eliminación de proveedores.  
+- Comparación de ofertas y normalización de cotizaciones.  
+- Gestión de órdenes de compra con historial y cierre.  
+- Facturación de proveedores con validación y conciliación.
+- Análisis de Proveedor  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+El desarrollo se realizará con un **enfoque ágil (Scrum)**, trabajando de manera iterativa e incremental en diferentes sprints.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 👥 Integrantes (Grupo 7)
 
-## Expanding the ESLint configuration
+- Miguel Alonso Solis Cunza *(Scrum Master)*  
+- Mihael Jhire Cristobal Rojas  
+- Roberto Giosttin Josue Pizarro Diaz  
+- Ricardo José Matamoros Laura  
+- Morales Usca Andrés Fernando  
+- Moreno Zevallos Eva Lucía
+- Karlo Toro  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📅 Metodología
+- **Product Owner (PO):** Profesor del curso  
+- **Scrum Master:** Miguel Alonso Solis Cunza  
+- **Equipo de desarrollo:** Integrantes del grupo  
