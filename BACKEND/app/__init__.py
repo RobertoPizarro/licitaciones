@@ -1,42 +1,37 @@
-from flask import Flask
-from app.bdd import db, coneccion
-from sqlalchemy.sql import text
-import os
-from dotenv import load_dotenv
+from flask import Flask, get_flashed_messages
+from app.bdd import db
+from app.extensiones import bcrypt
+from flask_bcrypt import Bcrypt
+from app.bdd import coneccion
+# Lo de abajo es un ejemplo de como importar una BP
+#from app.BP.Colaborador import colaborador_bp
+from sqlalchemy.sql import text #permite ejecutar consultas sql puras 
 
-load_dotenv()
-
-# API Key (no se usa en Licitaciones, pero se mantiene por compatibilidad)
-api_key = os.getenv("API_KEY", "default_key_for_development")
-
+bcrypt = Bcrypt()
 
 def create_app():
     app = Flask(__name__)
-    
-    # Configuraciones de Flask
-    app.config["SECRET_KEY"] = '3zM8c.1Z9>@2_x$!;Y`:3u?5'  # Para sesiones y CSRF
-    
-    # Configuraciones de Base de Datos
-    app.config["SQLALCHEMY_DATABASE_URI"] = coneccion  # SQLite (pruebas) o AWS (producción)
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # Evita warnings de SQLAlchemy
+    app.secret_key = '3zM8c.1Z9>@2_x$!;Y`:3u?5'
+    app.config["SQLALCHEMY_DATABASE_URI"]=coneccion #%40 es @ pero escapado
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SECRET_KEY"]='_Cb15q&o~n81'
 
     db.init_app(app)
-    
-    # Importar modelos para registrarlos en SQLAlchemy
-    with app.app_context():
-        from app.licitaciones import models
+    bcrypt.init_app(app)
 
-    # Registrar Blueprints de Licitaciones
-    from app.licitaciones import register_licitaciones_blueprints
-    register_licitaciones_blueprints(app)
-    
-    # Registrar Blueprints (otros módulos comentados por ahora)
+    # Registrar Blueprints
+    # ejemplo de restro, ahorita tira error si descomento
     # app.register_blueprint(colaborador_bp, url_prefix='/colaborador')
 
-    # Manejador de errores para API
+    # 🔴 Manejador de errores
+
+    #Eso de abajo es cuando se hace server side rendering todo en flask, ahorita se maneja por react
+    """
     @app.errorhandler(404)
     def pagina_no_encontrada(error):
-        return {"error": "Endpoint not found", "message": "Try /api/licitaciones"}, 404
+        from flask import render_template
+        return render_template("error/404.html"), 404
+    """
     
     return app
 

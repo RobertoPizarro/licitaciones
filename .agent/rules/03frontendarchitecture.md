@@ -4,7 +4,7 @@ trigger: always_on
 
 # Arquitectura Frontend: Atomic Design
 
-- **Modelo de Datos:** Guiarse ESTRICTAMENTE por `backend/app/licitaciones/diagramaclases.txt`. Si el código difiere del diagrama, el diagrama tiene la razón.
+- **Modelo de Datos:** Guiarse ESTRICTAMENTE por `backend/app/models/licitaciones/diagramaClases.txt`. Si el código difiere del diagrama, el diagrama tiene la razón.
 
 ## ⚛️ Estructura
 
