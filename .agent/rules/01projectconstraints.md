@@ -7,7 +7,7 @@ trigger: always_on
 ## 🎯 Objetivo
 
 Desarrollo exclusivo de la funcionalidad **Gestión de Licitaciones**.
-Ante cualquier posible edicion, primero analizar todo para evitar fallos.
+Ante cualquier posible edicion, primero analizar todo el proyecto o lo necesario para evitar fallos.
 
 ## ⛔ Restricciones de Alcance (ESTRICTO)
 

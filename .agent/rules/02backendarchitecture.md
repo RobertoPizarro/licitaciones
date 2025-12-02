@@ -6,8 +6,7 @@ trigger: always_on
 
 ## 🏛️ Estructura y Fuente de Verdad
 
-- **Arquitectura:** MVC + Repository + Services.
-- **Modelo de Datos:** Guiarse ESTRICTAMENTE por `backend/app/models/licitaciones/diagramaClases.txt`. Si el código difiere del diagrama, el diagrama tiene la razón.
+- **Modelo de Datos:** Guiarse ESTRICTAMENTE por `backend/app/models/licitaciones/BDLicitaciones.txt`. Si el código difiere del diagrama, la BD tiene la razón.
 - **Estilos:** Seguir `backend/Guias de estilo.txt`.
 
 ## 🧩 Patrones de Diseño (Implementación Obligatoria)
