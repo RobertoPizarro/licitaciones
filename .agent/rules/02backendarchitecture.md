@@ -6,7 +6,7 @@ trigger: always_on
 
 ## 🏛️ Estructura y Fuente de Verdad
 
-- **Modelo de Datos:** Guiarse ESTRICTAMENTE por `backend/app/models/licitaciones/BDLicitaciones.txt`. Si el código difiere del diagrama, la BD tiene la razón.
+- **Modelo de Datos:** Guiarse ESTRICTAMENTE por `backend/app/models/licitaciones`. Si el código difiere de los models, los models tienen la razón.
 - **Estilos:** Seguir `backend/Guias de estilo.txt`.
 
 ## 🧩 Patrones de Diseño (Implementación Obligatoria)

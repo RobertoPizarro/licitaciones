@@ -27,14 +27,14 @@ class DocumentoRequerido(db.Model):
     __tablename__ = 'documentos_requeridos'
     
     id_requerido = db.Column(db.Integer, primary_key=True)
-    licitacion_id = db.Column(db.Integer, db.ForeignKey('licitaciones.id_licitacion'))
+    licitacion_id = db.Column(db.Integer, db.ForeignKey('licitaciones.id'), nullable=False)
     
     nombre = db.Column(db.String(255))
     tipo = db.Column(db.Enum(TipoDocumento))
     obligatorio = db.Column(db.Boolean, default=True)
     
     # Información de la plantilla
-    ruta_plantilla = db.Column(db.String(500)) # Ruta relativa en frontend/public o URL externa
+    ruta_plantilla = db.Column(db.String(500)) # ID de plantilla (ej: 'propuesta-economica') o URL externa
     
     # Relación inversa
     licitacion = db.relationship('Licitacion', backref=db.backref('documentos_requeridos', lazy=True))

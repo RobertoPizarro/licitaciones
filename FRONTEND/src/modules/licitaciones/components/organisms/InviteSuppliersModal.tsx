@@ -7,15 +7,9 @@ import Label from '../atoms/Label';
 import Input from '../atoms/Input';
 import Textarea from '../atoms/Textarea';
 import Checkbox from '../atoms/Checkbox';
+import { downloadMultipleFilesAsZip } from '../../lib/documentTemplateUtils';
+import type { ProveedorDTO, DocumentoRequeridoDTO } from '../../lib/types';
 import './InviteSuppliersModal.css';
-
-interface Supplier {
-    id: number;
-    name: string;
-    ruc: string;
-    email: string;
-    category: string;
-}
 
 interface InviteSuppliersModalProps {
     isOpen: boolean;
@@ -24,9 +18,11 @@ interface InviteSuppliersModalProps {
     licitacionTitle: string;
     estimatedAmount: number;
     maxBudget: number;
-    availableSuppliers: Supplier[];
-    requiredDocuments: string[];
+    // TODO: MOCK - Debe venir de proveedoresService.listar()
+    availableSuppliers: ProveedorDTO[];
+    requiredDocuments: DocumentoRequeridoDTO[];
     onSuppliersInvited?: (suppliers: string[]) => void;
+    onInvitarProveedores?: (proveedores: number[]) => void;
 }
 
 const InviteSuppliersModal: React.FC<InviteSuppliersModalProps> = ({
@@ -37,9 +33,11 @@ const InviteSuppliersModal: React.FC<InviteSuppliersModalProps> = ({
     maxBudget,
     availableSuppliers,
     requiredDocuments,
-    onSuppliersInvited
+    onSuppliersInvited,
+    onInvitarProveedores
 }) => {
     const [selectedSuppliers, setSelectedSuppliers] = useState<number[]>([]);
+    const [isDownloading, setIsDownloading] = useState(false);
 
     const handleToggleSupplier = (supplierId: number) => {
         setSelectedSuppliers(prev => {
@@ -61,7 +59,7 @@ const InviteSuppliersModal: React.FC<InviteSuppliersModalProps> = ({
     const getSelectedSupplierNames = () => {
         return availableSuppliers
             .filter(s => selectedSuppliers.includes(s.id))
-            .map(s => s.name);
+            .map(s => s.nombre);
     };
 
     const emailSubject = `Invitación a Licitación - ${licitacionTitle}`;
@@ -89,9 +87,40 @@ Juan Pérez - Módulo de Compras`;
         const mailto = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(emails)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
         window.open(mailto, '_blank');
 
-        // Guardar proveedores invitados
+        // Guardar proveedores invitados en UI
         if (onSuppliersInvited) {
             onSuppliersInvited(getSelectedSupplierNames());
+        }
+
+        // Llamar a la API con los IDs de proveedores
+        if (onInvitarProveedores && selectedSuppliers.length > 0) {
+            onInvitarProveedores(selectedSuppliers);
+        }
+    };
+
+    const handleDownloadTemplates = async () => {
+        setIsDownloading(true);
+        try {
+            const files = requiredDocuments
+                .map(doc => {
+                    // Usar ruta_plantilla del DTO si existe, o construirla/buscarla
+                    const path = doc.ruta_plantilla;
+                    return path ? { path, name: doc.nombre } : null;
+                })
+                .filter((f): f is { path: string; name: string } => f !== null);
+
+            if (files.length > 0) {
+                await downloadMultipleFilesAsZip(
+                    files,
+                    `Plantillas_Licitacion_${licitacionId}.zip`
+                );
+            } else {
+                console.warn('No templates found for the required documents');
+            }
+        } catch (error) {
+            console.error('Error downloading templates:', error);
+        } finally {
+            setIsDownloading(false);
         }
     };
 
@@ -134,12 +163,12 @@ Juan Pérez - Módulo de Compras`;
                                         className="supplier-checkbox"
                                     />
                                     <div className="supplier-info">
-                                        <div className="supplier-name">{supplier.name}</div>
+                                        <div className="supplier-name">{supplier.nombre}</div>
                                         <div className="supplier-details">
                                             RUC: {supplier.ruc} | {supplier.email}
                                         </div>
                                     </div>
-                                    <Badge variant="info">{supplier.category}</Badge>
+                                    <Badge variant="info">Proveedor</Badge>
                                 </div>
                             ))}
                         </div>
@@ -185,12 +214,18 @@ Juan Pérez - Módulo de Compras`;
                                     </div>
                                     <ul className="documents-list">
                                         {requiredDocuments.map((doc, index) => (
-                                            <li key={index}>{doc}</li>
+                                            <li key={index}>{doc.nombre}</li>
                                         ))}
                                     </ul>
-                                    <Button variant="primary" size="sm" className="download-button">
+                                    <Button
+                                        variant="primary"
+                                        size="sm"
+                                        className="download-button"
+                                        onClick={handleDownloadTemplates}
+                                        disabled={isDownloading}
+                                    >
                                         <Download size={16} />
-                                        Descargar Plantillas (ZIP)
+                                        {isDownloading ? 'Generando ZIP...' : 'Descargar Plantillas (ZIP)'}
                                     </Button>
                                 </div>
                             </div>

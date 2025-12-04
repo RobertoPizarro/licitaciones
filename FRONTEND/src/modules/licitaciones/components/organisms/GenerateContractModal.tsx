@@ -3,21 +3,16 @@ import { FileText, Upload, CheckCircle, Download, Trophy } from 'lucide-react';
 import Modal from '../atoms/Modal';
 import Button from '../atoms/Button';
 import Alert from '../atoms/Alert';
+import { getContractTemplatePath, downloadFile } from '../../lib/documentTemplateUtils';
+import type { ProveedorDTO } from '../../lib/types';
 import './GenerateContractModal.css';
-
-interface WinnerProvider {
-    id: number;
-    name: string;
-    ruc: string;
-    email: string;
-}
 
 interface GenerateContractModalProps {
     isOpen: boolean;
     onClose: () => void;
     licitacionId: string;
     licitacionTitle: string;
-    winnerProvider?: WinnerProvider;
+    winnerProvider?: ProveedorDTO;
     onSaveContract?: (file: File) => void;
 }
 
@@ -61,9 +56,11 @@ const GenerateContractModal: React.FC<GenerateContractModalProps> = ({
         }
     };
 
+
+
     const handleDownloadTemplate = () => {
-        console.log('[Mock] Descargando plantilla de contrato...');
-        // In a real app, this would trigger a file download
+        const contractPath = getContractTemplatePath();
+        downloadFile(contractPath, 'Plantilla - Contrato Adjudicacion.docx');
     };
 
     if (!winnerProvider) return null;
@@ -91,7 +88,7 @@ const GenerateContractModal: React.FC<GenerateContractModalProps> = ({
                         </div>
                         <div className="winner-info-row">
                             <span className="winner-label">Proveedor:</span>
-                            <span className="winner-value">{winnerProvider.name}</span>
+                            <span className="winner-value">{winnerProvider.nombre}</span>
                         </div>
                         <div className="winner-info-row">
                             <span className="winner-label">RUC:</span>

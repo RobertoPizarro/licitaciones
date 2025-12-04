@@ -4,7 +4,3 @@
 .idea/vcs.xml
 package-lock.json
 .gitignore
-.agent/rules/01projectconstraints.md
-.agent/rules/02backendarchitecture.md
-.agent/rules/03frontendarchitecture.md
-.agent/rules/04businessworkflow.md

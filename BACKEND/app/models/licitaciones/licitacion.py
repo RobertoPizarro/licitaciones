@@ -1,90 +1,73 @@
 from app.bdd import db
-from app.models.licitaciones.estados.estado_borrador import EstadoBorrador
 from app.models.licitaciones.estados.estado_nueva import EstadoNueva
 from app.models.licitaciones.estados.estado_cancelada import EstadoCancelada
-# Importar otros estados aquí a medida que se creen, o usar importación dinámica/local en _reconstruir_estado
-
-from app.models.licitaciones.proceso_adquisicion import ProcesoAdquisicion
-from app.models.licitaciones.solicitud import Solicitud
+from app.models.adquisiciones.proceso import ProcesoAdquisicion
 
 class Licitacion(ProcesoAdquisicion):
-    """
-    Modelo de Licitación que actúa como Contexto del patrón State.
-
-    """
     __tablename__ = 'licitaciones'
     
-    id_licitacion = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('procesos_adquisicion.id'), primary_key=True)
+    
+    __mapper_args__ = {
+        'polymorphic_identity': 'LICITACION',
+    }
+
     presupuesto_max = db.Column(db.Numeric(10, 2))
     fecha_limite = db.Column(db.DateTime)
     
-    _estado_nombre = db.Column('estado', db.String(50), nullable=False, default='BORRADOR')
+    _estado_nombre = db.Column('estado_licitacion', db.String(50), nullable=False, default='NUEVA')
     
-    # Atributos heredados de ProcesoAdquisicion
-    solicitud_id = db.Column(db.Integer, db.ForeignKey('solicitudes.id_solicitud'), nullable=False)
-    
-    # Relaciones
-    solicitud_origen = db.relationship('Solicitud', backref='licitaciones')
-    
-    # Supervisor (Usuario)
     supervisor_id = db.Column(db.Integer, nullable=True) 
-    
-    # Campos de control para lógica de estados
     aprobada_por_supervisor = db.Column(db.Boolean, default=False)
     invitaciones_enviadas = db.Column(db.Boolean, default=False)
     motivo_rechazo = db.Column(db.Text, nullable=True)
-    
-    # Relaciones
+
+    # Relación con todas las propuestas
     propuestas = db.relationship('PropuestaProveedor', backref='licitacion', lazy=True)
-    propuesta_ganadora = db.relationship('PropuestaProveedor', 
-                                    primaryjoin="and_(Licitacion.id_licitacion==PropuestaProveedor.licitacion_id, PropuestaProveedor.es_ganadora==True)",
-                                    uselist=False, viewonly=True)
     
-    # Items se obtienen via solicitud_origen.items (JOIN)
+    # --- AGREGA ESTO (NUEVO) ---
+    # Esta es la relación que faltaba y causaba el error.
+    # Filtra automáticamente la propuesta que tenga es_ganadora=True
+    propuesta_ganadora = db.relationship(
+        'PropuestaProveedor', 
+        primaryjoin="and_(Licitacion.id==PropuestaProveedor.licitacion_id, PropuestaProveedor.es_ganadora==True)",
+        uselist=False, 
+        viewonly=True
+    )
+    # ---------------------------
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._estado_actual = EstadoBorrador(self)
+        self._estado_actual = EstadoNueva(self)
         self._estado_nombre = self._estado_actual.get_nombre()
     
     @property
     def estado_actual(self):
-        """
-        Retorna la instancia del estado actual (Objeto State).
-        
-        """
         if not hasattr(self, '_estado_actual') or self._estado_actual is None:
             self._estado_actual = self._reconstruir_estado()
         return self._estado_actual
     
     def cambiar_estado(self, nuevo_estado):
-        """
-        Cambia al nuevo estado y actualiza el nombre para persistencia.
-        """
         self._estado_actual = nuevo_estado
         self._estado_nombre = nuevo_estado.get_nombre()
     
     def siguiente_estado(self):
-        """
-        Avanza al siguiente estado delegando la lógica al estado actual.
-        """
+        # IMPORTANTE: Hacemos flush para que la BD sepa que 'es_ganadora' cambió 
+        # antes de que el Estado pregunte por 'propuesta_ganadora'
+        db.session.flush() 
         nuevo_estado = self.estado_actual.siguiente()
         self.cambiar_estado(nuevo_estado)
     
     def cancelar(self):
-        """
-        Fuerza la transición al estado CANCELADA.
-        """
+        from app.models.licitaciones.estados.estado_cancelada import EstadoCancelada
         self.cambiar_estado(EstadoCancelada(self))
         
     def _reconstruir_estado(self):
-        """
-        Instancia la clase de estado correcta según _estado_nombre.
-        """
+        # ... (Tu código de reconstrucción de estados que ya tenías) ...
+        # (Cópialo del archivo anterior si lo tienes, o te lo paso si lo necesitas)
         nombre = self._estado_nombre
         
-        # Importación local para evitar ciclos
-        from app.models.licitaciones.estados.estado_borrador import EstadoBorrador
+        # Imports locales para evitar ciclos
         from app.models.licitaciones.estados.estado_nueva import EstadoNueva
         from app.models.licitaciones.estados.estado_en_invitacion import EstadoEnInvitacion
         from app.models.licitaciones.estados.estado_con_propuestas import EstadoConPropuestas
@@ -96,7 +79,6 @@ class Licitacion(ProcesoAdquisicion):
         from app.models.licitaciones.estados.estado_cancelada import EstadoCancelada
         
         estados_map = {
-            "BORRADOR": EstadoBorrador,
             "NUEVA": EstadoNueva,
             "EN_INVITACION": EstadoEnInvitacion,
             "CON_PROPUESTAS": EstadoConPropuestas,
@@ -108,5 +90,5 @@ class Licitacion(ProcesoAdquisicion):
             "CANCELADA": EstadoCancelada
         }
         
-        clase_estado = estados_map.get(nombre, EstadoBorrador)
+        clase_estado = estados_map.get(nombre, EstadoNueva)
         return clase_estado(self)
